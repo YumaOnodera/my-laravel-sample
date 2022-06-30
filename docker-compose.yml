@@ -1,52 +1,58 @@
-# For more information: https://laravel.com/docs/sail
 version: '3'
 services:
-    laravel.test:
+    php:
         build:
-            context: ./docker/8.1
+            context: ./docker/php
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: sail-8.1/app
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-        ports:
-            - '${APP_PORT:-80}:80'
-            - '${HMR_PORT:-8080}:8080'
         environment:
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
-            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
         volumes:
-            - '.:/var/www/html'
-        networks:
-            - sail
-        depends_on:
-            - mysql
-    mysql:
-        image: 'mysql/mysql-server:8.0'
+            - ./:/var/www/html:cached
+    nginx:
+        image: nginx:alpine
         ports:
-            - '${FORWARD_DB_PORT:-3306}:3306'
+            - '80:80'
         environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ROOT_HOST: "%"
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            TZ: Asia/Tokyo
         volumes:
-            - 'sail-mysql:/var/lib/mysql'
-            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
-        networks:
-            - sail
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
-            retries: 3
-            timeout: 5s
-networks:
-    sail:
-        driver: bridge
+            - ./:/var/www/html:cached
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - php
+    mysql:
+        image: mysql/mysql-server:8.0
+        ports:
+            - '3306:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_HOST: '%'
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            TZ: Asia/Tokyo
+        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        volumes:
+            - mysql:/var/lib/mysql
+            - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+            - ./docker/mysql/sql:/docker-entrypoint-initdb.d
+    swagger-ui:
+        image: swaggerapi/swagger-ui
+        ports:
+            - '8080:8080'
+        environment:
+            API_URL: openapi.json
+        volumes:
+            - ./swagger/openapi.json:/usr/share/nginx/html/openapi.json
+    swagger-merger:
+        build:
+            context: .
+            dockerfile: ./docker/swagger-merger/Dockerfile
+        command: >
+            watch 'swagger-merger -i /swagger/src/index.json -o /swagger/openapi.json' /swagger/src/
+        volumes:
+            - ./swagger:/swagger
 volumes:
-    sail-mysql:
-        driver: local
+    mysql:
