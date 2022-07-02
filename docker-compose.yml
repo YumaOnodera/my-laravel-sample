@@ -4,11 +4,6 @@ services:
         build:
             context: ./docker/php
             dockerfile: Dockerfile
-            args:
-                WWWGROUP: '${WWWGROUP}'
-        environment:
-            WWWUSER: '${WWWUSER}'
-            LARAVEL_SAIL: 1
         volumes:
             - ./:/var/www/html:cached
     nginx:
