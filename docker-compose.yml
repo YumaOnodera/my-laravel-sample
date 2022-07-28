@@ -9,7 +9,7 @@ services:
     nginx:
         image: nginx:alpine
         ports:
-            - '80:80'
+            - '8000:8000'
         environment:
             TZ: Asia/Tokyo
         volumes:
