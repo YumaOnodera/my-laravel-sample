@@ -18,13 +18,16 @@
     },
     "paths": {
         "/sanctum/csrf-cookie": {
-            "$ref": "./paths/csrf-cookie.json"
+            "$ref": "./paths/auth/csrf-cookie.json"
         },
         "/register": {
-            "$ref": "./paths/register.json"
+            "$ref": "./paths/auth/register.json"
         },
         "/login": {
-            "$ref": "./paths/login.json"
+            "$ref": "./paths/auth/login.json"
+        },
+        "/user": {
+            "$ref": "./paths/auth/user.json"
         }
     }
 }

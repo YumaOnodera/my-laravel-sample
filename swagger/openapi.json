@@ -135,6 +135,57 @@
           }
         }
       }
+    },
+    "/user": {
+      "get": {
+        "description": "ログインユーザーの取得",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "山田太郎"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "test@example.co.jp"
+                          },
+                          "email_verified_at": {
+                            "type": "string",
+                            "example": "2022-01-02 00:00:00"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "example": "2022-01-01 00:00:00"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "example": "2022-01-02 00:00:00"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
