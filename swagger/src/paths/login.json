@@ -1,0 +1,38 @@
+{
+    "post": {
+        "description": "ログインを行う。",
+        "requestBody": {
+            "content": {
+                "application/json:": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "email": {
+                                "type": "string",
+                                "example": "test@example.com"
+                            },
+                            "password": {
+                                "type": "string",
+                                "example": "password"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "204": {
+                "headers": {},
+                "description": "no content"
+            },
+            "419": {
+                "headers": {},
+                "description": "CORS not allowed"
+            },
+            "422": {
+                "headers": {},
+                "description": "authentication failed"
+            }
+        }
+    }
+}

@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost"
+      "url": "http://localhost:8000"
     }
   ],
   "components": {
@@ -33,46 +33,105 @@
     }
   },
   "paths": {
-    "/api/users": {
+    "/sanctum/csrf-cookie": {
       "get": {
-        "title": "ユーザー一覧",
-        "description": "全ユーザーの取得",
+        "description": "CSRFトークンを生成する。",
         "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
+          "204": {
+            "description": "No Content",
+            "headers": {
+              "XSRF-TOKEN": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "users": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "email": {
-                            "type": "string",
-                            "example": "test@example.co.jp"
-                          },
-                          "name": {
-                            "type": "string",
-                            "example": "山田太郎"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "example": "2022-01-01 00:00:00"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "example": "2022-01-01 00:00:00"
-                          }
-                        }
-                      }
-                    }
+                  "type": "string",
+                  "example": "XSRF-TOKEN=abc123;"
+                },
+                "description": "CSRFトークン"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "description": "ユーザーを登録し、ログインを行う。",
+        "requestBody": {
+          "content": {
+            "application/json:": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Test User"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "test@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "password_confirmation": {
+                    "type": "string",
+                    "example": "password"
                   }
                 }
               }
             }
+          }
+        },
+        "responses": {
+          "204": {
+            "headers": {},
+            "description": "no content"
+          },
+          "419": {
+            "headers": {},
+            "description": "CORS not allowed"
+          },
+          "422": {
+            "headers": {},
+            "description": "validation error"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "ログインを行う。",
+        "requestBody": {
+          "content": {
+            "application/json:": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "test@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "headers": {},
+            "description": "no content"
+          },
+          "419": {
+            "headers": {},
+            "description": "CORS not allowed"
+          },
+          "422": {
+            "headers": {},
+            "description": "authentication failed"
           }
         }
       }
