@@ -1,5 +1,8 @@
 {
     "get": {
+        "tags": [
+            "Auth"
+        ],
         "description": "CSRFトークンを生成する。",
         "responses": {
             "204": {

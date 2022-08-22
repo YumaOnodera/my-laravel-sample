@@ -1,5 +1,8 @@
 {
     "post": {
+        "tags": [
+            "Auth"
+        ],
         "description": "ユーザーを登録し、ログインを行う。",
         "requestBody": {
             "content": {

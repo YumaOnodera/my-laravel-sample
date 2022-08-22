@@ -35,6 +35,9 @@
   "paths": {
     "/sanctum/csrf-cookie": {
       "get": {
+        "tags": [
+          "Auth"
+        ],
         "description": "CSRFトークンを生成する。",
         "responses": {
           "204": {
@@ -54,6 +57,9 @@
     },
     "/register": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "ユーザーを登録し、ログインを行う。",
         "requestBody": {
           "content": {
@@ -100,6 +106,9 @@
     },
     "/login": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "ログインを行う。",
         "requestBody": {
           "content": {
@@ -138,7 +147,10 @@
     },
     "/user": {
       "get": {
-        "description": "ログインユーザーの取得",
+        "tags": [
+          "Auth"
+        ],
+        "description": "ログインユーザーを取得する。",
         "responses": {
           "200": {
             "description": "成功",
@@ -147,37 +159,152 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "users": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "山田一郎"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "test@example.co.jp"
+                    },
+                    "email_verified_at": {
+                      "type": "string",
+                      "example": "2022-01-02 00:00:00"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "example": "2022-01-01 00:00:00"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "example": "2022-01-02 00:00:00"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "指定した件数ごとにユーザーを取得する。",
+        "parameters": [
+          {
+            "description": "ページの指定",
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "per_page: 1ページに表示する件数",
+          "content": {
+            "application/json:": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "per_page": {
+                    "type": "integer",
+                    "example": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "example": 50
+                    },
+                    "per_page": {
+                      "type": "integer",
+                      "example": 5
+                    },
+                    "current_page": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "last_page": {
+                      "type": "integer",
+                      "example": 10
+                    },
+                    "first_item": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "last_item": {
+                      "type": "integer",
+                      "example": 5
+                    },
+                    "has_more_pages": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
                       "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer",
-                            "example": 1
-                          },
-                          "name": {
-                            "type": "string",
-                            "example": "山田太郎"
-                          },
-                          "email": {
-                            "type": "string",
-                            "example": "test@example.co.jp"
-                          },
-                          "email_verified_at": {
-                            "type": "string",
-                            "example": "2022-01-02 00:00:00"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "example": "2022-01-01 00:00:00"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "example": "2022-01-02 00:00:00"
-                          }
+                      "example": [
+                        {
+                          "id": 1,
+                          "name": "山田一郎",
+                          "email": "test@example.co.jp",
+                          "email_verified_at": "2022-01-02 00:00:00",
+                          "created_at": "2022-01-01 00:00:00",
+                          "updated_at": "2022-01-02 00:00:00"
+                        },
+                        {
+                          "id": 2,
+                          "name": "田中二郎",
+                          "email": "test2@example.co.jp",
+                          "email_verified_at": "2022-01-02 00:00:00",
+                          "created_at": "2022-01-01 00:00:00",
+                          "updated_at": "2022-01-02 00:00:00"
+                        },
+                        {
+                          "id": 3,
+                          "name": "中田三郎",
+                          "email": "test3@example.co.jp",
+                          "email_verified_at": "2022-01-02 00:00:00",
+                          "created_at": "2022-01-01 00:00:00",
+                          "updated_at": "2022-01-02 00:00:00"
+                        },
+                        {
+                          "id": 4,
+                          "name": "田山四郎",
+                          "email": "test4@example.co.jp",
+                          "email_verified_at": "2022-01-02 00:00:00",
+                          "created_at": "2022-01-01 00:00:00",
+                          "updated_at": "2022-01-02 00:00:00"
+                        },
+                        {
+                          "id": 5,
+                          "name": "中村五郎",
+                          "email": "test5@example.co.jp",
+                          "email_verified_at": "2022-01-02 00:00:00",
+                          "created_at": "2022-01-01 00:00:00",
+                          "updated_at": "2022-01-02 00:00:00"
                         }
-                      }
+                      ]
                     }
                   }
                 }

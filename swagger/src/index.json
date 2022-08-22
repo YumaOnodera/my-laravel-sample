@@ -28,6 +28,9 @@
         },
         "/user": {
             "$ref": "./paths/auth/user.json"
+        },
+        "/users": {
+            "$ref": "./paths/users/index.json"
         }
     }
 }
