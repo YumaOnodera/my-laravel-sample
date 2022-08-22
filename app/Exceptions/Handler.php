@@ -3,6 +3,12 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -46,5 +52,64 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (Throwable $e) {
+            // 422 バリデーションエラー
+            if ($e instanceof ValidationException) {
+                return response()->json(
+                    [
+                        'message' => $e->errors(),
+                    ],
+                    $e->status,
+                );
+            }
+
+            // HttpException
+            if ($this->isHttpException($e)) {
+                return response()->json(
+                    [
+                        'message' => $this->createMessage($e),
+                    ],
+                    $e->getStatusCode(),
+                );
+            }
+
+            return response()->json(
+                [
+                    'message' => 'サーバーで処理中にエラーが発生しました。',
+                ],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        });
+    }
+
+    /**
+     * @param Throwable $e
+     * @return string
+     */
+    protected function createMessage(Throwable $e): string
+    {
+        // 401
+        if ($e instanceof UnauthorizedHttpException) {
+            return '認証に失敗しました。';
+        }
+
+        // 403
+        if ($e instanceof AccessDeniedHttpException) {
+            return '許可されていない操作です。';
+        }
+
+        // 404
+        if ($e instanceof NotFoundHttpException) {
+            return 'URLが存在しません。';
+        }
+
+        // 405
+        if ($e instanceof MethodNotAllowedHttpException) {
+            return '未定義のHTTPメソッドが指定されました。';
+        }
+
+        // 500
+        return 'サーバーで処理中にエラーが発生しました。';
     }
 }
