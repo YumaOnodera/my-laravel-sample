@@ -1,0 +1,19 @@
+{
+    "get": {
+        "description": "CSRFトークンを生成する。",
+        "responses": {
+            "204": {
+                "description": "No Content",
+                "headers": {
+                    "XSRF-TOKEN": {
+                        "schema": {
+                            "type": "string",
+                            "example": "XSRF-TOKEN=abc123;"
+                        },
+                        "description": "CSRFトークン"
+                    }
+                }
+            }
+        }
+    }
+}

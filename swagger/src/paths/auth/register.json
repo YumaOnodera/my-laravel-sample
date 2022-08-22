@@ -1,0 +1,46 @@
+{
+    "post": {
+        "description": "ユーザーを登録し、ログインを行う。",
+        "requestBody": {
+            "content": {
+                "application/json:": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "Test User"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "test@example.com"
+                            },
+                            "password": {
+                                "type": "string",
+                                "example": "password"
+                            },
+                            "password_confirmation": {
+                                "type": "string",
+                                "example": "password"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "204": {
+                "headers": {},
+                "description": "no content"
+            },
+            "419": {
+                "headers": {},
+                "description": "CORS not allowed"
+            },
+            "422": {
+                "headers": {},
+                "description": "validation error"
+            }
+        }
+    }
+}

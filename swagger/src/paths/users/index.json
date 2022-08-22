@@ -1,6 +1,5 @@
 {
     "get": {
-        "title": "ユーザー一覧",
         "description": "全ユーザーの取得",
         "responses": {
             "200": {
@@ -15,13 +14,21 @@
                                     "items": {
                                         "type": "object",
                                         "properties": {
-                                            "email": {
-                                                "type": "string",
-                                                "example": "test@example.co.jp"
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
                                             },
                                             "name": {
                                                 "type": "string",
                                                 "example": "山田太郎"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "test@example.co.jp"
+                                            },
+                                            "email_verified_at": {
+                                                "type": "string",
+                                                "example": "2022-01-02 00:00:00"
                                             },
                                             "created_at": {
                                                 "type": "string",
@@ -29,7 +36,7 @@
                                             },
                                             "updated_at": {
                                                 "type": "string",
-                                                "example": "2022-01-01 00:00:00"
+                                                "example": "2022-01-02 00:00:00"
                                             }
                                         }
                                     }

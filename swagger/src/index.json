@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost"
+            "url": "http://localhost:8000"
         }
     ],
     "components": {
@@ -17,8 +17,17 @@
         }
     },
     "paths": {
-        "/api/users": {
-            "$ref": "./paths/users.json"
+        "/sanctum/csrf-cookie": {
+            "$ref": "./paths/auth/csrf-cookie.json"
+        },
+        "/register": {
+            "$ref": "./paths/auth/register.json"
+        },
+        "/login": {
+            "$ref": "./paths/auth/login.json"
+        },
+        "/user": {
+            "$ref": "./paths/auth/user.json"
         }
     }
 }
