@@ -31,6 +31,9 @@
         },
         "/users": {
             "$ref": "./paths/users/index.json"
+        },
+        "/users/{id}": {
+            "$ref": "./paths/users/show.json"
         }
     }
 }
