@@ -17,7 +17,9 @@ class IndexTest extends IndexTestCase
         parent::setUp();
 
         $this->apiUrl = 'api/users';
-        $this->users = User::factory(50)->create();
+        $this->users = User::factory(50)->create([
+            'deleted_at' => null,
+        ]);
     }
 
     /**
@@ -37,6 +39,7 @@ class IndexTest extends IndexTestCase
                     'email_verified_at',
                     'created_at',
                     'updated_at',
+                    'deleted_at',
                 ]
             ]
         );
