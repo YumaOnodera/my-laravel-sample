@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
@@ -33,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
         ) {
             $this->addQueryListener();
         }
+
+        // dataキーの除去
+        JsonResource::withoutWrapping();
     }
 
     private function addQueryListener()
