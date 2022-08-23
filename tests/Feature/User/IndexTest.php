@@ -25,7 +25,7 @@ class IndexTest extends IndexTestCase
      *
      * @return void
      */
-    public function test_successful_response()
+    public function test_data_structure()
     {
         $this->assertDataStructure(
             $this->apiUrl,
