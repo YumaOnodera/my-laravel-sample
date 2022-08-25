@@ -5,6 +5,7 @@ namespace Tests\Feature\User;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\DB;
 use Tests\IndexTestCase;
 
 class IndexTest extends IndexTestCase
@@ -12,11 +13,12 @@ class IndexTest extends IndexTestCase
     use RefreshDatabase;
     use WithoutMiddleware;
 
+    private const API_URL = 'api/users';
+
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->apiUrl = 'api/users';
         $this->users = User::factory(50)->create([
             'deleted_at' => null,
         ]);
@@ -30,7 +32,7 @@ class IndexTest extends IndexTestCase
     public function test_data_structure()
     {
         $this->assertDataStructure(
-            $this->apiUrl,
+            self::API_URL,
             [
                 '*' => [
                     'id',
@@ -52,7 +54,7 @@ class IndexTest extends IndexTestCase
      */
     public function test_paginate_first_page()
     {
-        $this->assertPaginateFirstPage($this->apiUrl, $this->users);
+        $this->assertPaginateFirstPage(self::API_URL, $this->users);
     }
 
     /**
@@ -62,7 +64,7 @@ class IndexTest extends IndexTestCase
      */
     public function test_paginate_next_page()
     {
-        $this->assertPaginateNextPage($this->apiUrl, $this->users);
+        $this->assertPaginateNextPage(self::API_URL, $this->users);
     }
 
     /**
@@ -72,7 +74,7 @@ class IndexTest extends IndexTestCase
      */
     public function test_paginate_last_page()
     {
-        $this->assertPaginateLastPage($this->apiUrl, $this->users);
+        $this->assertPaginateLastPage(self::API_URL, $this->users);
     }
 
     /**
@@ -82,6 +84,11 @@ class IndexTest extends IndexTestCase
      */
     public function test_paginate_per_page()
     {
-        $this->assertPaginatePerPage($this->apiUrl, $this->users);
+        $this->assertPaginatePerPage(self::API_URL, $this->users);
+    }
+
+    public function tearDown(): void
+    {
+        DB::table('users')->truncate();
     }
 }

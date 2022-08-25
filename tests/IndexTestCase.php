@@ -31,9 +31,8 @@ class IndexTestCase extends TestCase
      * @param string $apiUrl
      * @param Collection $data
      * @param array $request
-     * @param array $expected
      */
-    protected function assertPaginateFirstPage(string $apiUrl, Collection $data, array $request = [], array $expected = [])
+    protected function assertPaginateFirstPage(string $apiUrl, Collection $data, array $request = [])
     {
         $total = $data->count();
         $perPage = config('const.PER_PAGE');
@@ -43,9 +42,7 @@ class IndexTestCase extends TestCase
         }
 
         $lastPage = ceil($total / $perPage);
-        if (empty($expected)) {
-            $expected = $data->chunk($perPage)[0]->values()->toArray();
-        }
+        $expected = $data->chunk($perPage)[0]->values()->toArray();
 
         $response = $this->post($apiUrl, $request);
 
@@ -69,9 +66,8 @@ class IndexTestCase extends TestCase
      * @param string $apiUrl
      * @param Collection $data
      * @param array $request
-     * @param array $expected
      */
-    protected function assertPaginateNextPage(string $apiUrl, Collection $data, array $request = [], array $expected = [])
+    protected function assertPaginateNextPage(string $apiUrl, Collection $data, array $request = [])
     {
         $total = $data->count();
         $perPage = config('const.PER_PAGE');
@@ -81,9 +77,7 @@ class IndexTestCase extends TestCase
         }
 
         $lastPage = ceil($total / $perPage);
-        if (empty($expected)) {
-            $expected = $data->chunk($perPage)[1]->values()->toArray();
-        }
+        $expected = $data->chunk($perPage)[1]->values()->toArray();
 
         $response = $this->post($apiUrl . '?page=2', $request);
 
@@ -107,9 +101,8 @@ class IndexTestCase extends TestCase
      * @param string $apiUrl
      * @param Collection $data
      * @param array $request
-     * @param array $expected
      */
-    protected function assertPaginateLastPage(string $apiUrl, Collection $data, array $request = [], array $expected = [])
+    protected function assertPaginateLastPage(string $apiUrl, Collection $data, array $request = [])
     {
         $total = $data->count();
         $perPage = config('const.PER_PAGE');
@@ -120,9 +113,7 @@ class IndexTestCase extends TestCase
 
         $lastPage = ceil($total / $perPage);
         $offset = $perPage * ($lastPage - 1);
-        if (empty($expected)) {
-            $expected = $data->chunk($perPage)[$lastPage - 1]->values()->toArray();
-        }
+        $expected = $data->chunk($perPage)[$lastPage - 1]->values()->toArray();
 
         $response = $this->post($apiUrl . '?page=' . $lastPage, $request);
 
@@ -146,9 +137,8 @@ class IndexTestCase extends TestCase
      * @param string $apiUrl
      * @param Collection $data
      * @param array $request
-     * @param array $expected
      */
-    protected function assertPaginatePerPage(string $apiUrl, Collection $data, array $request = [], array $expected = [])
+    protected function assertPaginatePerPage(string $apiUrl, Collection $data, array $request = [])
     {
         $total = $data->count();
         $perPage = 15;
@@ -163,9 +153,7 @@ class IndexTestCase extends TestCase
                 'per_page' => $perPage
             ];
         }
-        if (empty($expected)) {
-            $expected = $data->chunk($perPage)[0]->values()->toArray();
-        }
+        $expected = $data->chunk($perPage)[0]->values()->toArray();
 
         $response = $this->post($apiUrl, $request);
 
