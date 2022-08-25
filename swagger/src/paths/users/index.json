@@ -77,7 +77,8 @@
                                             "email": "test@example.co.jp",
                                             "email_verified_at": "2022-01-02 00:00:00",
                                             "created_at": "2022-01-01 00:00:00",
-                                            "updated_at": "2022-01-02 00:00:00"
+                                            "updated_at": "2022-01-02 00:00:00",
+                                            "deleted_at": null
                                         },
                                         {
                                             "id": 2,
@@ -85,7 +86,8 @@
                                             "email": "test2@example.co.jp",
                                             "email_verified_at": "2022-01-02 00:00:00",
                                             "created_at": "2022-01-01 00:00:00",
-                                            "updated_at": "2022-01-02 00:00:00"
+                                            "updated_at": "2022-01-02 00:00:00",
+                                            "deleted_at": null
                                         },
                                         {
                                             "id": 3,
@@ -93,7 +95,8 @@
                                             "email": "test3@example.co.jp",
                                             "email_verified_at": "2022-01-02 00:00:00",
                                             "created_at": "2022-01-01 00:00:00",
-                                            "updated_at": "2022-01-02 00:00:00"
+                                            "updated_at": "2022-01-02 00:00:00",
+                                            "deleted_at": null
                                         },
                                         {
                                             "id": 4,
@@ -101,7 +104,8 @@
                                             "email": "test4@example.co.jp",
                                             "email_verified_at": "2022-01-02 00:00:00",
                                             "created_at": "2022-01-01 00:00:00",
-                                            "updated_at": "2022-01-02 00:00:00"
+                                            "updated_at": "2022-01-02 00:00:00",
+                                            "deleted_at": null
                                         },
                                         {
                                             "id": 5,
@@ -109,7 +113,8 @@
                                             "email": "test5@example.co.jp",
                                             "email_verified_at": "2022-01-02 00:00:00",
                                             "created_at": "2022-01-01 00:00:00",
-                                            "updated_at": "2022-01-02 00:00:00"
+                                            "updated_at": "2022-01-02 00:00:00",
+                                            "deleted_at": null
                                         }
                                     ]
                                 }

@@ -47,6 +47,10 @@
                                 "updated_at": {
                                     "type": "string",
                                     "example": "2022-01-02 00:00:00"
+                                },
+                                "deleted_at": {
+                                    "type": "string",
+                                    "example": null
                                 }
                             }
                         }
