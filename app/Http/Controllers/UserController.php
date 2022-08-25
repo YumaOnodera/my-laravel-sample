@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\IndexRequest;
 use App\Http\Resources\UserResource;
 use App\UseCases\User\IndexAction;
+use App\UseCases\User\ShowAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -47,12 +48,13 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @param ShowAction $action
+     * @return UserResource
      */
-    public function show($id)
+    public function show(int $id, ShowAction $action)
     {
-        //
+        return new UserResource($action($id));
     }
 
     /**
