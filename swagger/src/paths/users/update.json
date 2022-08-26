@@ -1,8 +1,35 @@
 {
     "tags": [
-        "Auth"
+        "User"
     ],
-    "description": "ログインユーザーを取得する。",
+    "description": "指定したユーザーを更新する。",
+    "parameters": [
+        {
+            "description": "ユーザーのID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+                "type": "integer",
+                "example": 1
+            }
+        }
+    ],
+    "requestBody": {
+        "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "example": "山田一郎"
+                        }
+                    }
+                }
+            }
+        }
+    },
     "responses": {
         "200": {
             "description": "成功",

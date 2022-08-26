@@ -18,22 +18,37 @@
     },
     "paths": {
         "/sanctum/csrf-cookie": {
-            "$ref": "./paths/auth/csrf-cookie.json"
+            "get": {
+                "$ref": "./paths/auth/csrf-cookie.json"
+            }
         },
         "/register": {
-            "$ref": "./paths/auth/register.json"
+            "post": {
+                "$ref": "./paths/auth/register.json"
+            }
         },
         "/login": {
-            "$ref": "./paths/auth/login.json"
+            "post": {
+                "$ref": "./paths/auth/login.json"
+            }
         },
         "/user": {
-            "$ref": "./paths/auth/user.json"
+            "get": {
+                "$ref": "./paths/auth/user.json"
+            }
         },
         "/users": {
-            "$ref": "./paths/users/index.json"
+            "post": {
+                "$ref": "./paths/users/index.json"
+            }
         },
         "/users/{id}": {
-            "$ref": "./paths/users/show.json"
+            "get": {
+                "$ref": "./paths/users/show.json"
+            },
+            "put": {
+                "$ref": "./paths/users/update.json"
+            }
         }
     }
 }
