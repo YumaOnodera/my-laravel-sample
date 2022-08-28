@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\User\IndexRequest;
+use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
 use App\UseCases\User\IndexAction;
 use App\UseCases\User\ShowAction;
+use App\UseCases\User\UpdateAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -52,7 +54,7 @@ class UserController extends Controller
      * @param ShowAction $action
      * @return UserResource
      */
-    public function show(int $id, ShowAction $action)
+    public function show(int $id, ShowAction $action): UserResource
     {
         return new UserResource($action($id));
     }
@@ -60,13 +62,14 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateRequest $request
+     * @param int $id
+     * @param UpdateAction $action
+     * @return UserResource
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, int $id, UpdateAction $action): UserResource
     {
-        //
+        return new UserResource($action($request, $id));
     }
 
     /**
