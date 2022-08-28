@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\IndexRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
+use App\UseCases\User\DeleteAction;
 use App\UseCases\User\IndexAction;
 use App\UseCases\User\ShowAction;
 use App\UseCases\User\UpdateAction;
@@ -75,11 +76,13 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @param DeleteAction $action
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(int $id, DeleteAction $action): JsonResponse
     {
-        //
+        $action($id);
+        return response()->json(['message' => '処理に成功しました。']);
     }
 }
