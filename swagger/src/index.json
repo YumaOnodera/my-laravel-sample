@@ -48,6 +48,9 @@
             },
             "put": {
                 "$ref": "./paths/users/update.json"
+            },
+            "delete": {
+                "$ref": "./paths/users/delete.json"
             }
         }
     }
