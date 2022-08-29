@@ -4,7 +4,7 @@ namespace App\UseCases\User;
 
 use App\Models\User;
 
-class DeleteAction
+class DestroyAction
 {
     /**
      * @param int $id

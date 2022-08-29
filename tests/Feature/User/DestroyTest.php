@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Throwable;
 
-class DeleteTest extends TestCase
+class DestroyTest extends TestCase
 {
     use RefreshDatabase;
     use WithoutMiddleware;
@@ -30,17 +30,16 @@ class DeleteTest extends TestCase
 
         $response = $this->delete(self::API_URL . '/' . 1);
 
-        $response->assertStatus(200);
+        $afterUpdate = User::withTrashed()->where('id', 1)->first();
 
-        $actualUser = User::withTrashed()->where('id', 1)->first();
+        $response
+            ->assertStatus(200)
+            ->assertExactJson([
+                'message' => '処理に成功しました。'
+            ]);
 
-        // 論理削除されているか確認する
-        $this->assertNotNull($actualUser->deleted_at);
-
-        $actual = $response->decodeResponseJson();
-
-        // レスポンスの値が合っているか確認する
-        $this->assertSame('処理に成功しました。', $actual['message']);
+        // 対象データが論理削除されているか確認する
+        $this->assertNotNull($afterUpdate->deleted_at);
     }
 
     /**
@@ -52,7 +51,7 @@ class DeleteTest extends TestCase
     {
         $response = $this->delete(self::API_URL . '/' . 1);
 
-        $response->assertStatus(404);
+        $response->assertStatus(422);
     }
 
     /**
@@ -60,7 +59,7 @@ class DeleteTest extends TestCase
      *
      * @return void
      */
-    public function test_delete_soft_delete_data()
+    public function test_destroy_soft_delete_data()
     {
         User::factory()->create([
             'deleted_at' => now()
@@ -68,7 +67,12 @@ class DeleteTest extends TestCase
 
         $response = $this->delete(self::API_URL . '/' . 1);
 
-        $response->assertStatus(404);
+        $afterUpdate = User::withTrashed()->where('id', 1)->first();
+
+        $response->assertStatus(422);
+
+        // 対象データが論理削除されたままか確認する
+        $this->assertNotNull($afterUpdate->deleted_at);
     }
 
     public function tearDown(): void

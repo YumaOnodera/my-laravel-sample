@@ -50,7 +50,7 @@
                 "$ref": "./paths/users/update.json"
             },
             "delete": {
-                "$ref": "./paths/users/delete.json"
+                "$ref": "./paths/users/destroy.json"
             }
         }
     }
