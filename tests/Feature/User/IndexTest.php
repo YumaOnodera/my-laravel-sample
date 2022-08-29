@@ -3,6 +3,7 @@
 namespace Tests\Feature\User;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,41 @@ class IndexTest extends TestCase
         $users = User::factory(11)->create([
             'deleted_at' => null,
         ]);
+
+        $total = $users->count();
+        $perPage = config('const.PER_PAGE');
+        $lastPage = ceil($total / $perPage);
+        $expected = $users->chunk($perPage)[0]->values()->toArray();
+
+        $response = $this->post(self::API_URL);
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson([
+                'total' => $total,
+                'per_page' => $perPage,
+                'current_page' => 1,
+                'last_page' => $lastPage,
+                'first_item' => 1,
+                'last_item' => $perPage,
+                'has_more_pages' => true,
+                'data' => $expected
+            ]);
+    }
+
+    /**
+     * 論理削除されたデータが存在する時、レスポンスが想定通りであることを確認する
+     *
+     * @return void
+     */
+    public function test_get_soft_delete_data()
+    {
+        $users = User::factory(11)
+            ->state(new Sequence(
+                ['deleted_at' => null],
+                ['deleted_at' => now()],
+            ))
+            ->create();
 
         $total = $users->count();
         $perPage = config('const.PER_PAGE');
