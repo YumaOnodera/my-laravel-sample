@@ -6,55 +6,45 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\DB;
-use Tests\IndexTestCase;
+use Tests\TestCase;
 
-class IndexTest extends IndexTestCase
+class IndexTest extends TestCase
 {
     use RefreshDatabase;
     use WithoutMiddleware;
 
     private const API_URL = 'api/users';
 
-    public function setUp(): void
+    /**
+     * レスポンスが想定通りであることを確認する
+     *
+     * @return void
+     */
+    public function test_success()
     {
-        parent::setUp();
-
-        $this->users = User::factory(50)->create([
+        $users = User::factory(11)->create([
             'deleted_at' => null,
         ]);
-    }
 
-    /**
-     * レスポンスに必要な要素が含まれていることを確認する
-     *
-     * @return void
-     */
-    public function test_data_structure()
-    {
-        $this->assertDataStructure(
-            self::API_URL,
-            [
-                '*' => [
-                    'id',
-                    'name',
-                    'email',
-                    'email_verified_at',
-                    'created_at',
-                    'updated_at',
-                    'deleted_at',
-                ]
-            ]
-        );
-    }
+        $total = $users->count();
+        $perPage = config('const.PER_PAGE');
+        $lastPage = ceil($total / $perPage);
+        $expected = $users->chunk($perPage)[0]->values()->toArray();
 
-    /**
-     * 最初のページのレスポンスが想定通りであることを確認する
-     *
-     * @return void
-     */
-    public function test_paginate_first_page()
-    {
-        $this->assertPaginateFirstPage(self::API_URL, $this->users);
+        $response = $this->post(self::API_URL);
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson([
+                'total' => $total,
+                'per_page' => $perPage,
+                'current_page' => 1,
+                'last_page' => $lastPage,
+                'first_item' => 1,
+                'last_item' => $perPage,
+                'has_more_pages' => true,
+                'data' => $expected
+            ]);
     }
 
     /**
@@ -64,7 +54,29 @@ class IndexTest extends IndexTestCase
      */
     public function test_paginate_next_page()
     {
-        $this->assertPaginateNextPage(self::API_URL, $this->users);
+        $users = User::factory(21)->create([
+            'deleted_at' => null,
+        ]);
+
+        $total = $users->count();
+        $perPage = config('const.PER_PAGE');
+        $lastPage = ceil($total / $perPage);
+        $expected = $users->chunk($perPage)[1]->values()->toArray();
+
+        $response = $this->post(self::API_URL . '?page=2');
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson([
+                'total' => $total,
+                'per_page' => $perPage,
+                'current_page' => 2,
+                'last_page' => $lastPage,
+                'first_item' => $perPage + 1,
+                'last_item' => $perPage * 2,
+                'has_more_pages' => true,
+                'data' => $expected
+            ]);
     }
 
     /**
@@ -74,7 +86,30 @@ class IndexTest extends IndexTestCase
      */
     public function test_paginate_last_page()
     {
-        $this->assertPaginateLastPage(self::API_URL, $this->users);
+        $users = User::factory(11)->create([
+            'deleted_at' => null,
+        ]);
+
+        $total = $users->count();
+        $perPage = config('const.PER_PAGE');
+        $lastPage = ceil($total / $perPage);
+        $firstItem = $perPage * ($lastPage - 1) + 1;
+        $expected = $users->chunk($perPage)[$lastPage - 1]->values()->toArray();
+
+        $response = $this->post(self::API_URL . '?page=' . $lastPage);
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson([
+                'total' => $total,
+                'per_page' => $perPage,
+                'current_page' => $lastPage,
+                'last_page' => $lastPage,
+                'first_item' => $firstItem,
+                'last_item' => $total,
+                'has_more_pages' => false,
+                'data' => $expected
+            ]);
     }
 
     /**
@@ -84,7 +119,31 @@ class IndexTest extends IndexTestCase
      */
     public function test_paginate_per_page()
     {
-        $this->assertPaginatePerPage(self::API_URL, $this->users);
+        $users = User::factory(16)->create([
+            'deleted_at' => null,
+        ]);
+
+        $total = $users->count();
+        $perPage = 15;
+        $lastPage = ceil($total / $perPage);
+        $expected = $users->chunk($perPage)[0]->values()->toArray();
+
+        $response = $this->post(self::API_URL, [
+            'per_page' => $perPage
+        ]);
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson([
+                'total' => $total,
+                'per_page' => $perPage,
+                'current_page' => 1,
+                'last_page' => $lastPage,
+                'first_item' => 1,
+                'last_item' => $perPage,
+                'has_more_pages' => true,
+                'data' => $expected
+            ]);
     }
 
     public function tearDown(): void
