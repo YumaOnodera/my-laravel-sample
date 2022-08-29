@@ -3,6 +3,7 @@
 namespace Tests\Feature\User;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\DB;
@@ -28,31 +29,21 @@ class UpdateTest extends TestCase
             'deleted_at' => null,
             'name' => '山田一郎'
         ]);
-        $expected->name = 'テスト太郎';
 
-        $response = $this->put(self::API_URL . '/' . 1, [
-            'name' => 'テスト太郎'
-        ]);
+        $request = [
+            'name' => '田中二郎'
+        ];
+        $response = $this->put(self::API_URL . '/' . 1, $request);
 
-        $actual = $response->decodeResponseJson();
+        $expected->name = $request['name'];
+        $afterUpdate = User::where('id', 1)->first();
 
-        $updatedUser = User::where('id', 1)->first();
+        $response
+            ->assertStatus(200)
+            ->assertExactJson($afterUpdate->toArray());
 
-        foreach ($updatedUser->toArray() as $key => $item) {
-            switch ($key) {
-                case 'email_verified_at':
-                case 'created_at':
-                case 'updated_at':
-                case 'deleted_at':
-                    continue 2;
-            }
-
-            // 更新後のレコードの値が合っているか確認する
-            $this->assertSame($expected[$key], $item);
-
-            // レスポンスの値が合っているか確認する
-            $this->assertSame($item, $actual[$key]);
-        }
+        // 対象データが送信した値で更新されていることを確認する
+        $this->assertSameData($expected, $afterUpdate);
     }
 
     /**
@@ -63,7 +54,7 @@ class UpdateTest extends TestCase
     public function test_not_found()
     {
         $response = $this->put(self::API_URL . '/' . 1, [
-            'name' => 'テスト太郎'
+            'name' => '田中二郎'
         ]);
 
         $response->assertStatus(422);
@@ -81,28 +72,36 @@ class UpdateTest extends TestCase
             'name' => '山田一郎'
         ]);
 
-        $expected = User::withTrashed()->where('id', 1)->first();
+        $beforeUpdate = User::withTrashed()->where('id', 1)->first();
 
         $response = $this->put(self::API_URL . '/' . 1, [
-            'name' => 'テスト太郎'
+            'name' => '田中二郎'
         ]);
 
-        $actual = User::withTrashed()->where('id', 1)->first();
-
-        foreach ($actual->toArray() as $key => $actualValue) {
-            switch ($key) {
-                case 'email_verified_at':
-                case 'created_at':
-                case 'updated_at':
-                case 'deleted_at':
-                    continue 2;
-            }
-
-            // 対象データが更新されていないことを確認する
-            $this->assertSame($expected[$key], $actualValue);
-        }
+        $afterUpdate = User::withTrashed()->where('id', 1)->first();
 
         $response->assertStatus(422);
+
+        // 対象データが更新されていないことを確認する
+        $this->assertSameData($beforeUpdate, $afterUpdate);
+    }
+
+    /**
+     * 2つのModelの値が同じ値であることを確認する
+     *
+     * @param Model $expected
+     * @param Model $actual
+     * @return void
+     */
+    public function assertSameData (Model $expected, Model $actual)
+    {
+        $this->assertSame($expected->name, $actual->name);
+        $this->assertSame($expected->email, $actual->email);
+        $this->assertSame((string) $expected->email_verified_at, (string) $actual->email_verified_at);
+        $this->assertSame($expected->password, $actual->password);
+        $this->assertSame($expected->remember_token, $actual->remember_token);
+        $this->assertSame((string) $expected->created_at, (string) $actual->created_at);
+        $this->assertSame((string) $expected->deleted_at, (string) $actual->deleted_at);
     }
 
     public function tearDown(): void
