@@ -6,10 +6,10 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\DB;
-use Tests\ShowTestCase;
+use Tests\TestCase;
 use Throwable;
 
-class ShowTest extends ShowTestCase
+class ShowTest extends TestCase
 {
     use RefreshDatabase;
     use WithoutMiddleware;
@@ -22,13 +22,17 @@ class ShowTest extends ShowTestCase
      * @return void
      * @throws Throwable
      */
-    public function test_request_data()
+    public function test_success()
     {
-        $user = User::factory()->create([
+        $expected = User::factory()->create([
             'deleted_at' => null,
         ]);
 
-        $this->assertRequestData(self::API_URL, $user);
+        $response = $this->get(self::API_URL . '/' . 1);
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson($expected->toArray());
     }
 
     /**
@@ -36,9 +40,11 @@ class ShowTest extends ShowTestCase
      *
      * @return void
      */
-    public function test_request_not_found_data()
+    public function test_not_found()
     {
-        $this->assertRequestNotFoundData(self::API_URL);
+        $response = $this->get(self::API_URL . '/' . 1);
+
+        $response->assertStatus(404);
     }
 
     /**
@@ -46,13 +52,17 @@ class ShowTest extends ShowTestCase
      *
      * @return void
      */
-    public function test_request_soft_delete_data()
+    public function test_get_soft_delete_data()
     {
-        $user = User::factory()->create([
+        $expected = User::factory()->create([
             'deleted_at' => now(),
         ]);
 
-        $this->assertRequestSoftDeleteData(self::API_URL, $user, true);
+        $response = $this->get(self::API_URL . '/' . 1);
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson($expected->toArray());
     }
 
     public function tearDown(): void
