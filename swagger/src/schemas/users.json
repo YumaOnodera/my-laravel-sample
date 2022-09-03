@@ -6,13 +6,25 @@
         "password"
     ],
     "properties": {
+        "id": {
+            "type": "integer"
+        },
         "name": {
             "type": "string"
         },
         "email": {
             "type": "string"
         },
-        "password": {
+        "email_verified_at": {
+            "type": "string"
+        },
+        "created_at": {
+            "type": "string"
+        },
+        "updated_at": {
+            "type": "string"
+        },
+        "deleted_at": {
             "type": "string"
         }
     }

@@ -53,9 +53,14 @@
                 "$ref": "./paths/users/destroy.json"
             }
         },
-        "/users/update-email/{id}": {
+        "/users/update-email": {
             "put": {
                 "$ref": "./paths/users/updateEmail.json"
+            }
+        },
+        "/users/update-password": {
+            "put": {
+                "$ref": "./paths/users/updatePassword.json"
             }
         }
     }

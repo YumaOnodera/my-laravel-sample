@@ -19,13 +19,25 @@
           "password"
         ],
         "properties": {
+          "id": {
+            "type": "integer"
+          },
           "name": {
             "type": "string"
           },
           "email": {
             "type": "string"
           },
-          "password": {
+          "email_verified_at": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "deleted_at": {
             "type": "string"
           }
         }
@@ -496,24 +508,12 @@
         }
       }
     },
-    "/users/update-email/{id}": {
+    "/users/update-email": {
       "put": {
         "tags": [
           "User"
         ],
         "description": "指定したユーザーのメールアドレスを更新する。",
-        "parameters": [
-          {
-            "description": "ユーザーのID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -523,6 +523,39 @@
                   "email": {
                     "type": "string",
                     "example": "test@example.co.jp"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "headers": {},
+            "description": "no content"
+          }
+        }
+      }
+    },
+    "/users/update-password": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "description": "指定したユーザーのパスワードを更新する。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "password_confirmation": {
+                    "type": "string",
+                    "example": "password"
                   }
                 }
               }
