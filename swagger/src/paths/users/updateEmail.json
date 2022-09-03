@@ -1,0 +1,39 @@
+{
+    "tags": [
+        "User"
+    ],
+    "description": "指定したユーザーのメールアドレスを更新する。",
+    "parameters": [
+        {
+            "description": "ユーザーのID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+                "type": "integer",
+                "example": 1
+            }
+        }
+    ],
+    "requestBody": {
+        "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string",
+                            "example": "test@example.co.jp"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "responses": {
+        "204": {
+            "headers": {},
+            "description": "no content"
+        }
+    }
+}

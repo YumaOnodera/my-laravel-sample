@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\DestroyRequest;
 use App\Http\Requests\User\IndexRequest;
+use App\Http\Requests\User\UpdateEmailRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
 use App\UseCases\User\DestroyAction;
 use App\UseCases\User\IndexAction;
 use App\UseCases\User\ShowAction;
 use App\UseCases\User\UpdateAction;
+use App\UseCases\User\UpdateEmailAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -72,6 +75,20 @@ class UserController extends Controller
     public function update(UpdateRequest $request, int $id, UpdateAction $action): UserResource
     {
         return new UserResource($action($request, $id));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param UpdateEmailRequest $request
+     * @param UpdateEmailAction $action
+     * @return Response
+     */
+    public function updateEmail(UpdateEmailRequest $request, UpdateEmailAction $action): Response
+    {
+        $action($request);
+
+        return response()->noContent();
     }
 
     /**

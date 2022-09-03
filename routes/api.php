@@ -21,6 +21,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
     Route::controller(UserController::class)->group(function () {
         Route::post('/users', 'index');
+        Route::put('/users/update-email', 'updateEmail');
         Route::get('/users/{id}', 'show');
         Route::put('/users/{id}', 'update');
         Route::delete('/users/{id}', 'destroy');

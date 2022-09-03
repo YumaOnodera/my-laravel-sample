@@ -52,6 +52,11 @@
             "delete": {
                 "$ref": "./paths/users/destroy.json"
             }
+        },
+        "/users/update-email/{id}": {
+            "put": {
+                "$ref": "./paths/users/updateEmail.json"
+            }
         }
     }
 }
