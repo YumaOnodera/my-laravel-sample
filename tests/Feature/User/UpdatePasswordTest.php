@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\User;
 
+use App\Mail\UpdatePassword;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 use Throwable;
 
@@ -24,6 +26,8 @@ class UpdatePasswordTest extends TestCase
      */
     public function test_success()
     {
+        Mail::fake();
+
         $expected = User::factory()->create();
 
         $request = [
@@ -39,6 +43,10 @@ class UpdatePasswordTest extends TestCase
 
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($expected, $afterUpdate);
+
+        Mail::assertSent(UpdatePassword::class, static function ($mail) use ($expected) {
+            return $mail->hasTo($expected->email);
+        });
     }
 
     /**
