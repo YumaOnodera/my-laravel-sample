@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Lang;
 
 class UpdatePassword extends Mailable
 {
@@ -36,6 +37,7 @@ class UpdatePassword extends Mailable
         return $this->markdown('emails.users.update-password', [
             'user' => $this->user->name,
             'actionUrl' => config('app.frontend_url') . '/forgot-password'
-        ]);
+        ])
+            ->subject(Lang::get('mail.update_password.subject'));
     }
 }

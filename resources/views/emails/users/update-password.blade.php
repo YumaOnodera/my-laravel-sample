@@ -1,19 +1,9 @@
 @component('mail::message')
-# @lang(config('app.name') . "アカウント $user のパスワードが変更されました。")<br>
-お客様がこの変更を行っていない場合、次のリンクからパスワードの再設定を行ってください。
+# {{ __('mail.update_password.message', ['appName' => config('app.name'), 'user' => $user]) }}
 
-@component('mail::button', ['url' => $actionUrl, 'color' => 'primary'])
-パスワードを再設定する
-@endcomponent
+{{ __('mail.update_password.line_01') }}
 
-@if (! empty($salutation))
-{{ $salutation }}
-@else
-{{ config('app.name') }}
-@endif
+{{ __('mail.update_password.line_02', ['actionUrl' => $actionUrl]) }}
 
-@slot('subcopy')
-@lang("\"パスワードを再設定する\" ボタンをクリックできない場合は、次のURLをコピーしてWebブラウザに貼り付けます。: ")
-<span class="break-all">[{{ $actionUrl }}]({{ $actionUrl }})</span>
-@endslot
+{{ __('mail.update_password.salutation', ['appName' => config('app.name')]) }}
 @endcomponent
