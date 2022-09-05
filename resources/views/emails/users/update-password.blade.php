@@ -5,5 +5,5 @@
 
 {{ __('mail.update_password.line_02', ['actionUrl' => $actionUrl]) }}
 
-{{ __('mail.update_password.salutation', ['appName' => config('app.name')]) }}
+{{ __('mail.common.salutation', ['appName' => config('app.name')]) }}
 @endcomponent
