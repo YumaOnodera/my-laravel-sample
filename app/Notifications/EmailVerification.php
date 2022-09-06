@@ -31,6 +31,7 @@ class EmailVerification extends VerifyEmail
                 __('mail.email_verification.line_02')
             ])
             ->action(__('mail.email_verification.action'), $verificationUrl)
+            ->line(__('mail.email_verification.line_03'))
             ->salutation(__('mail.common.salutation', ['appName' => config('app.name')]));
     }
 }
