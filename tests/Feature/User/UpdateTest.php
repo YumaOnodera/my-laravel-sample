@@ -31,7 +31,7 @@ class UpdateTest extends TestCase
         $request = [
             'name' => '田中二郎'
         ];
-        $response = $this->actingAs($expected)->put(self::API_URL . '/' . 1, $request);
+        $response = $this->actingAs($expected)->put(self::API_URL, $request);
 
         $expected->name = $request['name'];
         $afterUpdate = User::where('id', 1)->first();
@@ -42,50 +42,6 @@ class UpdateTest extends TestCase
 
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($expected, $afterUpdate);
-    }
-
-    /**
-     * 存在しないデータを指定した時、レスポンスが想定通りであることを確認する
-     *
-     * @return void
-     */
-    public function test_not_found()
-    {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->put(self::API_URL . '/' . 2, [
-            'name' => '田中二郎'
-        ]);
-
-        $response->assertStatus(422);
-    }
-
-    /**
-     * 論理削除されたデータを指定した時、対象データが更新されず、レスポンスが想定通りであることを確認する
-     *
-     * @return void
-     */
-    public function test_update_soft_delete_data()
-    {
-        $user = User::factory()->create();
-
-        User::factory()->create([
-            'deleted_at' => now(),
-            'name' => '山田一郎'
-        ]);
-
-        $beforeUpdate = User::withTrashed()->where('id', 2)->first();
-
-        $response = $this->actingAs($user)->put(self::API_URL . '/' . 2, [
-            'name' => '田中二郎'
-        ]);
-
-        $afterUpdate = User::withTrashed()->where('id', 2)->first();
-
-        $response->assertStatus(422);
-
-        // 対象データが更新されていないことを確認する
-        $this->assertSameData($beforeUpdate, $afterUpdate);
     }
 
     /**

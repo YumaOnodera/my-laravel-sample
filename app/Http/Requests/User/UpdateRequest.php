@@ -15,23 +15,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => [
-                'required',
-                Rule::exists('users', 'id')->withoutTrashed()
-            ],
             'name' => 'required|string|max:255',
         ];
-    }
-
-    /**
-     * バリデーションのためにデータを準備
-     *
-     * @return void
-     */
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'id' => $this->id,
-        ]);
     }
 }

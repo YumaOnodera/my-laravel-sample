@@ -70,13 +70,12 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateRequest $request
-     * @param int $id
      * @param UpdateAction $action
      * @return UserResource
      */
-    public function update(UpdateRequest $request, int $id, UpdateAction $action): UserResource
+    public function update(UpdateRequest $request, UpdateAction $action): UserResource
     {
-        return new UserResource($action($request, $id));
+        return new UserResource($action($request));
     }
 
     /**

@@ -3,18 +3,6 @@
         "User"
     ],
     "description": "指定したユーザーを更新する。",
-    "parameters": [
-        {
-            "description": "ユーザーのID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-                "type": "integer",
-                "example": 1
-            }
-        }
-    ],
     "requestBody": {
         "content": {
             "application/json": {

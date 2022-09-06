@@ -40,14 +40,14 @@
         "/users": {
             "post": {
                 "$ref": "./paths/users/index.json"
+            },
+            "put": {
+                "$ref": "./paths/users/update.json"
             }
         },
         "/users/{id}": {
             "get": {
                 "$ref": "./paths/users/show.json"
-            },
-            "put": {
-                "$ref": "./paths/users/update.json"
             },
             "delete": {
                 "$ref": "./paths/users/destroy.json"

@@ -333,26 +333,27 @@
             }
           }
         }
-      }
-    },
-    "/users/{id}": {
-      "get": {
+      },
+      "put": {
         "tags": [
           "User"
         ],
-        "description": "指定したユーザーを取得する。",
-        "parameters": [
-          {
-            "description": "ユーザーのID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1
+        "description": "指定したユーザーを更新する。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "山田一郎"
+                  }
+                }
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "成功",
@@ -395,12 +396,14 @@
             }
           }
         }
-      },
-      "put": {
+      }
+    },
+    "/users/{id}": {
+      "get": {
         "tags": [
           "User"
         ],
-        "description": "指定したユーザーを更新する。",
+        "description": "指定したユーザーを取得する。",
         "parameters": [
           {
             "description": "ユーザーのID",
@@ -413,21 +416,6 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "山田一郎"
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "成功",
