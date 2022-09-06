@@ -5,14 +5,12 @@ namespace Tests\Feature\User;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class IndexTest extends TestCase
 {
     use RefreshDatabase;
-    use WithoutMiddleware;
 
     private const API_URL = 'api/users';
 
@@ -32,7 +30,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[0]->values()->toArray();
 
-        $response = $this->post(self::API_URL);
+        $response = $this->actingAs($users->first())->post(self::API_URL);
 
         $response
             ->assertStatus(200)
@@ -67,7 +65,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[0]->values()->toArray();
 
-        $response = $this->post(self::API_URL);
+        $response = $this->actingAs($users->first())->post(self::API_URL);
 
         $response
             ->assertStatus(200)
@@ -99,7 +97,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[1]->values()->toArray();
 
-        $response = $this->post(self::API_URL . '?page=2');
+        $response = $this->actingAs($users->first())->post(self::API_URL . '?page=2');
 
         $response
             ->assertStatus(200)
@@ -132,7 +130,7 @@ class IndexTest extends TestCase
         $firstItem = $perPage * ($lastPage - 1) + 1;
         $expected = $users->chunk($perPage)[$lastPage - 1]->values()->toArray();
 
-        $response = $this->post(self::API_URL . '?page=' . $lastPage);
+        $response = $this->actingAs($users->first())->post(self::API_URL . '?page=' . $lastPage);
 
         $response
             ->assertStatus(200)
@@ -164,7 +162,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[0]->values()->toArray();
 
-        $response = $this->post(self::API_URL, [
+        $response = $this->actingAs($users->first())->post(self::API_URL, [
             'per_page' => $perPage
         ]);
 

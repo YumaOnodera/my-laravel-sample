@@ -4,7 +4,6 @@ namespace Tests\Feature\User;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Throwable;
@@ -12,7 +11,6 @@ use Throwable;
 class DestroyTest extends TestCase
 {
     use RefreshDatabase;
-    use WithoutMiddleware;
 
     private const API_URL = 'api/users';
 
@@ -24,11 +22,11 @@ class DestroyTest extends TestCase
      */
     public function test_success()
     {
-        User::factory()->create([
+        $user = User::factory()->create([
             'deleted_at' => null
         ]);
 
-        $response = $this->delete(self::API_URL . '/' . 1);
+        $response = $this->actingAs($user)->delete(self::API_URL . '/' . 1);
 
         $afterUpdate = User::withTrashed()->where('id', 1)->first();
 
@@ -49,7 +47,9 @@ class DestroyTest extends TestCase
      */
     public function test_not_found()
     {
-        $response = $this->delete(self::API_URL . '/' . 1);
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->delete(self::API_URL . '/' . 2);
 
         $response->assertStatus(422);
     }
@@ -61,13 +61,15 @@ class DestroyTest extends TestCase
      */
     public function test_destroy_soft_delete_data()
     {
+        $user = User::factory()->create();
+
         User::factory()->create([
             'deleted_at' => now()
         ]);
 
-        $response = $this->delete(self::API_URL . '/' . 1);
+        $response = $this->actingAs($user)->delete(self::API_URL . '/' . 2);
 
-        $afterUpdate = User::withTrashed()->where('id', 1)->first();
+        $afterUpdate = User::withTrashed()->where('id', 2)->first();
 
         $response->assertStatus(422);
 

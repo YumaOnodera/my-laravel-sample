@@ -5,7 +5,6 @@ namespace Tests\Feature\User;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Throwable;
@@ -13,7 +12,6 @@ use Throwable;
 class UpdateTest extends TestCase
 {
     use RefreshDatabase;
-    use WithoutMiddleware;
 
     private const API_URL = 'api/users';
 
@@ -33,7 +31,7 @@ class UpdateTest extends TestCase
         $request = [
             'name' => '田中二郎'
         ];
-        $response = $this->put(self::API_URL . '/' . 1, $request);
+        $response = $this->actingAs($expected)->put(self::API_URL . '/' . 1, $request);
 
         $expected->name = $request['name'];
         $afterUpdate = User::where('id', 1)->first();
@@ -53,7 +51,9 @@ class UpdateTest extends TestCase
      */
     public function test_not_found()
     {
-        $response = $this->put(self::API_URL . '/' . 1, [
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->put(self::API_URL . '/' . 2, [
             'name' => '田中二郎'
         ]);
 
@@ -67,18 +67,20 @@ class UpdateTest extends TestCase
      */
     public function test_update_soft_delete_data()
     {
+        $user = User::factory()->create();
+
         User::factory()->create([
             'deleted_at' => now(),
             'name' => '山田一郎'
         ]);
 
-        $beforeUpdate = User::withTrashed()->where('id', 1)->first();
+        $beforeUpdate = User::withTrashed()->where('id', 2)->first();
 
-        $response = $this->put(self::API_URL . '/' . 1, [
+        $response = $this->actingAs($user)->put(self::API_URL . '/' . 2, [
             'name' => '田中二郎'
         ]);
 
-        $afterUpdate = User::withTrashed()->where('id', 1)->first();
+        $afterUpdate = User::withTrashed()->where('id', 2)->first();
 
         $response->assertStatus(422);
 
