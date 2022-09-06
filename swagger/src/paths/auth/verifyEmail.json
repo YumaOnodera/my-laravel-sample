@@ -1,0 +1,33 @@
+{
+    "tags": [
+        "Auth"
+    ],
+    "description": "メールアドレスを検証済みとする。",
+    "parameters": [
+        {
+            "description": "ユーザーのID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+                "type": "integer",
+                "example": 1
+            }
+        },
+        {
+            "description": "メールアドレス認証トークン",
+            "in": "path",
+            "name": "hash",
+            "required": true,
+            "schema": {
+                "type": "string",
+                "example": "567159d622ffbb50b11b0efd307be358624a26ee"
+            }
+        }
+    ],
+    "responses": {
+        "302": {
+            "description": "redirect to home"
+        }
+    }
+}

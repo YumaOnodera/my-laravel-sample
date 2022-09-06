@@ -20,7 +20,6 @@
     },
     "responses": {
         "204": {
-            "headers": {},
             "description": "no content"
         }
     }

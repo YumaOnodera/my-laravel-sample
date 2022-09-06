@@ -24,15 +24,12 @@
     },
     "responses": {
         "204": {
-            "headers": {},
             "description": "no content"
         },
         "419": {
-            "headers": {},
             "description": "CORS not allowed"
         },
         "422": {
-            "headers": {},
             "description": "authentication failed"
         }
     }

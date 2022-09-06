@@ -102,15 +102,12 @@
         },
         "responses": {
           "204": {
-            "headers": {},
             "description": "no content"
           },
           "419": {
-            "headers": {},
             "description": "CORS not allowed"
           },
           "422": {
-            "headers": {},
             "description": "validation error"
           }
         }
@@ -143,16 +140,193 @@
         },
         "responses": {
           "204": {
-            "headers": {},
             "description": "no content"
           },
           "419": {
-            "headers": {},
             "description": "CORS not allowed"
           },
           "422": {
-            "headers": {},
             "description": "authentication failed"
+          }
+        }
+      }
+    },
+    "/forgot-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "指定されたメールアドレスに対して、パスワードリセットメールを送信する。",
+        "requestBody": {
+          "content": {
+            "application/json:": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "test@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "パスワードリセットメールを送信しました。"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "419": {
+            "description": "CORS not allowed"
+          },
+          "422": {
+            "description": "validation error"
+          }
+        }
+      }
+    },
+    "/reset-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "パスワードをリセットする。",
+        "requestBody": {
+          "content": {
+            "application/json:": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "test@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "password_confirmation": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "token": {
+                    "type": "string",
+                    "example": "781f2cbe7c692028c0d49c4ef208387362a984442263a91850f8a0e55c6e2d47"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "パスワードをリセットしました。"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "419": {
+            "description": "CORS not allowed"
+          },
+          "422": {
+            "description": "validation error"
+          }
+        }
+      }
+    },
+    "/verify-email/{id}/{hash}": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "メールアドレスを検証済みとする。",
+        "parameters": [
+          {
+            "description": "ユーザーのID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "description": "メールアドレス認証トークン",
+            "in": "path",
+            "name": "hash",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "567159d622ffbb50b11b0efd307be358624a26ee"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "redirect to home"
+          }
+        }
+      }
+    },
+    "/email/verification-notification": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "メールアドレス確認通知を送信する。",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "verification-link-sent"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "ログアウトを行う。",
+        "responses": {
+          "204": {
+            "description": "no content"
           }
         }
       }
@@ -519,7 +693,6 @@
         },
         "responses": {
           "204": {
-            "headers": {},
             "description": "no content"
           }
         }
@@ -552,7 +725,6 @@
         },
         "responses": {
           "204": {
-            "headers": {},
             "description": "no content"
           }
         }

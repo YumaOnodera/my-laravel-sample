@@ -1,0 +1,11 @@
+{
+    "tags": [
+        "Auth"
+    ],
+    "description": "ログアウトを行う。",
+    "responses": {
+        "204": {
+            "description": "no content"
+        }
+    }
+}

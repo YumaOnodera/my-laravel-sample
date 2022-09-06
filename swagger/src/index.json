@@ -19,7 +19,7 @@
     "paths": {
         "/sanctum/csrf-cookie": {
             "get": {
-                "$ref": "./paths/auth/csrf-cookie.json"
+                "$ref": "./paths/auth/csrfCookie.json"
             }
         },
         "/register": {
@@ -30,6 +30,31 @@
         "/login": {
             "post": {
                 "$ref": "./paths/auth/login.json"
+            }
+        },
+        "/forgot-password": {
+            "post": {
+                "$ref": "./paths/auth/forgotPassword.json"
+            }
+        },
+        "/reset-password": {
+            "post": {
+                "$ref": "./paths/auth/resetPassword.json"
+            }
+        },
+        "/verify-email/{id}/{hash}": {
+            "get": {
+                "$ref": "./paths/auth/verifyEmail.json"
+            }
+        },
+        "/email/verification-notification": {
+            "post": {
+                "$ref": "./paths/auth/verificationNotification.json"
+            }
+        },
+        "/logout": {
+            "post": {
+                "$ref": "./paths/auth/logout.json"
             }
         },
         "/user": {
