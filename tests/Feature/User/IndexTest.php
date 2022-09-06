@@ -21,9 +21,7 @@ class IndexTest extends TestCase
      */
     public function test_success()
     {
-        $users = User::factory(11)->create([
-            'deleted_at' => null,
-        ]);
+        $users = User::factory(11)->create();
 
         $total = $users->count();
         $perPage = config('const.PER_PAGE');
@@ -88,9 +86,7 @@ class IndexTest extends TestCase
      */
     public function test_paginate_next_page()
     {
-        $users = User::factory(21)->create([
-            'deleted_at' => null,
-        ]);
+        $users = User::factory(21)->create();
 
         $total = $users->count();
         $perPage = config('const.PER_PAGE');
@@ -120,9 +116,7 @@ class IndexTest extends TestCase
      */
     public function test_paginate_last_page()
     {
-        $users = User::factory(11)->create([
-            'deleted_at' => null,
-        ]);
+        $users = User::factory(11)->create();
 
         $total = $users->count();
         $perPage = config('const.PER_PAGE');
@@ -153,9 +147,7 @@ class IndexTest extends TestCase
      */
     public function test_paginate_per_page()
     {
-        $users = User::factory(16)->create([
-            'deleted_at' => null,
-        ]);
+        $users = User::factory(16)->create();
 
         $total = $users->count();
         $perPage = 15;

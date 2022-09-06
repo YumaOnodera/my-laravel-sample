@@ -22,9 +22,7 @@ class ShowTest extends TestCase
      */
     public function test_success()
     {
-        $expected = User::factory()->create([
-            'deleted_at' => null,
-        ]);
+        $expected = User::factory()->create();
 
         $response = $this->actingAs($expected)->get(self::API_URL . '/' . 1);
 

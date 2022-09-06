@@ -22,9 +22,7 @@ class DestroyTest extends TestCase
      */
     public function test_success()
     {
-        $user = User::factory()->create([
-            'deleted_at' => null
-        ]);
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->delete(self::API_URL . '/' . 1);
 

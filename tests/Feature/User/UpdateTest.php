@@ -24,7 +24,6 @@ class UpdateTest extends TestCase
     public function test_success()
     {
         $expected = User::factory()->create([
-            'deleted_at' => null,
             'name' => '山田一郎'
         ]);
 
