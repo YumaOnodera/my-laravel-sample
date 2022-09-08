@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\User;
 
+use App\Mail\User\Destroy;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 use Throwable;
 
@@ -22,11 +24,14 @@ class DestroyTest extends TestCase
      */
     public function test_success()
     {
-        $user = User::factory()->create();
+        Mail::fake();
 
-        $response = $this->actingAs($user)->delete(self::API_URL . '/' . 1);
+        $users = User::factory(2)->create();
+        $requestUser = $users->first();
 
-        $afterUpdate = User::withTrashed()->where('id', 1)->first();
+        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . 2);
+
+        $afterUpdate = User::withTrashed()->where('id', 2)->first();
 
         $response
             ->assertStatus(200)
@@ -36,6 +41,10 @@ class DestroyTest extends TestCase
 
         // 対象データが論理削除されているか確認する
         $this->assertNotNull($afterUpdate->deleted_at);
+
+        Mail::assertSent(Destroy::class, static function ($mail) use ($requestUser, $afterUpdate) {
+            return $mail->hasTo($requestUser->email) && $mail->hasCc($afterUpdate->email);
+        });
     }
 
     /**
