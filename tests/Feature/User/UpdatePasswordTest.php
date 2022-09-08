@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\User;
 
-use App\Mail\UpdatePassword;
+use App\Mail\User\UpdatePassword;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;

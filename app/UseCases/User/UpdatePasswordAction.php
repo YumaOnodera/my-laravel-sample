@@ -3,7 +3,7 @@
 namespace App\UseCases\User;
 
 use App\Http\Requests\User\UpdatePasswordRequest;
-use App\Mail\UpdatePassword;
+use App\Mail\User\UpdatePassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
