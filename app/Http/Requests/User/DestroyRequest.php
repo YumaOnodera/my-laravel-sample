@@ -8,6 +8,18 @@ use Illuminate\Validation\Rule;
 class DestroyRequest extends FormRequest
 {
     /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        $user = $this->user();
+
+        return $user->is_admin || $user->id === (int) $this->id;
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, mixed>

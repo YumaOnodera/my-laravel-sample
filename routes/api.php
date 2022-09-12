@@ -20,11 +20,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return $request->user();
     });
     Route::controller(UserController::class)->group(function () {
-        Route::post('/users', 'index');
-        Route::get('/users/{id}', 'show');
         Route::put('/users', 'update');
         Route::put('/users/update-email', 'updateEmail');
         Route::put('/users/update-password', 'updatePassword');
         Route::delete('/users/{id}', 'destroy');
+    });
+});
+
+Route::middleware(['auth:sanctum', 'verified', 'can:admin'])->group(function () {
+    Route::controller(UserController::class)->group(function () {
+        Route::post('/users', 'index');
+        Route::get('/users/{id}', 'show');
     });
 });

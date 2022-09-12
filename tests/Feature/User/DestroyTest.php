@@ -8,7 +8,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
-use Throwable;
 
 class DestroyTest extends TestCase
 {
@@ -20,18 +19,16 @@ class DestroyTest extends TestCase
      * 対象データが論理削除され、レスポンスが想定通りであることを確認する
      *
      * @return void
-     * @throws Throwable
      */
     public function test_success()
     {
         Mail::fake();
 
-        $users = User::factory(2)->create();
-        $requestUser = $users->first();
+        $user = User::factory()->create();
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . 2);
+        $response = $this->actingAs($user)->delete(self::API_URL . '/' . 1);
 
-        $afterUpdate = User::withTrashed()->where('id', 2)->first();
+        $afterUpdate = User::withTrashed()->where('id', 1)->first();
 
         $response
             ->assertStatus(200)
@@ -42,9 +39,45 @@ class DestroyTest extends TestCase
         // 対象データが論理削除されているか確認する
         $this->assertNotNull($afterUpdate->deleted_at);
 
-        Mail::assertSent(Destroy::class, static function ($mail) use ($requestUser, $afterUpdate) {
-            return $mail->hasTo($requestUser->email) && $mail->hasCc($afterUpdate->email);
+        Mail::assertSent(Destroy::class, static function ($mail) use ($user, $afterUpdate) {
+            return $mail->hasTo($user->email) && $mail->hasCc($afterUpdate->email);
         });
+    }
+
+    /**
+     * 管理者ユーザーが他のユーザーを対象にできることを確認
+     *
+     * @return void
+     */
+    public function test_authorization_success_admin_user()
+    {
+        $users = User::factory(2)
+            ->sequence(fn ($sequence) => [
+                'is_admin' => $sequence->index === 0 ? 1 : 0
+            ])
+            ->create();
+
+        $requestUser = $users->first();
+
+        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . 2);
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * 一般ユーザーが他のユーザーを対象にできないことを確認
+     *
+     * @return void
+     */
+    public function test_authorization_error_general_user()
+    {
+        $users = User::factory(2)->create();
+
+        $requestUser = $users->first();
+
+        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . 2);
+
+        $response->assertStatus(403);
     }
 
     /**
@@ -54,7 +87,9 @@ class DestroyTest extends TestCase
      */
     public function test_not_found()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'is_admin' => 1
+        ]);
 
         $response = $this->actingAs($user)->delete(self::API_URL . '/' . 2);
 
@@ -68,7 +103,9 @@ class DestroyTest extends TestCase
      */
     public function test_destroy_soft_delete_data()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'is_admin' => 1
+        ]);
 
         User::factory()->create([
             'deleted_at' => now()

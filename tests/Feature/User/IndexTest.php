@@ -21,7 +21,11 @@ class IndexTest extends TestCase
      */
     public function test_success()
     {
-        $users = User::factory(11)->create();
+        $users = User::factory(11)
+            ->sequence(fn ($sequence) => [
+                'is_admin' => $sequence->index === 0 ? 1 : 0
+            ])
+            ->create();
 
         $total = $users->count();
         $perPage = config('const.PER_PAGE');
@@ -52,6 +56,9 @@ class IndexTest extends TestCase
     public function test_get_soft_delete_data()
     {
         $users = User::factory(11)
+            ->sequence(fn ($sequence) => [
+                'is_admin' => $sequence->index === 0 ? 1 : 0
+            ])
             ->state(new Sequence(
                 ['deleted_at' => null],
                 ['deleted_at' => now()],
@@ -86,7 +93,11 @@ class IndexTest extends TestCase
      */
     public function test_paginate_next_page()
     {
-        $users = User::factory(21)->create();
+        $users = User::factory(21)
+            ->sequence(fn ($sequence) => [
+                'is_admin' => $sequence->index === 0 ? 1 : 0
+            ])
+            ->create();
 
         $total = $users->count();
         $perPage = config('const.PER_PAGE');
@@ -116,7 +127,11 @@ class IndexTest extends TestCase
      */
     public function test_paginate_last_page()
     {
-        $users = User::factory(11)->create();
+        $users = User::factory(11)
+            ->sequence(fn ($sequence) => [
+                'is_admin' => $sequence->index === 0 ? 1 : 0
+            ])
+            ->create();
 
         $total = $users->count();
         $perPage = config('const.PER_PAGE');
@@ -147,7 +162,11 @@ class IndexTest extends TestCase
      */
     public function test_paginate_per_page()
     {
-        $users = User::factory(16)->create();
+        $users = User::factory(16)
+            ->sequence(fn ($sequence) => [
+                'is_admin' => $sequence->index === 0 ? 1 : 0
+            ])
+            ->create();
 
         $total = $users->count();
         $perPage = 15;
@@ -170,6 +189,20 @@ class IndexTest extends TestCase
                 'has_more_pages' => true,
                 'data' => $expected
             ]);
+    }
+
+    /**
+     * 一般ユーザーが実行できないことを確認
+     *
+     * @return void
+     */
+    public function test_authorization_error_general_user()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post(self::API_URL);
+
+        $response->assertStatus(403);
     }
 
     public function tearDown(): void

@@ -505,6 +505,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "権限エラー",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "許可されていない操作です。"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -630,6 +646,22 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "権限エラー",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "許可されていない操作です。"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -661,6 +693,22 @@
                     "message": {
                       "type": "string",
                       "example": "処理に成功しました。"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "権限エラー",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "許可されていない操作です。"
                     }
                   }
                 }

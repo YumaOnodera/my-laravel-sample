@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
-use Throwable;
 
 class UpdatePasswordTest extends TestCase
 {
@@ -22,7 +21,6 @@ class UpdatePasswordTest extends TestCase
      * 対象データが送信した値で更新され、レスポンスが想定通りであることを確認する
      *
      * @return void
-     * @throws Throwable
      */
     public function test_success()
     {

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
-use Throwable;
 
 class UpdateTest extends TestCase
 {
@@ -19,7 +18,6 @@ class UpdateTest extends TestCase
      * 対象データが送信した値で更新され、レスポンスが想定通りであることを確認する
      *
      * @return void
-     * @throws Throwable
      */
     public function test_success()
     {

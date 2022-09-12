@@ -121,6 +121,22 @@
                     }
                 }
             }
+        },
+        "403": {
+            "description": "権限エラー",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "type": "string",
+                                "example": "許可されていない操作です。"
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
