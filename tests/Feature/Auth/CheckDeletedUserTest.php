@@ -25,7 +25,8 @@ class CheckDeletedUserTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertExactJson([
-                'isDeleted' => true
+                'id' => 1,
+                'is_deleted' => true
             ]);
     }
 
@@ -41,7 +42,8 @@ class CheckDeletedUserTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertExactJson([
-                'isDeleted' => false
+                'id' => null,
+                'is_deleted' => false
             ]);
     }
 
@@ -57,7 +59,8 @@ class CheckDeletedUserTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertExactJson([
-                'isDeleted' => false
+                'id' => null,
+                'is_deleted' => false
             ]);
     }
 

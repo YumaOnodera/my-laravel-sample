@@ -10,12 +10,25 @@ class CheckDeletedUserAction
 {
     /**
      * @param LoginRequest $request
-     * @return bool
+     * @return array
      */
-    public function __invoke(LoginRequest $request): bool
+    public function __invoke(LoginRequest $request): array
     {
-        $user = User::withTrashed()->where('email', $request->email)->first();
+        $result = [
+            'id' => null,
+            'is_deleted' => false
+        ];
 
-        return $user && Hash::check($request->password, $user->password) && $user->deleted_at !== null;
+        $user = User::withTrashed()
+            ->where('email', $request->email)
+            ->whereNotNull('deleted_at')
+            ->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            $result['id'] = $user->id;
+            $result['is_deleted'] = true;
+        }
+
+        return $result;
     }
 }

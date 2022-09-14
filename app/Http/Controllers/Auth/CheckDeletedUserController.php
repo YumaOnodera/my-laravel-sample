@@ -18,6 +18,11 @@ class CheckDeletedUserController extends Controller
      */
     public function isDeleted(LoginRequest $request, CheckDeletedUserAction $action): JsonResponse
     {
-        return response()->json(['isDeleted' => $action($request)]);
+        $result = $action($request);
+
+        return response()->json([
+            'id' => $result['id'],
+            'is_deleted' => $result['is_deleted']
+        ]);
     }
 }
