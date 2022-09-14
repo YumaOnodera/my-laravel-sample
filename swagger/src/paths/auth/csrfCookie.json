@@ -5,7 +5,7 @@
     "description": "CSRFトークンを生成する。",
     "responses": {
         "204": {
-            "description": "No Content",
+            "description": "成功",
             "headers": {
                 "XSRF-TOKEN": {
                     "schema": {

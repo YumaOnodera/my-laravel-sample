@@ -53,7 +53,7 @@
         "description": "CSRFトークンを生成する。",
         "responses": {
           "204": {
-            "description": "No Content",
+            "description": "成功",
             "headers": {
               "XSRF-TOKEN": {
                 "schema": {
@@ -102,7 +102,7 @@
         },
         "responses": {
           "204": {
-            "description": "no content"
+            "description": "成功"
           },
           "419": {
             "description": "CORS not allowed"
@@ -188,7 +188,7 @@
         },
         "responses": {
           "204": {
-            "description": "no content"
+            "description": "成功"
           },
           "419": {
             "description": "CORS not allowed"
@@ -223,7 +223,7 @@
         },
         "responses": {
           "204": {
-            "description": "no content"
+            "description": "成功"
           },
           "419": {
             "description": "CORS not allowed"
@@ -370,7 +370,7 @@
         ],
         "responses": {
           "302": {
-            "description": "redirect to home"
+            "description": "redirect to HOME"
           }
         }
       }
@@ -409,7 +409,7 @@
         "description": "ログアウトを行う。",
         "responses": {
           "204": {
-            "description": "no content"
+            "description": "成功"
           }
         }
       }
@@ -824,7 +824,7 @@
         },
         "responses": {
           "204": {
-            "description": "no content"
+            "description": "成功"
           }
         }
       }
@@ -856,7 +856,7 @@
         },
         "responses": {
           "204": {
-            "description": "no content"
+            "description": "成功"
           }
         }
       }
@@ -880,21 +880,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "処理に成功しました。"
-                    }
-                  }
-                }
-              }
-            }
+          "204": {
+            "description": "成功"
           },
           "403": {
             "description": "権限エラー",

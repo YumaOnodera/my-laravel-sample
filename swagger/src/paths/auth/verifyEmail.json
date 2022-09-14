@@ -27,7 +27,7 @@
     ],
     "responses": {
         "302": {
-            "description": "redirect to home"
+            "description": "redirect to HOME"
         }
     }
 }

@@ -32,7 +32,7 @@
     },
     "responses": {
         "204": {
-            "description": "no content"
+            "description": "成功"
         },
         "419": {
             "description": "CORS not allowed"
