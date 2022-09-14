@@ -124,7 +124,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Restore the specified resource from storage.
      *
      * @param RestoreRequest $request
      * @param int $id

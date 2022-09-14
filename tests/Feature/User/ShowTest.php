@@ -67,7 +67,6 @@ class ShowTest extends TestCase
         $response->assertStatus(403);
     }
 
-
     /**
      * 存在しないデータを指定した時、レスポンスが想定通りであることを確認する
      *
