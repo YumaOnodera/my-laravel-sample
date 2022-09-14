@@ -39,7 +39,7 @@ class RestoreTest extends TestCase
         // 対象データが復活しているか確認する
         $this->assertNull($afterUpdate->deleted_at);
 
-        $response->assertNoContent();
+        $response->assertStatus(204);
 
         Mail::assertSent(Restore::class, static function ($mail) use ($user) {
             return $mail->hasTo($user->email);

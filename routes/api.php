@@ -31,6 +31,6 @@ Route::middleware(['auth:sanctum', 'verified', 'can:admin'])->group(function () 
     Route::controller(UserController::class)->group(function () {
         Route::post('/users', 'index');
         Route::get('/users/{id}', 'show');
-        Route::put('/users/{id}/restore', 'restore');
+        Route::post('/users/{id}/restore', 'restore');
     });
 });

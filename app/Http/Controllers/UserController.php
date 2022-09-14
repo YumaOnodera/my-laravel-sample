@@ -129,12 +129,12 @@ class UserController extends Controller
      * @param RestoreRequest $request
      * @param int $id
      * @param RestoreAction $action
-     * @return JsonResponse
+     * @return Response
      */
-    public function restore(RestoreRequest $request, int $id, RestoreAction $action): JsonResponse
+    public function restore(RestoreRequest $request, int $id, RestoreAction $action)
     {
         $action($request, $id);
 
-        return response()->json(['message' => '処理に成功しました。']);
+        return response()->noContent();
     }
 }

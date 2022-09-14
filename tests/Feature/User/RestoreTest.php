@@ -16,11 +16,11 @@ class RestoreTest extends TestCase
     private const API_URL = 'api/users';
 
     /**
-     * 対象データが復活し、レスポンスが想定通りであることを確認する
+     * 管理者ユーザーが実行した時、対象データが復活することを確認する
      *
      * @return void
      */
-    public function test_success()
+    public function test_admin_user_can_restore_other_user()
     {
         Mail::fake();
 
@@ -32,15 +32,11 @@ class RestoreTest extends TestCase
         ]);
 
         $uri = sprintf('%s/%s/%s', self::API_URL, $user->id, 'restore');
-        $response = $this->actingAs($requestUser)->put($uri);
+        $response = $this->actingAs($requestUser)->post($uri);
 
         $afterUpdate = User::where('id', $user->id)->first();
 
-        $response
-            ->assertStatus(200)
-            ->assertExactJson([
-                'message' => '処理に成功しました。'
-            ]);
+        $response->assertStatus(204);
 
         // 対象データが復活しているか確認する
         $this->assertNull($afterUpdate->deleted_at);
@@ -51,7 +47,7 @@ class RestoreTest extends TestCase
     }
 
     /**
-     * 一般ユーザーが実行できないことを確認
+     * 一般ユーザーが実行できないことを確認する
      *
      * @return void
      */
@@ -63,13 +59,13 @@ class RestoreTest extends TestCase
         ]);
 
         $uri = sprintf('%s/%s/%s', self::API_URL, $user->id, 'restore');
-        $response = $this->actingAs($requestUser)->put($uri);
+        $response = $this->actingAs($requestUser)->post($uri);
 
         $response->assertStatus(403);
     }
 
     /**
-     * 存在しないデータを指定した時、レスポンスが想定通りであることを確認する
+     * 存在しないデータを指定した時、実行できないことを確認する
      *
      * @return void
      */
@@ -80,17 +76,17 @@ class RestoreTest extends TestCase
         ]);
 
         $uri = sprintf('%s/%s/%s', self::API_URL, 2, 'restore');
-        $response = $this->actingAs($requestUser)->put($uri);
+        $response = $this->actingAs($requestUser)->post($uri);
 
         $response->assertStatus(422);
     }
 
     /**
-     * 論理削除されていないデータを指定した時、対象データが更新されず、レスポンスが想定通りであることを確認する
+     * 論理削除されていないデータを指定した時、実行できないことを確認する
      *
      * @return void
      */
-    public function test_destroy_soft_delete_data()
+    public function test_can_not_restore_not_soft_delete_data()
     {
         $requestUser = User::factory()->create([
             'is_admin' => 1
@@ -98,14 +94,9 @@ class RestoreTest extends TestCase
         $user = User::factory()->create();
 
         $uri = sprintf('%s/%s/%s', self::API_URL, $user->id, 'restore');
-        $response = $this->actingAs($requestUser)->put($uri);
-
-        $afterUpdate = User::withTrashed()->where('id', $user->id)->first();
+        $response = $this->actingAs($requestUser)->post($uri);
 
         $response->assertStatus(422);
-
-        // 対象データが論理削除されていないままか確認する
-        $this->assertNull($afterUpdate->deleted_at);
     }
 
     public function tearDown(): void
