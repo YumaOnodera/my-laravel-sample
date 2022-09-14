@@ -30,10 +30,6 @@
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "id": {
-                                "type": "integer",
-                                "example": 1
-                            },
                             "is_deleted": {
                                 "type": "boolean",
                                 "example": true
@@ -42,6 +38,9 @@
                     }
                 }
             }
+        },
+        "419": {
+            "description": "CORS not allowed"
         }
     }
 }
