@@ -32,6 +32,11 @@
                 "$ref": "./paths/auth/checkDeletedUser.json"
             }
         },
+        "/restore": {
+            "post": {
+                "$ref": "./paths/auth/restore.json"
+            }
+        },
         "/login": {
             "post": {
                 "$ref": "./paths/auth/login.json"

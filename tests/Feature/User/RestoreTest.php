@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\User;
 
-use App\Mail\User\Restore;
+use App\Mail\Auth\Restore;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;

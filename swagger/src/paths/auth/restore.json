@@ -1,0 +1,33 @@
+{
+    "tags": [
+        "Auth"
+    ],
+    "description": "メールアドレスとパスワードをもとに、指定したユーザーを復活させる。",
+    "requestBody": {
+        "content": {
+            "application/json:": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string",
+                            "example": "test@example.com"
+                        },
+                        "password": {
+                            "type": "string",
+                            "example": "password"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "responses": {
+        "204": {
+            "description": "no content"
+        },
+        "419": {
+            "description": "CORS not allowed"
+        }
+    }
+}

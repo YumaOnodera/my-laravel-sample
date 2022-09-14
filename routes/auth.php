@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\RestoreUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,10 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
 Route::post('/deleted-user/check', [CheckDeletedUserController::class, 'isDeleted'])
                 ->middleware('guest')
                 ->name('check_deleted_user');
+
+Route::post('/restore', [RestoreUserController::class, 'restore'])
+                ->middleware('guest')
+                ->name('restore');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
                 ->middleware('guest')

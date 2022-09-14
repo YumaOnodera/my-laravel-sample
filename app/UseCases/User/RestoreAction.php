@@ -3,7 +3,7 @@
 namespace App\UseCases\User;
 
 use App\Http\Requests\User\RestoreRequest;
-use App\Mail\User\Restore;
+use App\Mail\Auth\Restore;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
