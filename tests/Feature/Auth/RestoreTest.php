@@ -21,7 +21,7 @@ class RestoreTest extends TestCase
      *
      * @return void
      */
-    public function test_success()
+    public function test_can_restore()
     {
         Mail::fake();
 
