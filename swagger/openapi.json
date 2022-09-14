@@ -146,7 +146,11 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "isDeleted": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "is_deleted": {
                       "type": "boolean",
                       "example": true
                     }
@@ -819,6 +823,60 @@
         "responses": {
           "204": {
             "description": "no content"
+          }
+        }
+      }
+    },
+    "/users/{id}/restore": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "description": "指定したユーザーを復活させる。",
+        "parameters": [
+          {
+            "description": "ユーザーのID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "処理に成功しました。"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "権限エラー",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "許可されていない操作です。"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

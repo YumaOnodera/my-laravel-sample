@@ -92,6 +92,11 @@
             "put": {
                 "$ref": "./paths/users/updatePassword.json"
             }
+        },
+        "/users/{id}/restore": {
+            "put": {
+                "$ref": "./paths/users/restore.json"
+            }
         }
     }
 }

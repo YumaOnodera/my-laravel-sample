@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\DestroyRequest;
 use App\Http\Requests\User\IndexRequest;
+use App\Http\Requests\User\RestoreRequest;
 use App\Http\Requests\User\UpdateEmailRequest;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
 use App\UseCases\User\DestroyAction;
 use App\UseCases\User\IndexAction;
+use App\UseCases\User\RestoreAction;
 use App\UseCases\User\ShowAction;
 use App\UseCases\User\UpdateAction;
 use App\UseCases\User\UpdateEmailAction;
@@ -115,6 +117,21 @@ class UserController extends Controller
      * @return JsonResponse
      */
     public function destroy(DestroyRequest $request, int $id, DestroyAction $action): JsonResponse
+    {
+        $action($request, $id);
+
+        return response()->json(['message' => '処理に成功しました。']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param RestoreRequest $request
+     * @param int $id
+     * @param RestoreAction $action
+     * @return JsonResponse
+     */
+    public function restore(RestoreRequest $request, int $id, RestoreAction $action): JsonResponse
     {
         $action($request, $id);
 
