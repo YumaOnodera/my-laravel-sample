@@ -46,6 +46,11 @@ class RestoreTest extends TestCase
         });
     }
 
+    /**
+     * パスワードが異なる時、実行できないことを確認する
+     *
+     * @return void
+     */
     public function test_can_not_restore_with_invalid_password()
     {
         $user = User::factory()->create([
