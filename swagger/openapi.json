@@ -444,6 +444,10 @@
                       "type": "string",
                       "example": "2022-01-02 00:00:00"
                     },
+                    "is_admin": {
+                      "type": "boolean",
+                      "example": true
+                    },
                     "created_at": {
                       "type": "string",
                       "example": "2022-01-01 00:00:00"
@@ -542,6 +546,7 @@
                           "name": "山田一郎",
                           "email": "test@example.co.jp",
                           "email_verified_at": "2022-01-02 00:00:00",
+                          "is_admin": true,
                           "created_at": "2022-01-01 00:00:00",
                           "updated_at": "2022-01-02 00:00:00",
                           "deleted_at": null
@@ -551,6 +556,7 @@
                           "name": "田中二郎",
                           "email": "test2@example.co.jp",
                           "email_verified_at": "2022-01-02 00:00:00",
+                          "is_admin": false,
                           "created_at": "2022-01-01 00:00:00",
                           "updated_at": "2022-01-02 00:00:00",
                           "deleted_at": null
@@ -560,6 +566,7 @@
                           "name": "中田三郎",
                           "email": "test3@example.co.jp",
                           "email_verified_at": "2022-01-02 00:00:00",
+                          "is_admin": false,
                           "created_at": "2022-01-01 00:00:00",
                           "updated_at": "2022-01-02 00:00:00",
                           "deleted_at": null
@@ -569,6 +576,7 @@
                           "name": "田山四郎",
                           "email": "test4@example.co.jp",
                           "email_verified_at": "2022-01-02 00:00:00",
+                          "is_admin": false,
                           "created_at": "2022-01-01 00:00:00",
                           "updated_at": "2022-01-02 00:00:00",
                           "deleted_at": null
@@ -578,6 +586,7 @@
                           "name": "中村五郎",
                           "email": "test5@example.co.jp",
                           "email_verified_at": "2022-01-02 00:00:00",
+                          "is_admin": false,
                           "created_at": "2022-01-01 00:00:00",
                           "updated_at": "2022-01-02 00:00:00",
                           "deleted_at": null
@@ -651,6 +660,10 @@
                       "type": "string",
                       "example": "2022-01-02 00:00:00"
                     },
+                    "is_admin": {
+                      "type": "boolean",
+                      "example": true
+                    },
                     "created_at": {
                       "type": "string",
                       "example": "2022-01-01 00:00:00"
@@ -713,6 +726,10 @@
                       "type": "string",
                       "example": "2022-01-02 00:00:00"
                     },
+                    "is_admin": {
+                      "type": "boolean",
+                      "example": true
+                    },
                     "created_at": {
                       "type": "string",
                       "example": "2022-01-01 00:00:00"
@@ -766,21 +783,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "処理に成功しました。"
-                    }
-                  }
-                }
-              }
-            }
+          "204": {
+            "description": "成功"
           },
           "403": {
             "description": "権限エラー",
