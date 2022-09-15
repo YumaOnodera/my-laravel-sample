@@ -17,7 +17,6 @@ use App\UseCases\User\UpdateAction;
 use App\UseCases\User\UpdateEmailAction;
 use App\UseCases\User\UpdatePasswordAction;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
@@ -43,17 +42,6 @@ class UserController extends Controller
             'has_more_pages' => $users['has_more_pages'],
             'data' => UserResource::collection($users['items']),
         ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
