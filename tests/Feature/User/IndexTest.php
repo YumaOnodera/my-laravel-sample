@@ -15,11 +15,11 @@ class IndexTest extends TestCase
     private const API_URL = 'api/users';
 
     /**
-     * レスポンスが想定通りであることを確認する
+     * 管理者ユーザーが実行した時、レスポンスが想定通りであることを確認する
      *
      * @return void
      */
-    public function test_success()
+    public function test_admin_user_can_view_data()
     {
         $users = User::factory(11)
             ->sequence(fn ($sequence) => [
@@ -53,7 +53,7 @@ class IndexTest extends TestCase
      *
      * @return void
      */
-    public function test_get_soft_delete_data()
+    public function test_can_view_soft_delete_data()
     {
         $users = User::factory(11)
             ->sequence(fn ($sequence) => [
@@ -192,11 +192,11 @@ class IndexTest extends TestCase
     }
 
     /**
-     * 一般ユーザーが実行できないことを確認
+     * 一般ユーザーが実行できないことを確認する
      *
      * @return void
      */
-    public function test_authorization_error_general_user()
+    public function test_general_user_can_not_view_data()
     {
         $user = User::factory()->create();
 

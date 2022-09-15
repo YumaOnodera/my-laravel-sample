@@ -14,21 +14,21 @@ class ShowTest extends TestCase
     private const API_URL = 'api/users';
 
     /**
-     * 存在するデータを指定した時、レスポンスが想定通りであることを確認する
+     * 管理者ユーザーが実行した時、レスポンスが想定通りであることを確認する
      *
      * @return void
      */
-    public function test_success()
+    public function test_admin_user_can_view_data()
     {
-        $expected = User::factory()->create([
+        $user = User::factory()->create([
             'is_admin' => 1
         ]);
 
-        $response = $this->actingAs($expected)->get(self::API_URL . '/' . 1);
+        $response = $this->actingAs($user)->get(self::API_URL . '/' . $user->id);
 
         $response
             ->assertStatus(200)
-            ->assertExactJson($expected->toArray());
+            ->assertExactJson($user->toArray());
     }
 
     /**
@@ -36,39 +36,39 @@ class ShowTest extends TestCase
      *
      * @return void
      */
-    public function test_get_soft_delete_data()
+    public function test_can_view_soft_delete_data()
     {
-        $user = User::factory()->create([
+        $requestUser = User::factory()->create([
             'is_admin' => 1
         ]);
 
-        $expected = User::factory()->create([
+        $otherUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
 
-        $response = $this->actingAs($user)->get(self::API_URL . '/' . 2);
+        $response = $this->actingAs($requestUser)->get(self::API_URL . '/' . $otherUser->id);
 
         $response
             ->assertStatus(200)
-            ->assertExactJson($expected->toArray());
+            ->assertExactJson($otherUser->toArray());
     }
 
     /**
-     * 一般ユーザーが実行できないことを確認
+     * 一般ユーザーが実行できないことを確認する
      *
      * @return void
      */
-    public function test_authorization_error_general_user()
+    public function test_general_user_can_not_view_data()
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->get(self::API_URL . '/' . 1);
+        $response = $this->actingAs($user)->get(self::API_URL . '/' . $user->id);
 
         $response->assertStatus(403);
     }
 
     /**
-     * 存在しないデータを指定した時、レスポンスが想定通りであることを確認する
+     * 存在しないデータを指定した時、実行できないことを確認する
      *
      * @return void
      */

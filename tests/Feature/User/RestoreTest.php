@@ -20,29 +20,29 @@ class RestoreTest extends TestCase
      *
      * @return void
      */
-    public function test_admin_user_can_restore_other_user()
+    public function test_admin_user_can_restore_other_data()
     {
         Mail::fake();
 
         $requestUser = User::factory()->create([
             'is_admin' => 1
         ]);
-        $user = User::factory()->create([
+        $otherUser = User::factory()->create([
             'deleted_at' => now()
         ]);
 
-        $uri = sprintf('%s/%s/%s', self::API_URL, $user->id, 'restore');
+        $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'restore');
         $response = $this->actingAs($requestUser)->post($uri);
 
-        $afterUpdate = User::where('id', $user->id)->first();
+        $afterUpdate = User::where('id', $otherUser->id)->first();
 
         $response->assertStatus(204);
 
         // 対象データが復活しているか確認する
         $this->assertNull($afterUpdate->deleted_at);
 
-        Mail::assertSent(Restore::class, static function ($mail) use ($requestUser, $user) {
-            return $mail->hasTo($requestUser->email) && $mail->hasCc($user->email);
+        Mail::assertSent(Restore::class, static function ($mail) use ($requestUser, $otherUser) {
+            return $mail->hasTo($requestUser->email) && $mail->hasCc($otherUser->email);
         });
     }
 
@@ -51,14 +51,14 @@ class RestoreTest extends TestCase
      *
      * @return void
      */
-    public function test_general_user_can_not_restore_other_user()
+    public function test_general_user_can_not_restore_data()
     {
         $requestUser = User::factory()->create();
-        $user = User::factory()->create([
+        $otherUser = User::factory()->create([
             'deleted_at' => now()
         ]);
 
-        $uri = sprintf('%s/%s/%s', self::API_URL, $user->id, 'restore');
+        $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'restore');
         $response = $this->actingAs($requestUser)->post($uri);
 
         $response->assertStatus(403);
@@ -91,9 +91,9 @@ class RestoreTest extends TestCase
         $requestUser = User::factory()->create([
             'is_admin' => 1
         ]);
-        $user = User::factory()->create();
+        $otherUser = User::factory()->create();
 
-        $uri = sprintf('%s/%s/%s', self::API_URL, $user->id, 'restore');
+        $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'restore');
         $response = $this->actingAs($requestUser)->post($uri);
 
         $response->assertStatus(422);

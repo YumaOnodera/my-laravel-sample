@@ -16,25 +16,21 @@ class DestroyTest extends TestCase
     private const API_URL = 'api/users';
 
     /**
-     * 対象データが論理削除され、レスポンスが想定通りであることを確認する
+     * 対象データが論理削除されることを確認する
      *
      * @return void
      */
-    public function test_success()
+    public function test_can_delete_data()
     {
         Mail::fake();
 
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->delete(self::API_URL . '/' . 1);
+        $response = $this->actingAs($user)->delete(self::API_URL . '/' . $user->id);
 
-        $afterUpdate = User::withTrashed()->where('id', 1)->first();
+        $afterUpdate = User::withTrashed()->where('id', $user->id)->first();
 
-        $response
-            ->assertStatus(200)
-            ->assertExactJson([
-                'message' => '処理に成功しました。'
-            ]);
+        $response->assertStatus(204);
 
         // 対象データが論理削除されているか確認する
         $this->assertNotNull($afterUpdate->deleted_at);
@@ -45,43 +41,52 @@ class DestroyTest extends TestCase
     }
 
     /**
-     * 管理者ユーザーが他のユーザーを対象にできることを確認
+     * 管理者ユーザーが他のユーザーを対象にできることを確認する
      *
      * @return void
      */
-    public function test_authorization_success_admin_user()
+    public function test_admin_user_can_delete_other_data()
     {
-        $users = User::factory(2)
-            ->sequence(fn ($sequence) => [
-                'is_admin' => $sequence->index === 0 ? 1 : 0
-            ])
-            ->create();
+        Mail::fake();
 
-        $requestUser = $users->first();
+        $requestUser = User::factory()->create([
+            'is_admin' => 1
+        ]);
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . 2);
+        $otherUser = User::factory()->create();
 
-        $response->assertStatus(200);
+        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $otherUser->id);
+
+        $afterUpdate = User::withTrashed()->where('id', $otherUser->id)->first();
+
+        $response->assertStatus(204);
+
+        // 対象データが論理削除されているか確認する
+        $this->assertNotNull($afterUpdate->deleted_at);
+
+        Mail::assertSent(Destroy::class, static function ($mail) use ($requestUser, $afterUpdate) {
+            return $mail->hasTo($requestUser->email) && $mail->hasCc($afterUpdate->email);
+        });
     }
 
     /**
-     * 一般ユーザーが他のユーザーを対象にできないことを確認
+     * 一般ユーザーが他のユーザーを対象にできないことを確認する
      *
      * @return void
      */
-    public function test_authorization_error_general_user()
+    public function test_general_user_can_not_delete_other_data()
     {
-        $users = User::factory(2)->create();
+        $requestUser = User::factory()->create();
 
-        $requestUser = $users->first();
+        $otherUser = User::factory()->create();
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . 2);
+        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $otherUser->id);
 
         $response->assertStatus(403);
     }
 
     /**
-     * 存在しないデータを指定した時、レスポンスが想定通りであることを確認する
+     * 存在しないデータを指定した時、実行できないことを確認する
      *
      * @return void
      */
@@ -97,28 +102,23 @@ class DestroyTest extends TestCase
     }
 
     /**
-     * 論理削除されたデータを指定した時、対象データが更新されず、レスポンスが想定通りであることを確認する
+     * 論理削除されたデータを指定した時、実行できないことを確認する
      *
      * @return void
      */
-    public function test_destroy_soft_delete_data()
+    public function test_can_not_delete_soft_delete_data()
     {
-        $user = User::factory()->create([
+        $requestUser = User::factory()->create([
             'is_admin' => 1
         ]);
 
-        User::factory()->create([
+        $otherUser = User::factory()->create([
             'deleted_at' => now()
         ]);
 
-        $response = $this->actingAs($user)->delete(self::API_URL . '/' . 2);
-
-        $afterUpdate = User::withTrashed()->where('id', 2)->first();
+        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $otherUser->id);
 
         $response->assertStatus(422);
-
-        // 対象データが論理削除されたままか確認する
-        $this->assertNotNull($afterUpdate->deleted_at);
     }
 
     public function tearDown(): void

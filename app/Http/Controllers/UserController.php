@@ -114,13 +114,13 @@ class UserController extends Controller
      * @param DestroyRequest $request
      * @param int $id
      * @param DestroyAction $action
-     * @return JsonResponse
+     * @return Response
      */
-    public function destroy(DestroyRequest $request, int $id, DestroyAction $action): JsonResponse
+    public function destroy(DestroyRequest $request, int $id, DestroyAction $action)
     {
         $action($request, $id);
 
-        return response()->json(['message' => '処理に成功しました。']);
+        return response()->noContent();
     }
 
     /**

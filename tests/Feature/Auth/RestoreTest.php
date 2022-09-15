@@ -21,7 +21,7 @@ class RestoreTest extends TestCase
      *
      * @return void
      */
-    public function test_can_restore()
+    public function test_can_restore_data()
     {
         Mail::fake();
 
@@ -51,7 +51,7 @@ class RestoreTest extends TestCase
      *
      * @return void
      */
-    public function test_can_not_restore_with_invalid_password()
+    public function test_can_not_restore_data_with_invalid_password()
     {
         $user = User::factory()->create([
             'deleted_at' => now()
