@@ -38,6 +38,10 @@
                             "created_at": {
                                 "type": "string",
                                 "example": "2022-01-01 00:00:00"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "example": "2022-01-02 00:00:00"
                             }
                         }
                     }
