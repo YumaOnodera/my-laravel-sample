@@ -31,6 +31,9 @@
           "email_verified_at": {
             "type": "string"
           },
+          "is_admin": {
+            "type": "boolean"
+          },
           "created_at": {
             "type": "string"
           },
@@ -38,6 +41,26 @@
             "type": "string"
           },
           "deleted_at": {
+            "type": "string"
+          }
+        }
+      },
+      "Post": {
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          },
+          "created_at": {
             "type": "string"
           }
         }
@@ -897,6 +920,318 @@
                     "message": {
                       "type": "string",
                       "example": "許可されていない操作です。"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "description": "指定した件数ごとに投稿を取得する。",
+        "parameters": [
+          {
+            "description": "ページの指定",
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "per_page: 1ページに表示する件数",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "per_page": {
+                    "type": "integer",
+                    "example": 5
+                  },
+                  "user_ids": {
+                    "type": "array",
+                    "example": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "example": 50
+                    },
+                    "per_page": {
+                      "type": "integer",
+                      "example": 5
+                    },
+                    "current_page": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "last_page": {
+                      "type": "integer",
+                      "example": 10
+                    },
+                    "first_item": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "last_item": {
+                      "type": "integer",
+                      "example": 5
+                    },
+                    "has_more_pages": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "example": [
+                        {
+                          "id": 1,
+                          "user_id": 1,
+                          "text": "テスト",
+                          "created_at": "2022-01-01 00:00:00"
+                        },
+                        {
+                          "id": 2,
+                          "user_id": 2,
+                          "text": "テスト",
+                          "created_at": "2022-01-01 00:00:00"
+                        },
+                        {
+                          "id": 3,
+                          "user_id": 3,
+                          "text": "テスト",
+                          "created_at": "2022-01-01 00:00:00"
+                        },
+                        {
+                          "id": 4,
+                          "user_id": 3,
+                          "text": "テスト",
+                          "created_at": "2022-01-02 00:00:00"
+                        },
+                        {
+                          "id": 5,
+                          "user_id": 3,
+                          "text": "テスト",
+                          "created_at": "2022-01-03 00:00:00"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Post"
+        ],
+        "description": "指定した投稿を更新する。",
+        "parameters": [
+          {
+            "description": "投稿のID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "example": "テスト"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "user_id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "text": {
+                      "type": "string",
+                      "example": "テスト"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "example": "2022-01-01 00:00:00"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "description": "指定した投稿を取得する。",
+        "parameters": [
+          {
+            "description": "投稿のID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "user_id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "text": {
+                      "type": "string",
+                      "example": "テスト"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "example": "2022-01-01 00:00:00"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Post"
+        ],
+        "description": "指定した投稿を削除する。",
+        "parameters": [
+          {
+            "description": "投稿のID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "成功"
+          }
+        }
+      }
+    },
+    "/posts/store": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "description": "投稿を作成する。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "example": "テスト"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "user_id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "text": {
+                      "type": "string",
+                      "example": "テスト"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "example": "2022-01-01 00:00:00"
                     }
                   }
                 }

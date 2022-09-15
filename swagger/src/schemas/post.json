@@ -1,0 +1,20 @@
+{
+    "type": "object",
+    "required": [
+        "text"
+    ],
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": "integer"
+        },
+        "text": {
+            "type": "string"
+        },
+        "created_at": {
+            "type": "string"
+        }
+    }
+}

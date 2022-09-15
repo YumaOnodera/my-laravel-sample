@@ -1,0 +1,63 @@
+{
+    "tags": [
+        "Post"
+    ],
+    "description": "指定した投稿を更新する。",
+    "parameters": [
+        {
+            "description": "投稿のID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+                "type": "integer",
+                "example": 1
+            }
+        }
+    ],
+    "requestBody": {
+        "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "example": "テスト"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "responses": {
+        "200": {
+            "description": "成功",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "user_id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "text": {
+                                "type": "string",
+                                "example": "テスト"
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "example": "2022-01-01 00:00:00"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

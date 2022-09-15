@@ -18,6 +18,9 @@
         "email_verified_at": {
             "type": "string"
         },
+        "is_admin": {
+            "type": "boolean"
+        },
         "created_at": {
             "type": "string"
         },

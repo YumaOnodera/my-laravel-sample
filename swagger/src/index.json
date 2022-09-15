@@ -12,7 +12,10 @@
     "components": {
         "schemas": {
             "User": {
-                "$ref": "./schemas/users.json"
+                "$ref": "./schemas/user.json"
+            },
+            "Post": {
+                "$ref": "./schemas/post.json"
             }
         }
     },
@@ -101,6 +104,27 @@
         "/users/{id}/restore": {
             "put": {
                 "$ref": "./paths/users/restore.json"
+            }
+        },
+        "/posts": {
+            "post": {
+                "$ref": "./paths/posts/index.json"
+            },
+            "put": {
+                "$ref": "./paths/posts/update.json"
+            }
+        },
+        "/posts/{id}": {
+            "get": {
+                "$ref": "./paths/posts/show.json"
+            },
+            "delete": {
+                "$ref": "./paths/posts/destroy.json"
+            }
+        },
+        "/posts/store": {
+            "post": {
+                "$ref": "./paths/posts/store.json"
             }
         }
     }
