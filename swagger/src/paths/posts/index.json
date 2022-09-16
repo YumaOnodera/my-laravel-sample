@@ -2,7 +2,7 @@
     "tags": [
         "Post"
     ],
-    "description": "指定した件数ごとに投稿を取得する。",
+    "description": "作成日、IDの降順で指定した件数ごとに投稿を取得する。",
     "parameters": [
         {
             "description": "ページの指定",
@@ -16,7 +16,7 @@
         }
     ],
     "requestBody": {
-        "description": "per_page: 1ページに表示する件数",
+        "description": "per_page: 1ページに表示する件数<br>user_ids: 投稿者による絞り込み",
         "content": {
             "application/json": {
                 "schema": {
@@ -75,8 +75,22 @@
                                 "type": "array",
                                 "example": [
                                     {
-                                        "id": 1,
-                                        "user_id": 1,
+                                        "id": 5,
+                                        "user_id": 3,
+                                        "text": "テスト",
+                                        "created_at": "2022-01-03 00:00:00",
+                                        "updated_at": "2022-01-04 00:00:00"
+                                    },
+                                    {
+                                        "id": 4,
+                                        "user_id": 3,
+                                        "text": "テスト",
+                                        "created_at": "2022-01-02 00:00:00",
+                                        "updated_at": "2022-01-02 00:00:00"
+                                    },
+                                    {
+                                        "id": 3,
+                                        "user_id": 3,
                                         "text": "テスト",
                                         "created_at": "2022-01-01 00:00:00",
                                         "updated_at": "2022-01-02 00:00:00"
@@ -89,25 +103,11 @@
                                         "updated_at": "2022-01-02 00:00:00"
                                     },
                                     {
-                                        "id": 3,
-                                        "user_id": 3,
+                                        "id": 1,
+                                        "user_id": 1,
                                         "text": "テスト",
                                         "created_at": "2022-01-01 00:00:00",
                                         "updated_at": "2022-01-02 00:00:00"
-                                    },
-                                    {
-                                        "id": 4,
-                                        "user_id": 3,
-                                        "text": "テスト",
-                                        "created_at": "2022-01-02 00:00:00",
-                                        "updated_at": "2022-01-02 00:00:00"
-                                    },
-                                    {
-                                        "id": 5,
-                                        "user_id": 3,
-                                        "text": "テスト",
-                                        "created_at": "2022-01-03 00:00:00",
-                                        "updated_at": "2022-01-04 00:00:00"
                                     }
                                 ]
                             }
