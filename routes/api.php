@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/users/update-email', 'updateEmail');
         Route::put('/users/update-password', 'updatePassword');
         Route::delete('/users/{id}', 'destroy');
+    });
+    Route::controller(PostController::class)->group(function () {
+        Route::post('/posts', 'index');
+        Route::get('/posts/{id}', 'show');
+        Route::post('/posts/store', 'create');
+        Route::put('/posts/{id}', 'update');
+        Route::delete('/posts/{id}', 'destroy');
     });
 });
 
