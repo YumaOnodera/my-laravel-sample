@@ -3,17 +3,25 @@
         "User"
     ],
     "description": "指定した件数ごとにユーザーを取得する。",
+    "parameters": [
+        {
+            "description": "ページの指定",
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "schema": {
+                "type": "integer",
+                "example": 1
+            }
+        }
+    ],
     "requestBody": {
-        "description": "page: ページの指定<br>per_page: 1ページに表示する件数",
+        "description": "per_page: 1ページに表示する件数",
         "content": {
             "application/json": {
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "page": {
-                            "type": "integer",
-                            "example": 1
-                        },
                         "per_page": {
                             "type": "integer",
                             "example": 5
