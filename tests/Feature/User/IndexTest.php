@@ -5,7 +5,6 @@ namespace Tests\Feature\User;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class IndexTest extends TestCase
@@ -203,10 +202,5 @@ class IndexTest extends TestCase
         $response = $this->actingAs($user)->post(self::API_URL);
 
         $response->assertStatus(403);
-    }
-
-    public function tearDown(): void
-    {
-        DB::table('users')->truncate();
     }
 }

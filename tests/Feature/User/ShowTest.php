@@ -4,7 +4,6 @@ namespace Tests\Feature\User;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class ShowTest extends TestCase
@@ -81,10 +80,5 @@ class ShowTest extends TestCase
         $response = $this->actingAs($user)->get(self::API_URL . '/' . 2);
 
         $response->assertStatus(404);
-    }
-
-    public function tearDown(): void
-    {
-        DB::table('users')->truncate();
     }
 }

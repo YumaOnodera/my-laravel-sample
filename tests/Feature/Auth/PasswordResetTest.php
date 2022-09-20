@@ -5,7 +5,6 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use App\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
@@ -44,10 +43,5 @@ class PasswordResetTest extends TestCase
 
             return true;
         });
-    }
-
-    public function tearDown(): void
-    {
-        DB::table('users')->truncate();
     }
 }

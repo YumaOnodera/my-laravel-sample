@@ -4,7 +4,6 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -34,10 +33,5 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertGuest();
-    }
-
-    public function tearDown(): void
-    {
-        DB::table('users')->truncate();
     }
 }

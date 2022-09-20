@@ -5,7 +5,6 @@ namespace Tests\Feature\User;
 use App\Mail\User\Destroy;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
@@ -119,10 +118,5 @@ class DestroyTest extends TestCase
         $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $otherUser->id);
 
         $response->assertStatus(422);
-    }
-
-    public function tearDown(): void
-    {
-        DB::table('users')->truncate();
     }
 }

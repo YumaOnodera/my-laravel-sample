@@ -5,7 +5,6 @@ namespace Tests\Feature\Auth;
 use App\Mail\Auth\Restore;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use RuntimeException;
 use Tests\TestCase;
@@ -66,10 +65,5 @@ class RestoreTest extends TestCase
         ]);
 
         $response->assertStatus(500);
-    }
-
-    public function tearDown(): void
-    {
-        DB::table('users')->truncate();
     }
 }

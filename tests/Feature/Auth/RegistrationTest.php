@@ -3,7 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -21,10 +20,5 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertNoContent();
-    }
-
-    public function tearDown(): void
-    {
-        DB::table('users')->truncate();
     }
 }

@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Notifications\EmailVerification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
@@ -62,10 +61,5 @@ class UpdateEmailTest extends TestCase
         $this->assertSame($expected->is_admin, $actual->is_admin);
         $this->assertSame((string) $expected->created_at, (string) $actual->created_at);
         $this->assertSame((string) $expected->deleted_at, (string) $actual->deleted_at);
-    }
-
-    public function tearDown(): void
-    {
-        DB::table('users')->truncate();
     }
 }
