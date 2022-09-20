@@ -11,10 +11,17 @@ class PaginateService
      *
      * @param Builder $builder
      * @param int $perPage
+     * @param string|null $order_by
+     * @param string|null $order
      * @return array
      */
-    public function paginate(Builder $builder, int $perPage): array
+    public function paginate(Builder $builder, int $perPage, string $order_by = null, string $order = null): array
     {
+        if ($order_by && $order) {
+            $builder->orderBy($order_by, $order)
+                ->orderBy('id', $order);
+        }
+
         $data = $builder->paginate($perPage);
 
         return [

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Post\IndexRequest;
 use App\Http\Resources\PostResource;
+use App\UseCases\Post\IndexAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
@@ -13,9 +15,20 @@ class PostController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function index(IndexRequest $request, IndexAction $action)
     {
-        return response()->json();
+        $posts = $action($request);
+
+        return response()->json([
+            'total' => $posts['total'],
+            'per_page' => $posts['per_page'],
+            'current_page' => $posts['current_page'],
+            'last_page' => $posts['last_page'],
+            'first_item' => $posts['first_item'],
+            'last_item' => $posts['last_item'],
+            'has_more_pages' => $posts['has_more_pages'],
+            'data' => PostResource::collection($posts['items']),
+        ]);
     }
 
     /**
