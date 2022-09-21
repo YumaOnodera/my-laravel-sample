@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Post\IndexRequest;
 use App\Http\Requests\Post\StoreRequest;
+use App\Http\Requests\Post\UpdateRequest;
 use App\Http\Resources\PostResource;
 use App\UseCases\Post\IndexAction;
 use App\UseCases\Post\ShowAction;
 use App\UseCases\Post\StoreAction;
+use App\UseCases\Post\UpdateAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
@@ -59,9 +61,9 @@ class PostController extends Controller
      *
      * @return PostResource
      */
-    public function update()
+    public function update(UpdateRequest $request, int $id, UpdateAction $action)
     {
-        return new PostResource([]);
+        return new PostResource($action($request, $id));
     }
 
     /**
