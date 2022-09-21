@@ -59,11 +59,25 @@ class UpdateTest extends TestCase
         ]);
         $text = Factory::create('ja_JP')->realText();
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $post->id, [
+        $response = $this->actingAs($requestUser)->put(self::API_URL . '/' . $post->id, [
             'text' => $text
         ]);
 
         $response->assertStatus(403);
+    }
+
+    /**
+     * 存在しないデータを指定した時、実行できないことを確認する
+     *
+     * @return void
+     */
+    public function test_not_found()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->put(self::API_URL . '/' . 1);
+
+        $response->assertStatus(422);
     }
 
     /**
