@@ -28,8 +28,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
     Route::controller(PostController::class)->group(function () {
         Route::post('/posts', 'index');
+        Route::post('/posts/store', 'store');
         Route::get('/posts/{id}', 'show');
-        Route::post('/posts/store', 'create');
         Route::put('/posts/{id}', 'update');
         Route::delete('/posts/{id}', 'destroy');
     });
