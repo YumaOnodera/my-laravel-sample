@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Post\DestroyRequest;
 use App\Http\Requests\Post\IndexRequest;
 use App\Http\Requests\Post\StoreRequest;
 use App\Http\Requests\Post\UpdateRequest;
 use App\Http\Resources\PostResource;
+use App\UseCases\Post\DestroyAction;
 use App\UseCases\Post\IndexAction;
 use App\UseCases\Post\ShowAction;
 use App\UseCases\Post\StoreAction;
@@ -71,8 +73,10 @@ class PostController extends Controller
      *
      * @return Response
      */
-    public function destroy()
+    public function destroy(DestroyRequest $request, int $id, DestroyAction $action)
     {
+        $action($request, $id);
+
         return response()->noContent();
     }
 }
