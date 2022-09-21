@@ -1,8 +1,8 @@
 <?php
 
-namespace App\UseCases\User;
+namespace App\UseCases\Post;
 
-use App\Models\User;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Model;
 
 class ShowAction
@@ -13,6 +13,6 @@ class ShowAction
      */
     public function __invoke(int $id): Model
     {
-        return User::withTrashed()->findOrFail($id);
+        return Post::findOrFail($id);
     }
 }

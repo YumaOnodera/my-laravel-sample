@@ -6,6 +6,7 @@ use App\Http\Requests\Post\IndexRequest;
 use App\Http\Requests\Post\StoreRequest;
 use App\Http\Resources\PostResource;
 use App\UseCases\Post\IndexAction;
+use App\UseCases\Post\ShowAction;
 use App\UseCases\Post\StoreAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -48,9 +49,9 @@ class PostController extends Controller
      *
      * @return PostResource
      */
-    public function show()
+    public function show(int $id, ShowAction $action)
     {
-        return new PostResource([]);
+        return new PostResource($action($id));
     }
 
     /**
