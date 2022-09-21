@@ -51,7 +51,6 @@ class DestroyTest extends TestCase
         $requestUser = User::factory()->create([
             'is_admin' => 1
         ]);
-
         $otherUser = User::factory()->create();
 
         $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $otherUser->id);
@@ -76,7 +75,6 @@ class DestroyTest extends TestCase
     public function test_general_user_can_not_delete_other_data()
     {
         $requestUser = User::factory()->create();
-
         $otherUser = User::factory()->create();
 
         $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $otherUser->id);
@@ -110,7 +108,6 @@ class DestroyTest extends TestCase
         $requestUser = User::factory()->create([
             'is_admin' => 1
         ]);
-
         $otherUser = User::factory()->create([
             'deleted_at' => now()
         ]);

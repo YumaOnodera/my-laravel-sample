@@ -40,7 +40,6 @@ class ShowTest extends TestCase
         $requestUser = User::factory()->create([
             'is_admin' => 1
         ]);
-
         $otherUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
