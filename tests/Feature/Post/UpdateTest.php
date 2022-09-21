@@ -46,6 +46,27 @@ class UpdateTest extends TestCase
     }
 
     /**
+     * 他のユーザーの投稿を対象にできないことを確認する
+     *
+     * @return void
+     */
+    public function test_can_not_update_other_users_data()
+    {
+        $requestUser = User::factory()->create();
+        $otherUser = User::factory()->create();
+        $post = Post::factory()->create([
+            'user_id' => $otherUser->id
+        ]);
+        $text = Factory::create('ja_JP')->realText();
+
+        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $post->id, [
+            'text' => $text
+        ]);
+
+        $response->assertStatus(403);
+    }
+
+    /**
      * 2つのModelの値が同じ値であることを確認する
      *
      * @param Model $expected
