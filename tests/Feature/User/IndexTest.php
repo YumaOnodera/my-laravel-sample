@@ -90,7 +90,7 @@ class IndexTest extends TestCase
      *
      * @return void
      */
-    public function test_paginate_next_page()
+    public function test_can_view_data_next_page()
     {
         $users = User::factory(21)
             ->sequence(fn ($sequence) => [
@@ -124,7 +124,7 @@ class IndexTest extends TestCase
      *
      * @return void
      */
-    public function test_paginate_last_page()
+    public function test_can_view_data_last_page()
     {
         $users = User::factory(11)
             ->sequence(fn ($sequence) => [
@@ -159,7 +159,7 @@ class IndexTest extends TestCase
      *
      * @return void
      */
-    public function test_paginate_per_page()
+    public function test_can_view_data_per_page()
     {
         $users = User::factory(16)
             ->sequence(fn ($sequence) => [
