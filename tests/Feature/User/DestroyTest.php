@@ -44,7 +44,7 @@ class DestroyTest extends TestCase
      *
      * @return void
      */
-    public function test_admin_user_can_delete_other_data()
+    public function test_admin_user_can_delete_other_users()
     {
         Mail::fake();
 
@@ -72,7 +72,7 @@ class DestroyTest extends TestCase
      *
      * @return void
      */
-    public function test_general_user_can_not_delete_other_data()
+    public function test_general_user_can_not_delete_other_users()
     {
         $requestUser = User::factory()->create();
         $otherUser = User::factory()->create();

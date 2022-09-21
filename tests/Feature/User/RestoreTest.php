@@ -19,7 +19,7 @@ class RestoreTest extends TestCase
      *
      * @return void
      */
-    public function test_admin_user_can_restore_other_data()
+    public function test_admin_user_can_restore_other_users()
     {
         Mail::fake();
 
