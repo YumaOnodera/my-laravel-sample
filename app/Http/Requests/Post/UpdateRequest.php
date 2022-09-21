@@ -4,6 +4,7 @@ namespace App\Http\Requests\Post;
 
 use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -31,7 +32,23 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'text' => 'required|string|max:20000',
+            'id' => [
+                'required',
+                Rule::exists('posts', 'id')
+            ],
+            'text' => 'required|string|max:20000'
         ];
+    }
+
+    /**
+     * バリデーションのためにデータを準備
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'id' => $this->id,
+        ]);
     }
 }
