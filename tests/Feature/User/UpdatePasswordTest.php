@@ -26,21 +26,21 @@ class UpdatePasswordTest extends TestCase
         Mail::fake();
 
         $user = User::factory()->create();
+        $password = 'password';
 
-        $request = [
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ];
-        $response = $this->actingAs($user)->put(self::API_URL, $request);
+        $response = $this->actingAs($user)->put(self::API_URL, [
+            'password' => $password,
+            'password_confirmation' => $password,
+        ]);
 
-        $user->password = $request['password'];
+        $user->password = $password;
 
         $afterUpdate = User::where('id', $user->id)->first();
 
-        $response->assertStatus(204);
-
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($user, $afterUpdate);
+
+        $response->assertStatus(204);
 
         Mail::assertSent(UpdatePassword::class, static function ($mail) use ($user) {
             return $mail->hasTo($user->email);

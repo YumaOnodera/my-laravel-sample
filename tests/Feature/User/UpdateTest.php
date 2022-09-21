@@ -3,6 +3,7 @@
 namespace Tests\Feature\User;
 
 use App\Models\User;
+use Faker\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -20,25 +21,23 @@ class UpdateTest extends TestCase
      */
     public function test_can_update_data()
     {
-        $user = User::factory()->create([
-            'name' => '山田一郎'
+        $user = User::factory()->create();
+        $name = Factory::create('ja_JP')->name();;
+
+        $response = $this->actingAs($user)->put(self::API_URL, [
+            'name' => $name
         ]);
 
-        $request = [
-            'name' => '田中二郎'
-        ];
-        $response = $this->actingAs($user)->put(self::API_URL, $request);
-
-        $user->name = $request['name'];
+        $user->name = $name;
 
         $afterUpdate = User::where('id', $user->id)->first();
+
+        // 対象データが送信した値で更新されていることを確認する
+        $this->assertSameData($user, $afterUpdate);
 
         $response
             ->assertStatus(200)
             ->assertExactJson($afterUpdate->toArray());
-
-        // 対象データが送信した値で更新されていることを確認する
-        $this->assertSameData($user, $afterUpdate);
     }
 
     /**

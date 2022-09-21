@@ -29,10 +29,10 @@ class DestroyTest extends TestCase
 
         $afterUpdate = User::withTrashed()->where('id', $user->id)->first();
 
-        $response->assertStatus(204);
-
         // 対象データが論理削除されているか確認する
         $this->assertNotNull($afterUpdate->deleted_at);
+
+        $response->assertStatus(204);
 
         Mail::assertSent(Destroy::class, static function ($mail) use ($user, $afterUpdate) {
             return $mail->hasTo($user->email) && $mail->hasCc($afterUpdate->email);
@@ -58,10 +58,10 @@ class DestroyTest extends TestCase
 
         $afterUpdate = User::withTrashed()->where('id', $otherUser->id)->first();
 
-        $response->assertStatus(204);
-
         // 対象データが論理削除されているか確認する
         $this->assertNotNull($afterUpdate->deleted_at);
+
+        $response->assertStatus(204);
 
         Mail::assertSent(Destroy::class, static function ($mail) use ($requestUser, $afterUpdate) {
             return $mail->hasTo($requestUser->email) && $mail->hasCc($afterUpdate->email);

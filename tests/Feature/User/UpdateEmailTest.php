@@ -4,6 +4,7 @@ namespace Tests\Feature\User;
 
 use App\Models\User;
 use App\Notifications\EmailVerification;
+use Faker\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
@@ -25,21 +26,21 @@ class UpdateEmailTest extends TestCase
         Notification::fake();
 
         $user = User::factory()->create();
+        $email = Factory::create('ja_JP')->email();
 
-        $request = [
-            'email' => 'test@example.co.jp'
-        ];
-        $response = $this->actingAs($user)->put(self::API_URL, $request);
+        $response = $this->actingAs($user)->put(self::API_URL, [
+            'email' => $email
+        ]);
 
-        $user->email = $request['email'];
+        $user->email = $email;
         $user->email_verified_at = null;
 
         $afterUpdate = User::where('id', $user->id)->first();
 
-        $response->assertStatus(204);
-
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($user, $afterUpdate);
+
+        $response->assertStatus(204);
 
         Notification::assertSentTo($user, EmailVerification::class);
     }
