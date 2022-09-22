@@ -72,7 +72,7 @@
         },
         "/user": {
             "get": {
-                "$ref": "./paths/users/showMySelf.json"
+                "$ref": "./paths/users/mySelf.json"
             }
         },
         "/users": {
