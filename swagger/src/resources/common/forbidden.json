@@ -1,0 +1,9 @@
+{
+    "type": "object",
+    "properties": {
+        "message": {
+            "type": "string",
+            "example": "許可されていない操作です。"
+        }
+    }
+}

@@ -20,56 +20,17 @@
             "description": "成功",
             "content": {
                 "application/json": {
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "integer",
-                                "example": 1
-                            },
-                            "name": {
-                                "type": "string",
-                                "example": "山田一郎"
-                            },
-                            "email": {
-                                "type": "string",
-                                "example": "test@example.co.jp"
-                            },
-                            "email_verified_at": {
-                                "type": "string",
-                                "example": "2022-01-02 00:00:00"
-                            },
-                            "is_admin": {
-                                "type": "boolean",
-                                "example": true
-                            },
-                            "created_at": {
-                                "type": "string",
-                                "example": "2022-01-01 00:00:00"
-                            },
-                            "updated_at": {
-                                "type": "string",
-                                "example": "2022-01-02 00:00:00"
-                            },
-                            "deleted_at": {
-                                "type": "string",
-                                "example": null
+                    "examples": {
+                        "general": {
+                            "summary": "一般ユーザー実行時のレスポンス",
+                            "value": {
+                                "$ref": "../../resources/users/single/general.json"
                             }
-                        }
-                    }
-                }
-            }
-        },
-        "403": {
-            "description": "権限エラー",
-            "content": {
-                "application/json": {
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "message": {
-                                "type": "string",
-                                "example": "許可されていない操作です。"
+                        },
+                        "admin": {
+                            "summary": "管理者ユーザー実行時のレスポンス",
+                            "value": {
+                                "$ref": "../../resources/users/single/admin.json"
                             }
                         }
                     }

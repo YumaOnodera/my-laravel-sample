@@ -1,0 +1,54 @@
+{
+    "type": "object",
+    "properties": {
+        "per_page": {
+            "type": "integer",
+            "example": 5
+        },
+        "current_page": {
+            "type": "integer",
+            "example": 1
+        },
+        "last_page": {
+            "type": "integer",
+            "example": 10
+        },
+        "first_item": {
+            "type": "integer",
+            "example": 1
+        },
+        "last_item": {
+            "type": "integer",
+            "example": 5
+        },
+        "has_more_pages": {
+            "type": "boolean",
+            "example": true
+        },
+        "data": {
+            "type": "array",
+            "example": [
+                {
+                    "id": 1,
+                    "name": "山田一郎"
+                },
+                {
+                    "id": 2,
+                    "name": "田中二郎"
+                },
+                {
+                    "id": 3,
+                    "name": "中田三郎"
+                },
+                {
+                    "id": 4,
+                    "name": "田山四郎"
+                },
+                {
+                    "id": 5,
+                    "name": "中村五郎"
+                }
+            ]
+        }
+    }
+}

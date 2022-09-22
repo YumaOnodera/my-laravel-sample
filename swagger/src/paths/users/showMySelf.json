@@ -2,22 +2,7 @@
     "tags": [
         "User"
     ],
-    "description": "指定したユーザーを更新する。",
-    "requestBody": {
-        "content": {
-            "application/json": {
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "type": "string",
-                            "example": "山田一郎"
-                        }
-                    }
-                }
-            }
-        }
-    },
+    "description": "ログインユーザーを取得する。",
     "responses": {
         "200": {
             "description": "成功",

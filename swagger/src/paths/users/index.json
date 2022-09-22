@@ -36,107 +36,17 @@
             "description": "成功",
             "content": {
                 "application/json": {
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "total": {
-                                "type": "integer",
-                                "example": 50
-                            },
-                            "per_page": {
-                                "type": "integer",
-                                "example": 5
-                            },
-                            "current_page": {
-                                "type": "integer",
-                                "example": 1
-                            },
-                            "last_page": {
-                                "type": "integer",
-                                "example": 10
-                            },
-                            "first_item": {
-                                "type": "integer",
-                                "example": 1
-                            },
-                            "last_item": {
-                                "type": "integer",
-                                "example": 5
-                            },
-                            "has_more_pages": {
-                                "type": "boolean",
-                                "example": true
-                            },
-                            "data": {
-                                "type": "array",
-                                "example": [
-                                    {
-                                        "id": 1,
-                                        "name": "山田一郎",
-                                        "email": "test@example.co.jp",
-                                        "email_verified_at": "2022-01-02 00:00:00",
-                                        "is_admin": true,
-                                        "created_at": "2022-01-01 00:00:00",
-                                        "updated_at": "2022-01-02 00:00:00",
-                                        "deleted_at": null
-                                    },
-                                    {
-                                        "id": 2,
-                                        "name": "田中二郎",
-                                        "email": "test2@example.co.jp",
-                                        "email_verified_at": "2022-01-02 00:00:00",
-                                        "is_admin": false,
-                                        "created_at": "2022-01-01 00:00:00",
-                                        "updated_at": "2022-01-02 00:00:00",
-                                        "deleted_at": null
-                                    },
-                                    {
-                                        "id": 3,
-                                        "name": "中田三郎",
-                                        "email": "test3@example.co.jp",
-                                        "email_verified_at": "2022-01-02 00:00:00",
-                                        "is_admin": false,
-                                        "created_at": "2022-01-01 00:00:00",
-                                        "updated_at": "2022-01-02 00:00:00",
-                                        "deleted_at": null
-                                    },
-                                    {
-                                        "id": 4,
-                                        "name": "田山四郎",
-                                        "email": "test4@example.co.jp",
-                                        "email_verified_at": "2022-01-02 00:00:00",
-                                        "is_admin": false,
-                                        "created_at": "2022-01-01 00:00:00",
-                                        "updated_at": "2022-01-02 00:00:00",
-                                        "deleted_at": null
-                                    },
-                                    {
-                                        "id": 5,
-                                        "name": "中村五郎",
-                                        "email": "test5@example.co.jp",
-                                        "email_verified_at": "2022-01-02 00:00:00",
-                                        "is_admin": false,
-                                        "created_at": "2022-01-01 00:00:00",
-                                        "updated_at": "2022-01-02 00:00:00",
-                                        "deleted_at": null
-                                    }
-                                ]
+                    "examples": {
+                        "general": {
+                            "summary": "一般ユーザー実行時のレスポンス",
+                            "value": {
+                                "$ref": "../../resources/users/multiple/general.json"
                             }
-                        }
-                    }
-                }
-            }
-        },
-        "403": {
-            "description": "権限エラー",
-            "content": {
-                "application/json": {
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "message": {
-                                "type": "string",
-                                "example": "許可されていない操作です。"
+                        },
+                        "admin": {
+                            "summary": "管理者ユーザー実行時のレスポンス",
+                            "value": {
+                                "$ref": "../../resources/users/multiple/admin.json"
                             }
                         }
                     }
