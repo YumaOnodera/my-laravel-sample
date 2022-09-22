@@ -29,7 +29,6 @@ class IndexTest extends TestCase
         $expected = $posts
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                unset($item['user_id']);
                 return $item;
             })
             ->chunk($perPage)[0]
@@ -68,7 +67,6 @@ class IndexTest extends TestCase
         $expected = $posts
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                unset($item['user_id']);
                 return $item;
             })
             ->chunk($perPage)[1]
@@ -108,7 +106,6 @@ class IndexTest extends TestCase
         $expected = $posts
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                unset($item['user_id']);
                 return $item;
             })
             ->chunk($perPage)[$lastPage - 1]
@@ -147,7 +144,6 @@ class IndexTest extends TestCase
         $expected = $posts
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                unset($item['user_id']);
                 return $item;
             })
             ->chunk($perPage)[0]
@@ -188,7 +184,6 @@ class IndexTest extends TestCase
         $expected = $posts
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                unset($item['user_id']);
                 return $item;
             })
             ->sortBy('created_at')
@@ -232,7 +227,6 @@ class IndexTest extends TestCase
         $expected = $posts
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                unset($item['user_id']);
                 return $item;
             })
             ->sortByDesc('created_at')
@@ -282,7 +276,6 @@ class IndexTest extends TestCase
         $expected = $posts
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                unset($item['user_id']);
                 return $item;
             })
             ->chunk($perPage)[0]

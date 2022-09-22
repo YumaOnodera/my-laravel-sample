@@ -37,7 +37,6 @@ class UpdateTest extends TestCase
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($post, $afterUpdate);
 
-        unset($afterUpdate->user_id);
         $afterUpdate->created_by = $user->name;
 
         $response

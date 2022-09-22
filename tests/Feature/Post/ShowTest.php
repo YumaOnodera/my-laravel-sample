@@ -25,7 +25,6 @@ class ShowTest extends TestCase
 
         $response = $this->actingAs($user)->get(self::API_URL . '/' . $post->id);
 
-        unset($post->user_id);
         $post->created_by = $user->name;
 
         $response
