@@ -101,6 +101,11 @@
                 "$ref": "./paths/users/updatePassword.json"
             }
         },
+        "/users/update-permission": {
+            "put": {
+                "$ref": "./paths/users/updatePermission.json"
+            }
+        },
         "/users/{id}/restore": {
             "put": {
                 "$ref": "./paths/users/restore.json"

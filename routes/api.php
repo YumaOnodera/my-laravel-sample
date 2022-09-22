@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 Route::middleware(['auth:sanctum', 'verified', 'can:admin'])->group(function () {
     Route::controller(UserController::class)->group(function () {
+        Route::put('/users/{id}/update-permission', 'updatePermission');
         Route::post('/users/{id}/restore', 'restore');
     });
 });

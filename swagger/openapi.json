@@ -988,6 +988,34 @@
         }
       }
     },
+    "/users/update-permission": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "description": "指定したユーザーの権限を更新する。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "is_admin": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "成功"
+          }
+        }
+      }
+    },
     "/users/{id}/restore": {
       "put": {
         "tags": [

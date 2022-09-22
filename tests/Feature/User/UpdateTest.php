@@ -25,7 +25,7 @@ class UpdateTest extends TestCase
         $user = User::factory()->create([
             'is_admin' => 1
         ]);
-        $name = Factory::create('ja_JP')->name();;
+        $name = Factory::create('ja_JP')->name();
 
         $response = $this->actingAs($user)->put(self::API_URL, [
             'name' => $name

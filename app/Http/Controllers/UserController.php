@@ -7,6 +7,7 @@ use App\Http\Requests\User\IndexRequest;
 use App\Http\Requests\User\RestoreRequest;
 use App\Http\Requests\User\UpdateEmailRequest;
 use App\Http\Requests\User\UpdatePasswordRequest;
+use App\Http\Requests\User\UpdatePermissionRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
 use App\UseCases\User\DestroyAction;
@@ -16,6 +17,7 @@ use App\UseCases\User\ShowAction;
 use App\UseCases\User\UpdateAction;
 use App\UseCases\User\UpdateEmailAction;
 use App\UseCases\User\UpdatePasswordAction;
+use App\UseCases\User\UpdatePermissionAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -110,6 +112,21 @@ class UserController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param UpdatePermissionRequest $request
+     * @param int $id
+     * @param UpdatePermissionAction $action
+     * @return Response
+     */
+    public function updatePermission(UpdatePermissionRequest $request, int $id, UpdatePermissionAction $action): Response
+    {
+        $action($request, $id);
+
+        return response()->noContent();
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param DestroyRequest $request
@@ -117,7 +134,7 @@ class UserController extends Controller
      * @param DestroyAction $action
      * @return Response
      */
-    public function destroy(DestroyRequest $request, int $id, DestroyAction $action)
+    public function destroy(DestroyRequest $request, int $id, DestroyAction $action): Response
     {
         $action($request, $id);
 
@@ -132,7 +149,7 @@ class UserController extends Controller
      * @param RestoreAction $action
      * @return Response
      */
-    public function restore(RestoreRequest $request, int $id, RestoreAction $action)
+    public function restore(RestoreRequest $request, int $id, RestoreAction $action): Response
     {
         $action($request, $id);
 
