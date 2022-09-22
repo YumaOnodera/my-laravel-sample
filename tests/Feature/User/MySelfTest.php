@@ -41,7 +41,7 @@ class MySelfTest extends TestCase
 
         $response = $this->actingAs($user)->get(self::API_URL);
 
-        $filteredUser = $user->only(['id', 'name']);
+        $filteredUser = $user->only('id', 'name');
 
         $response
             ->assertStatus(200)

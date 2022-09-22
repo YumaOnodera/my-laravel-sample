@@ -61,7 +61,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users
             ->map(function($item) {
-                return $item->only(['id', 'name']);
+                return $item->only('id', 'name');
             })
             ->chunk($perPage)[0]
             ->values()
@@ -141,7 +141,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users
             ->map(function($item) {
-                return $item->only(['id', 'name']);
+                return $item->only('id', 'name');
             })
             ->chunk($perPage)[0]
             ->values()

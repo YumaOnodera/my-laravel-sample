@@ -65,7 +65,7 @@ class UpdateTest extends TestCase
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($user, $afterUpdate);
 
-        $filteredAfterUpdate = $afterUpdate->only(['id', 'name']);
+        $filteredAfterUpdate = $afterUpdate->only('id', 'name');
 
         $response
             ->assertStatus(200)
