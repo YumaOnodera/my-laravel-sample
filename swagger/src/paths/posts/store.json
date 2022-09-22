@@ -19,7 +19,7 @@
         }
     },
     "responses": {
-        "200": {
+        "201": {
             "description": "成功",
             "content": {
                 "application/json": {
