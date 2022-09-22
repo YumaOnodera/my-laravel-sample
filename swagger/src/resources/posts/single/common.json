@@ -1,0 +1,29 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer",
+            "example": 1
+        },
+        "user_id": {
+            "type": "integer",
+            "example": 1
+        },
+        "text": {
+            "type": "string",
+            "example": "テスト"
+        },
+        "created_by": {
+            "type": "string",
+            "example": "山田一郎"
+        },
+        "created_at": {
+            "type": "string",
+            "example": "2022-01-01 00:00:00"
+        },
+        "updated_at": {
+            "type": "string",
+            "example": "2022-01-02 00:00:00"
+        }
+    }
+}
