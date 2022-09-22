@@ -16,12 +16,15 @@ class UpdateTest extends TestCase
 
     /**
      * 対象データが送信した値で更新されることを確認する
+     * 管理者ユーザーが実行した時、レスポンスが想定通りであることを確認する
      *
      * @return void
      */
-    public function test_can_update_data()
+    public function test_admin_user_can_update_data()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'is_admin' => 1
+        ]);
         $name = Factory::create('ja_JP')->name();;
 
         $response = $this->actingAs($user)->put(self::API_URL, [
@@ -38,6 +41,35 @@ class UpdateTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertExactJson($afterUpdate->toArray());
+    }
+
+    /**
+     * 対象データが送信した値で更新されることを確認する
+     * 一般ユーザーが実行した時、レスポンスが想定通りであることを確認する
+     *
+     * @return void
+     */
+    public function test_general_user_can_update_data()
+    {
+        $user = User::factory()->create();
+        $name = Factory::create('ja_JP')->name();
+
+        $response = $this->actingAs($user)->put(self::API_URL, [
+            'name' => $name
+        ]);
+
+        $user->name = $name;
+
+        $afterUpdate = User::where('id', $user->id)->first();
+
+        // 対象データが送信した値で更新されていることを確認する
+        $this->assertSameData($user, $afterUpdate);
+
+        $filteredAfterUpdate = $afterUpdate->only(['id', 'name']);
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson($filteredAfterUpdate);
     }
 
     /**

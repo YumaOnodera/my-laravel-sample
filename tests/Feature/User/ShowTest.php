@@ -31,11 +31,29 @@ class ShowTest extends TestCase
     }
 
     /**
-     * 論理削除されたデータを指定した時、レスポンスが想定通りであることを確認する
+     * 一般ユーザーが実行した時、レスポンスが想定通りであることを確認する
      *
      * @return void
      */
-    public function test_can_view_soft_delete_data()
+    public function test_general_user_can_view_data()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(self::API_URL . '/' . $user->id);
+
+        $filteredUser = $user->only('id', 'name');
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson($filteredUser);
+    }
+
+    /**
+     * 管理者ユーザーが実行した時、論理削除されたデータを参照できることを確認する
+     *
+     * @return void
+     */
+    public function test_admin_user_can_view_soft_delete_data()
     {
         $requestUser = User::factory()->create([
             'is_admin' => 1
@@ -52,17 +70,20 @@ class ShowTest extends TestCase
     }
 
     /**
-     * 一般ユーザーが実行できないことを確認する
+     * 一般ユーザーが実行した時、論理削除されたデータを参照できないことを確認する
      *
      * @return void
      */
-    public function test_general_user_can_not_view_data()
+    public function test_general_user_can_not_view_soft_delete_data()
     {
-        $user = User::factory()->create();
+        $requestUser = User::factory()->create();
+        $otherUser = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
 
-        $response = $this->actingAs($user)->get(self::API_URL . '/' . $user->id);
+        $response = $this->actingAs($requestUser)->get(self::API_URL . '/' . $otherUser->id);
 
-        $response->assertStatus(403);
+        $response->assertStatus(404);
     }
 
     /**

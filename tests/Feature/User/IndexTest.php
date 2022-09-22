@@ -48,11 +48,47 @@ class IndexTest extends TestCase
     }
 
     /**
-     * 論理削除されたデータが存在する時、レスポンスが想定通りであることを確認する
+     * 一般ユーザーが実行した時、レスポンスが想定通りであることを確認する
      *
      * @return void
      */
-    public function test_can_view_soft_delete_data()
+    public function test_general_user_can_view_data()
+    {
+        $users = User::factory(11)->create();
+
+        $total = $users->count();
+        $perPage = config('const.PER_PAGE');
+        $lastPage = ceil($total / $perPage);
+        $expected = $users
+            ->map(function($item) {
+                return $item->only(['id', 'name']);
+            })
+            ->chunk($perPage)[0]
+            ->values()
+            ->toArray();
+
+        $response = $this->actingAs($users->first())->post(self::API_URL);
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson([
+                'total' => $total,
+                'per_page' => $perPage,
+                'current_page' => 1,
+                'last_page' => $lastPage,
+                'first_item' => 1,
+                'last_item' => $perPage,
+                'has_more_pages' => true,
+                'data' => $expected
+            ]);
+    }
+
+    /**
+     * 管理者ユーザーが実行した時、論理削除されたデータを参照できることを確認する
+     *
+     * @return void
+     */
+    public function test_admin_user_can_view_soft_delete_data()
     {
         $users = User::factory(11)
             ->sequence(fn ($sequence) => [
@@ -81,6 +117,48 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $perPage,
                 'has_more_pages' => true,
+                'data' => $expected
+            ]);
+    }
+
+    /**
+     * 一般ユーザーが実行した時、論理削除されたデータを参照できないことを確認する
+     *
+     * @return void
+     */
+    public function test_general_user_can_not_view_soft_delete_data()
+    {
+        $users = User::factory(10)
+            ->state(new Sequence(
+                ['deleted_at' => null],
+                ['deleted_at' => now()],
+            ))
+            ->create()
+            ->whereNull('deleted_at');
+
+        $total = $users->count();
+        $perPage = config('const.PER_PAGE');
+        $lastPage = ceil($total / $perPage);
+        $expected = $users
+            ->map(function($item) {
+                return $item->only(['id', 'name']);
+            })
+            ->chunk($perPage)[0]
+            ->values()
+            ->toArray();
+
+        $response = $this->actingAs($users->first())->post(self::API_URL);
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson([
+                'total' => $total,
+                'per_page' => $perPage,
+                'current_page' => 1,
+                'last_page' => $lastPage,
+                'first_item' => 1,
+                'last_item' => $total,
+                'has_more_pages' => false,
                 'data' => $expected
             ]);
     }
@@ -188,19 +266,5 @@ class IndexTest extends TestCase
                 'has_more_pages' => true,
                 'data' => $expected
             ]);
-    }
-
-    /**
-     * 一般ユーザーが実行できないことを確認する
-     *
-     * @return void
-     */
-    public function test_general_user_can_not_view_data()
-    {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->post(self::API_URL);
-
-        $response->assertStatus(403);
     }
 }

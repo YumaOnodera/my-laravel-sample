@@ -17,10 +17,22 @@ use App\UseCases\User\UpdateAction;
 use App\UseCases\User\UpdateEmailAction;
 use App\UseCases\User\UpdatePasswordAction;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
+    /**
+     * Display the specified resource.
+     *
+     * @param Request $request
+     * @return UserResource
+     */
+    public function mySelf(Request $request): UserResource
+    {
+        return new UserResource($request->user());
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,13 +59,14 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Request $request
      * @param int $id
      * @param ShowAction $action
      * @return UserResource
      */
-    public function show(int $id, ShowAction $action): UserResource
+    public function show(Request $request, int $id, ShowAction $action): UserResource
     {
-        return new UserResource($action($id));
+        return new UserResource($action($request, $id));
     }
 
     /**

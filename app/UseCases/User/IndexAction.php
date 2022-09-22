@@ -27,7 +27,11 @@ class IndexAction
      */
     public function __invoke(IndexRequest $request): array
     {
-        $users = User::withTrashed();
+        $users = User::query();
+
+        if ($request->user()->is_admin) {
+            $users = $users->withTrashed();
+        }
 
         return $this->paginateService->paginate($users, $request->perPage());
     }
