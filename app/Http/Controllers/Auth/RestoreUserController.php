@@ -16,7 +16,7 @@ class RestoreUserController extends Controller
      * @param RestoreAction $action
      * @return Response
      */
-    public function restore(LoginRequest $request, RestoreAction $action)
+    public function restore(LoginRequest $request, RestoreAction $action): Response
     {
         $action($request);
 

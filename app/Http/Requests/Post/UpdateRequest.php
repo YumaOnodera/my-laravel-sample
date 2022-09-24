@@ -13,7 +13,7 @@ class UpdateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         $post = Post::where('id', $this->id)->first();
 
@@ -45,7 +45,7 @@ class UpdateRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'id' => $this->id,

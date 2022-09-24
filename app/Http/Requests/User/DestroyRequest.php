@@ -12,7 +12,7 @@ class DestroyRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         $user = $this->user();
 
@@ -40,7 +40,7 @@ class DestroyRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'id' => $this->id,

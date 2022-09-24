@@ -20,9 +20,11 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param IndexRequest $request
+     * @param IndexAction $action
      * @return JsonResponse
      */
-    public function index(IndexRequest $request, IndexAction $action)
+    public function index(IndexRequest $request, IndexAction $action): JsonResponse
     {
         $posts = $action($request);
 
@@ -41,9 +43,11 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param StoreRequest $request
+     * @param StoreAction $action
      * @return PostResource
      */
-    public function store(StoreRequest $request, StoreAction $action)
+    public function store(StoreRequest $request, StoreAction $action): PostResource
     {
         return new PostResource($action($request));
     }
@@ -51,9 +55,11 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param int $id
+     * @param ShowAction $action
      * @return PostResource
      */
-    public function show(int $id, ShowAction $action)
+    public function show(int $id, ShowAction $action): PostResource
     {
         return new PostResource($action($id));
     }
@@ -61,9 +67,12 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param UpdateRequest $request
+     * @param int $id
+     * @param UpdateAction $action
      * @return PostResource
      */
-    public function update(UpdateRequest $request, int $id, UpdateAction $action)
+    public function update(UpdateRequest $request, int $id, UpdateAction $action): PostResource
     {
         return new PostResource($action($request, $id));
     }
@@ -71,9 +80,12 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param DestroyRequest $request
+     * @param int $id
+     * @param DestroyAction $action
      * @return Response
      */
-    public function destroy(DestroyRequest $request, int $id, DestroyAction $action)
+    public function destroy(DestroyRequest $request, int $id, DestroyAction $action): Response
     {
         $action($request, $id);
 
