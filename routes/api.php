@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/posts/{id}', 'show');
         Route::put('/posts/{id}', 'update');
         Route::delete('/posts/{id}', 'destroy');
+    });
+    Route::controller(CommentController::class)->group(function () {
+        Route::post('/comments', 'index');
+        Route::post('/comments/store', 'store');
+        Route::delete('/comments/{id}', 'destroy');
     });
 });
 
