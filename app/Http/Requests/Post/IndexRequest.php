@@ -28,6 +28,6 @@ class IndexRequest extends FormRequest
      */
     public function perPage(): int
     {
-        return $this->input('per_page', config('const.PER_PAGE'));
+        return $this->input('per_page', config('const.PER_PAGE.PAGINATE'));
     }
 }

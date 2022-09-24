@@ -27,7 +27,7 @@ class IndexTest extends TestCase
             ->create();
 
         $total = $users->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[0]->values()->toArray();
 
@@ -57,7 +57,7 @@ class IndexTest extends TestCase
         $users = User::factory(11)->create();
 
         $total = $users->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $users
             ->map(function($item) {
@@ -101,7 +101,7 @@ class IndexTest extends TestCase
             ->create();
 
         $total = $users->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[0]->values()->toArray();
 
@@ -137,7 +137,7 @@ class IndexTest extends TestCase
             ->whereNull('deleted_at');
 
         $total = $users->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $users
             ->map(function($item) {
@@ -177,7 +177,7 @@ class IndexTest extends TestCase
             ->create();
 
         $total = $users->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[1]->values()->toArray();
 
@@ -211,7 +211,7 @@ class IndexTest extends TestCase
             ->create();
 
         $total = $users->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $firstItem = $perPage * ($lastPage - 1) + 1;
         $expected = $users->chunk($perPage)[$lastPage - 1]->values()->toArray();

@@ -24,7 +24,7 @@ class IndexTest extends TestCase
         $posts = Post::factory(11)->create();
 
         $total = $posts->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
             ->map(function($item) use ($users) {
@@ -62,7 +62,7 @@ class IndexTest extends TestCase
         $posts = Post::factory(21)->create();
 
         $total = $posts->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
             ->map(function($item) use ($users) {
@@ -100,7 +100,7 @@ class IndexTest extends TestCase
         $posts = Post::factory(11)->create();
 
         $total = $posts->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $firstItem = $perPage * ($lastPage - 1) + 1;
         $expected = $posts
@@ -179,7 +179,7 @@ class IndexTest extends TestCase
         $posts = Post::factory(11)->create();
 
         $total = $posts->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
             ->map(function($item) use ($users) {
@@ -222,7 +222,7 @@ class IndexTest extends TestCase
         $posts = Post::factory(11)->create();
 
         $total = $posts->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
             ->map(function($item) use ($users) {
@@ -271,7 +271,7 @@ class IndexTest extends TestCase
         $posts = $posts->whereIn('user_id', $user_ids);
 
         $total = $posts->count();
-        $perPage = config('const.PER_PAGE');
+        $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
             ->map(function($item) use ($users) {
