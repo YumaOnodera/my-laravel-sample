@@ -2,13 +2,13 @@
     "tags": [
         "User"
     ],
-    "description": "指定した件数ごとにユーザーを取得する。",
+    "description": "ユーザーを取得する。",
     "parameters": [
         {
             "description": "ページの指定",
-            "in": "path",
+            "in": "query",
             "name": "page",
-            "required": true,
+            "required": false,
             "schema": {
                 "type": "integer",
                 "example": 1

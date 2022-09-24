@@ -131,6 +131,21 @@
             "post": {
                 "$ref": "./paths/posts/store.json"
             }
+        },
+        "/comments": {
+            "post": {
+                "$ref": "./paths/comments/index.json"
+            }
+        },
+        "/comments/store": {
+            "post": {
+                "$ref": "./paths/comments/store.json"
+            }
+        },
+        "/comments/{id}": {
+            "delete": {
+                "$ref": "./paths/comments/destroy.json"
+            }
         }
     }
 }

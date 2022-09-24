@@ -1,20 +1,8 @@
 {
     "tags": [
-        "Post"
+        "Comment"
     ],
-    "description": "指定した投稿を更新する。",
-    "parameters": [
-        {
-            "description": "投稿のID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-                "type": "integer",
-                "example": 1
-            }
-        }
-    ],
+    "description": "コメントを作成する。",
     "requestBody": {
         "content": {
             "application/json": {
@@ -31,12 +19,12 @@
         }
     },
     "responses": {
-        "200": {
+        "201": {
             "description": "成功",
             "content": {
                 "application/json": {
                     "schema": {
-                        "$ref": "../../resources/posts/single.json"
+                        "$ref": "../../resources/comments/single.json"
                     }
                 }
             }

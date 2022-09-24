@@ -520,13 +520,13 @@
         "tags": [
           "User"
         ],
-        "description": "指定した件数ごとにユーザーを取得する。",
+        "description": "ユーザーを取得する。",
         "parameters": [
           {
             "description": "ページの指定",
-            "in": "path",
+            "in": "query",
             "name": "page",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
               "example": 1
@@ -1062,13 +1062,13 @@
         "tags": [
           "Post"
         ],
-        "description": "指定した件数ごとに投稿を取得する。",
+        "description": "投稿を取得する。",
         "parameters": [
           {
             "description": "ページの指定",
-            "in": "path",
+            "in": "query",
             "name": "page",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "integer",
               "example": 1
@@ -1407,6 +1407,264 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/comments": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "description": "コメントを取得する。",
+        "parameters": [
+          {
+            "description": "取得するデータの指定",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "eyJjb21tZW50cy5pZCI6MTUsIl9wb2ludHNUb05leHRJdGVtcyI6dHJ1ZX0"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "order_by: 並び順のキー<br>order: 昇順・降順の指定",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "order_by": {
+                    "type": "string",
+                    "example": "created_by"
+                  },
+                  "order": {
+                    "type": "string",
+                    "example": "asc"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "example": 50
+                    },
+                    "next_cursor": {
+                      "type": "string",
+                      "example": "eyJjb21tZW50cy5pZCI6MTUsIl9wb2ludHNUb05leHRJdGVtcyI6dHJ1ZX0"
+                    },
+                    "prev_cursor": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "data": {
+                      "type": "array",
+                      "example": [
+                        {
+                          "id": 1,
+                          "user_id": 1,
+                          "text": "テスト",
+                          "created_by": "山田一郎",
+                          "created_at": "2022-01-01 00:00:00"
+                        },
+                        {
+                          "id": 2,
+                          "user_id": 1,
+                          "text": "テスト",
+                          "created_by": "山田一郎",
+                          "created_at": "2022-01-02 00:00:00"
+                        },
+                        {
+                          "id": 3,
+                          "user_id": 1,
+                          "text": "テスト",
+                          "created_by": "山田一郎",
+                          "created_at": "2022-01-03 00:00:00"
+                        },
+                        {
+                          "id": 4,
+                          "user_id": 1,
+                          "text": "テスト",
+                          "created_by": "山田一郎",
+                          "created_at": "2022-01-04 00:00:00"
+                        },
+                        {
+                          "id": 5,
+                          "user_id": 1,
+                          "text": "テスト",
+                          "created_by": "山田一郎",
+                          "created_at": "2022-01-05 00:00:00"
+                        },
+                        {
+                          "id": 6,
+                          "user_id": 2,
+                          "text": "テスト",
+                          "created_by": "田中二郎",
+                          "created_at": "2022-01-06 00:00:00"
+                        },
+                        {
+                          "id": 7,
+                          "user_id": 2,
+                          "text": "テスト",
+                          "created_by": "田中二郎",
+                          "created_at": "2022-01-07 00:00:00"
+                        },
+                        {
+                          "id": 8,
+                          "user_id": 2,
+                          "text": "テスト",
+                          "created_by": "田中二郎",
+                          "created_at": "2022-01-08 00:00:00"
+                        },
+                        {
+                          "id": 9,
+                          "user_id": 2,
+                          "text": "テスト",
+                          "created_by": "田中二郎",
+                          "created_at": "2022-01-09 00:00:00"
+                        },
+                        {
+                          "id": 10,
+                          "user_id": 2,
+                          "text": "テスト",
+                          "created_by": "田中二郎",
+                          "created_at": "2022-01-10 00:00:00"
+                        },
+                        {
+                          "id": 11,
+                          "user_id": 3,
+                          "text": "テスト",
+                          "created_by": "中田三郎",
+                          "created_at": "2022-01-11 00:00:00"
+                        },
+                        {
+                          "id": 12,
+                          "user_id": 3,
+                          "text": "テスト",
+                          "created_by": "中田三郎",
+                          "created_at": "2022-01-12 00:00:00"
+                        },
+                        {
+                          "id": 13,
+                          "user_id": 3,
+                          "text": "テスト",
+                          "created_by": "中田三郎",
+                          "created_at": "2022-01-13 00:00:00"
+                        },
+                        {
+                          "id": 14,
+                          "user_id": 3,
+                          "text": "テスト",
+                          "created_by": "中田三郎",
+                          "created_at": "2022-01-14 00:00:00"
+                        },
+                        {
+                          "id": 15,
+                          "user_id": 3,
+                          "text": "テスト",
+                          "created_by": "中田三郎",
+                          "created_at": "2022-01-15 00:00:00"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/store": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "description": "コメントを作成する。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "example": "テスト"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "post_id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "text": {
+                      "type": "string",
+                      "example": "テスト"
+                    },
+                    "created_by": {
+                      "type": "string",
+                      "example": "山田一郎"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "example": "2022-01-01 00:00:00"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/{id}": {
+      "delete": {
+        "tags": [
+          "Comment"
+        ],
+        "description": "指定したコメントを削除する。",
+        "parameters": [
+          {
+            "description": "コメントのID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "成功"
           }
         }
       }

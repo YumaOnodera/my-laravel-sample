@@ -1,0 +1,23 @@
+{
+    "tags": [
+        "Comment"
+    ],
+    "description": "指定したコメントを削除する。",
+    "parameters": [
+        {
+            "description": "コメントのID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+                "type": "integer",
+                "example": 1
+            }
+        }
+    ],
+    "responses": {
+        "204": {
+            "description": "成功"
+        }
+    }
+}

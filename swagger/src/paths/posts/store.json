@@ -24,7 +24,7 @@
             "content": {
                 "application/json": {
                     "schema": {
-                        "$ref": "../../resources/posts/single/common.json"
+                        "$ref": "../../resources/posts/single.json"
                     }
                 }
             }
