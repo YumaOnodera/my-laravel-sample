@@ -33,6 +33,11 @@ class IndexAction
             $posts->whereIn('user_id', $request->user_ids);
         }
 
-        return $this->paginateService->paginate($posts, $request->perPage(), $request->order_by, $request->order);
+        return $this->paginateService->paginate(
+            $posts,
+            $request->perPage(),
+            $request->order_by,
+            $request->order
+        );
     }
 }
