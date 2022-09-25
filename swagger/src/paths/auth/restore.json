@@ -17,7 +17,11 @@
                             "type": "string",
                             "example": "password"
                         }
-                    }
+                    },
+                    "required": [
+                        "email",
+                        "password"
+                    ]
                 }
             }
         }

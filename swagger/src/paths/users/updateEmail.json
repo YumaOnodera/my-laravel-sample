@@ -13,7 +13,10 @@
                             "type": "string",
                             "example": "test@example.co.jp"
                         }
-                    }
+                    },
+                    "required": [
+                        "email"
+                    ]
                 }
             }
         }

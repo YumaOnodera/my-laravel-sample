@@ -16,21 +16,30 @@
         }
     ],
     "requestBody": {
-        "description": "order_by: 並び順のキー<br>order: 昇順・降順の指定",
         "content": {
             "application/json": {
                 "schema": {
                     "type": "object",
                     "properties": {
+                        "post_id": {
+                            "type": "integer",
+                            "example": 1,
+                            "description": "投稿のID"
+                        },
                         "order_by": {
                             "type": "string",
-                            "example": "created_by"
+                            "example": "created_by",
+                            "description": "並び順のキー"
                         },
                         "order": {
                             "type": "string",
-                            "example": "asc"
+                            "example": "asc",
+                            "description": "昇順・降順の指定"
                         }
-                    }
+                    },
+                    "required": [
+                        "post_id"
+                    ]
                 }
             }
         }

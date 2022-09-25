@@ -18,6 +18,7 @@
             "example": [
                 {
                     "id": 1,
+                    "post_id": 1,
                     "user_id": 1,
                     "text": "テスト",
                     "created_by": "山田一郎",
@@ -25,6 +26,7 @@
                 },
                 {
                     "id": 2,
+                    "post_id": 1,
                     "user_id": 1,
                     "text": "テスト",
                     "created_by": "山田一郎",
@@ -32,6 +34,7 @@
                 },
                 {
                     "id": 3,
+                    "post_id": 1,
                     "user_id": 1,
                     "text": "テスト",
                     "created_by": "山田一郎",
@@ -39,6 +42,7 @@
                 },
                 {
                     "id": 4,
+                    "post_id": 1,
                     "user_id": 1,
                     "text": "テスト",
                     "created_by": "山田一郎",
@@ -46,6 +50,7 @@
                 },
                 {
                     "id": 5,
+                    "post_id": 1,
                     "user_id": 1,
                     "text": "テスト",
                     "created_by": "山田一郎",
@@ -53,6 +58,7 @@
                 },
                 {
                     "id": 6,
+                    "post_id": 1,
                     "user_id": 2,
                     "text": "テスト",
                     "created_by": "田中二郎",
@@ -60,6 +66,7 @@
                 },
                 {
                     "id": 7,
+                    "post_id": 1,
                     "user_id": 2,
                     "text": "テスト",
                     "created_by": "田中二郎",
@@ -67,6 +74,7 @@
                 },
                 {
                     "id": 8,
+                    "post_id": 1,
                     "user_id": 2,
                     "text": "テスト",
                     "created_by": "田中二郎",
@@ -74,6 +82,7 @@
                 },
                 {
                     "id": 9,
+                    "post_id": 1,
                     "user_id": 2,
                     "text": "テスト",
                     "created_by": "田中二郎",
@@ -81,6 +90,7 @@
                 },
                 {
                     "id": 10,
+                    "post_id": 1,
                     "user_id": 2,
                     "text": "テスト",
                     "created_by": "田中二郎",
@@ -88,6 +98,7 @@
                 },
                 {
                     "id": 11,
+                    "post_id": 1,
                     "user_id": 3,
                     "text": "テスト",
                     "created_by": "中田三郎",
@@ -95,6 +106,7 @@
                 },
                 {
                     "id": 12,
+                    "post_id": 1,
                     "user_id": 3,
                     "text": "テスト",
                     "created_by": "中田三郎",
@@ -102,6 +114,7 @@
                 },
                 {
                     "id": 13,
+                    "post_id": 1,
                     "user_id": 3,
                     "text": "テスト",
                     "created_by": "中田三郎",
@@ -109,6 +122,7 @@
                 },
                 {
                     "id": 14,
+                    "post_id": 1,
                     "user_id": 3,
                     "text": "テスト",
                     "created_by": "中田三郎",
@@ -116,6 +130,7 @@
                 },
                 {
                     "id": 15,
+                    "post_id": 1,
                     "user_id": 3,
                     "text": "テスト",
                     "created_by": "中田三郎",

@@ -13,7 +13,10 @@
                             "type": "boolean",
                             "example": true
                         }
-                    }
+                    },
+                    "required": [
+                        "is_admin"
+                    ]
                 }
             }
         }

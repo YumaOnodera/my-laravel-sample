@@ -16,7 +16,6 @@
         }
     ],
     "requestBody": {
-        "description": "per_page: 1ページに表示する件数",
         "content": {
             "application/json": {
                 "schema": {
@@ -24,7 +23,8 @@
                     "properties": {
                         "per_page": {
                             "type": "integer",
-                            "example": 5
+                            "example": 5,
+                            "description": "1ページに表示する件数"
                         }
                     }
                 }

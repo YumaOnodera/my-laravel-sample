@@ -121,7 +121,13 @@
                     "type": "string",
                     "example": "password"
                   }
-                }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password",
+                  "password_confirmation"
+                ]
               }
             }
           }
@@ -159,7 +165,11 @@
                     "type": "string",
                     "example": "password"
                   }
-                }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -207,7 +217,11 @@
                     "type": "string",
                     "example": "password"
                   }
-                }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -242,7 +256,11 @@
                     "type": "string",
                     "example": "password"
                   }
-                }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -276,7 +294,10 @@
                     "type": "string",
                     "example": "test@example.com"
                   }
-                }
+                },
+                "required": [
+                  "email"
+                ]
               }
             }
           }
@@ -335,7 +356,13 @@
                     "type": "string",
                     "example": "781f2cbe7c692028c0d49c4ef208387362a984442263a91850f8a0e55c6e2d47"
                   }
-                }
+                },
+                "required": [
+                  "email",
+                  "password",
+                  "password_confirmation",
+                  "token"
+                ]
               }
             }
           }
@@ -534,7 +561,6 @@
           }
         ],
         "requestBody": {
-          "description": "per_page: 1ページに表示する件数",
           "content": {
             "application/json": {
               "schema": {
@@ -542,7 +568,8 @@
                 "properties": {
                   "per_page": {
                     "type": "integer",
-                    "example": 5
+                    "example": 5,
+                    "description": "1ページに表示する件数"
                   }
                 }
               }
@@ -728,7 +755,10 @@
                     "type": "string",
                     "example": "山田一郎"
                   }
-                }
+                },
+                "required": [
+                  "name"
+                ]
               }
             }
           }
@@ -944,7 +974,10 @@
                     "type": "string",
                     "example": "test@example.co.jp"
                   }
-                }
+                },
+                "required": [
+                  "email"
+                ]
               }
             }
           }
@@ -976,7 +1009,11 @@
                     "type": "string",
                     "example": "password"
                   }
-                }
+                },
+                "required": [
+                  "password",
+                  "password_confirmation"
+                ]
               }
             }
           }
@@ -1004,7 +1041,10 @@
                     "type": "boolean",
                     "example": true
                   }
-                }
+                },
+                "required": [
+                  "is_admin"
+                ]
               }
             }
           }
@@ -1076,7 +1116,6 @@
           }
         ],
         "requestBody": {
-          "description": "per_page: 1ページに表示する件数<br>order_by: 並び順のキー<br>order: 昇順・降順の指定<br>user_ids: 投稿者による絞り込み",
           "content": {
             "application/json": {
               "schema": {
@@ -1084,15 +1123,18 @@
                 "properties": {
                   "per_page": {
                     "type": "integer",
-                    "example": 5
+                    "example": 5,
+                    "description": "1ページに表示する件数"
                   },
                   "order_by": {
                     "type": "string",
-                    "example": "created_by"
+                    "example": "created_by",
+                    "description": "並び順のキー"
                   },
                   "order": {
                     "type": "string",
-                    "example": "desc"
+                    "example": "desc",
+                    "description": "昇順・降順の指定"
                   },
                   "user_ids": {
                     "type": "array",
@@ -1102,7 +1144,8 @@
                       3,
                       4,
                       5
-                    ]
+                    ],
+                    "description": "投稿者による絞り込み"
                   }
                 }
               }
@@ -1224,7 +1267,10 @@
                     "type": "string",
                     "example": "テスト"
                   }
-                }
+                },
+                "required": [
+                  "text"
+                ]
               }
             }
           }
@@ -1366,7 +1412,10 @@
                     "type": "string",
                     "example": "テスト"
                   }
-                }
+                },
+                "required": [
+                  "text"
+                ]
               }
             }
           }
@@ -1430,21 +1479,30 @@
           }
         ],
         "requestBody": {
-          "description": "order_by: 並び順のキー<br>order: 昇順・降順の指定",
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
+                  "post_id": {
+                    "type": "integer",
+                    "example": 1,
+                    "description": "投稿のID"
+                  },
                   "order_by": {
                     "type": "string",
-                    "example": "created_by"
+                    "example": "created_by",
+                    "description": "並び順のキー"
                   },
                   "order": {
                     "type": "string",
-                    "example": "asc"
+                    "example": "asc",
+                    "description": "昇順・降順の指定"
                   }
-                }
+                },
+                "required": [
+                  "post_id"
+                ]
               }
             }
           }
@@ -1474,6 +1532,7 @@
                       "example": [
                         {
                           "id": 1,
+                          "post_id": 1,
                           "user_id": 1,
                           "text": "テスト",
                           "created_by": "山田一郎",
@@ -1481,6 +1540,7 @@
                         },
                         {
                           "id": 2,
+                          "post_id": 1,
                           "user_id": 1,
                           "text": "テスト",
                           "created_by": "山田一郎",
@@ -1488,6 +1548,7 @@
                         },
                         {
                           "id": 3,
+                          "post_id": 1,
                           "user_id": 1,
                           "text": "テスト",
                           "created_by": "山田一郎",
@@ -1495,6 +1556,7 @@
                         },
                         {
                           "id": 4,
+                          "post_id": 1,
                           "user_id": 1,
                           "text": "テスト",
                           "created_by": "山田一郎",
@@ -1502,6 +1564,7 @@
                         },
                         {
                           "id": 5,
+                          "post_id": 1,
                           "user_id": 1,
                           "text": "テスト",
                           "created_by": "山田一郎",
@@ -1509,6 +1572,7 @@
                         },
                         {
                           "id": 6,
+                          "post_id": 1,
                           "user_id": 2,
                           "text": "テスト",
                           "created_by": "田中二郎",
@@ -1516,6 +1580,7 @@
                         },
                         {
                           "id": 7,
+                          "post_id": 1,
                           "user_id": 2,
                           "text": "テスト",
                           "created_by": "田中二郎",
@@ -1523,6 +1588,7 @@
                         },
                         {
                           "id": 8,
+                          "post_id": 1,
                           "user_id": 2,
                           "text": "テスト",
                           "created_by": "田中二郎",
@@ -1530,6 +1596,7 @@
                         },
                         {
                           "id": 9,
+                          "post_id": 1,
                           "user_id": 2,
                           "text": "テスト",
                           "created_by": "田中二郎",
@@ -1537,6 +1604,7 @@
                         },
                         {
                           "id": 10,
+                          "post_id": 1,
                           "user_id": 2,
                           "text": "テスト",
                           "created_by": "田中二郎",
@@ -1544,6 +1612,7 @@
                         },
                         {
                           "id": 11,
+                          "post_id": 1,
                           "user_id": 3,
                           "text": "テスト",
                           "created_by": "中田三郎",
@@ -1551,6 +1620,7 @@
                         },
                         {
                           "id": 12,
+                          "post_id": 1,
                           "user_id": 3,
                           "text": "テスト",
                           "created_by": "中田三郎",
@@ -1558,6 +1628,7 @@
                         },
                         {
                           "id": 13,
+                          "post_id": 1,
                           "user_id": 3,
                           "text": "テスト",
                           "created_by": "中田三郎",
@@ -1565,6 +1636,7 @@
                         },
                         {
                           "id": 14,
+                          "post_id": 1,
                           "user_id": 3,
                           "text": "テスト",
                           "created_by": "中田三郎",
@@ -1572,6 +1644,7 @@
                         },
                         {
                           "id": 15,
+                          "post_id": 1,
                           "user_id": 3,
                           "text": "テスト",
                           "created_by": "中田三郎",
@@ -1603,7 +1676,10 @@
                     "type": "string",
                     "example": "テスト"
                   }
-                }
+                },
+                "required": [
+                  "text"
+                ]
               }
             }
           }
@@ -1621,6 +1697,10 @@
                       "example": 1
                     },
                     "post_id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "user_id": {
                       "type": "integer",
                       "example": 1
                     },

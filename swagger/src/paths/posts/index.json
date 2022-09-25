@@ -16,7 +16,6 @@
         }
     ],
     "requestBody": {
-        "description": "per_page: 1ページに表示する件数<br>order_by: 並び順のキー<br>order: 昇順・降順の指定<br>user_ids: 投稿者による絞り込み",
         "content": {
             "application/json": {
                 "schema": {
@@ -24,19 +23,23 @@
                     "properties": {
                         "per_page": {
                             "type": "integer",
-                            "example": 5
+                            "example": 5,
+                            "description": "1ページに表示する件数"
                         },
                         "order_by": {
                             "type": "string",
-                            "example": "created_by"
+                            "example": "created_by",
+                            "description": "並び順のキー"
                         },
                         "order": {
                             "type": "string",
-                            "example": "desc"
+                            "example": "desc",
+                            "description": "昇順・降順の指定"
                         },
                         "user_ids": {
                             "type": "array",
-                            "example": [1, 2, 3, 4, 5]
+                            "example": [1, 2, 3, 4, 5],
+                            "description": "投稿者による絞り込み"
                         }
                     }
                 }

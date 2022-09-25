@@ -13,7 +13,10 @@
                             "type": "string",
                             "example": "テスト"
                         }
-                    }
+                    },
+                    "required": [
+                        "text"
+                    ]
                 }
             }
         }
