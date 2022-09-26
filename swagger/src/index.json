@@ -16,6 +16,9 @@
             },
             "Post": {
                 "$ref": "./schemas/post.json"
+            },
+            "Comment": {
+                "$ref": "./schemas/comment.json"
             }
         }
     },

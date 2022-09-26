@@ -16,7 +16,8 @@
         "required": [
           "name",
           "email",
-          "password"
+          "password",
+          "is_admin"
         ],
         "properties": {
           "id": {
@@ -48,6 +49,7 @@
       "Post": {
         "type": "object",
         "required": [
+          "user_id",
           "text"
         ],
         "properties": {
@@ -64,6 +66,31 @@
             "type": "string"
           },
           "updated_at": {
+            "type": "string"
+          }
+        }
+      },
+      "Comment": {
+        "type": "object",
+        "required": [
+          "post_id",
+          "user_id",
+          "text"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "post_id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          },
+          "created_at": {
             "type": "string"
           }
         }
