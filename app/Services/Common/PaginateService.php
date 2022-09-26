@@ -55,6 +55,8 @@ class PaginateService
         string $order_by = null,
         string $order = null
     ): array {
+        $total = $builder->count();
+
         if ($order_by && $order) {
             $builder->orderBy($order_by, $order)
                 ->orderBy('id', $order);
@@ -63,10 +65,24 @@ class PaginateService
         $data = $builder->cursorPaginate($perPage);
 
         return [
-            'total' => $builder->count(),
-            'next_cursor' => $data->nextCursor(),
-            'prev_cursor' => $data->previousCursor(),
+            'total' => $total,
+            'next_cursor' => $this->getCursor($data->nextPageUrl()),
+            'prev_cursor' => $this->getCursor($data->previousPageUrl()),
             'items' => $data->items(),
         ];
+    }
+
+    /**
+     * @param string|null $url
+     * @return string|null
+     */
+    private function getCursor(string|null $url): string|null
+    {
+        if ($url) {
+            parse_str(parse_url($url, PHP_URL_QUERY), $query);
+            return $query['cursor'];
+        }
+
+        return null;
     }
 }
