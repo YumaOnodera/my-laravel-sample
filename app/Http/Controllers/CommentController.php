@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Comment\DestroyRequest;
 use App\Http\Requests\Comment\IndexRequest;
 use App\Http\Requests\Comment\StoreRequest;
 use App\Http\Resources\CommentResource;
+use App\UseCases\Comment\DestroyAction;
 use App\UseCases\Comment\IndexAction;
 use App\UseCases\Comment\StoreAction;
 use Illuminate\Http\JsonResponse;
@@ -47,10 +49,15 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param DestroyRequest $request
+     * @param int $id
+     * @param DestroyAction $action
      * @return Response
      */
-    public function destroy(): Response
+    public function destroy(DestroyRequest $request, int $id, DestroyAction $action): Response
     {
+        $action($request, $id);
+
         return response()->noContent();
     }
 }
