@@ -25,7 +25,7 @@ class DestroyTest extends TestCase
 
         $response = $this->actingAs($user)->delete(self::API_URL . '/' . $post->id);
 
-        $isExists = Post::where('id', $user->id)->exists();
+        $isExists = Post::where('id', $post->id)->exists();
 
         // 対象データが削除されているか確認する
         $this->assertFalse($isExists);
