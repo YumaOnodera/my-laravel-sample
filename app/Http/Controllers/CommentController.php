@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Comment\IndexRequest;
+use App\Http\Requests\Comment\StoreRequest;
 use App\Http\Resources\CommentResource;
 use App\UseCases\Comment\IndexAction;
+use App\UseCases\Comment\StoreAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -33,12 +35,13 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreRequest $request
+     * @param StoreAction $action
      * @return CommentResource
      */
-    public function store(Request $request): CommentResource
+    public function store(StoreRequest $request, StoreAction $action): CommentResource
     {
-        return new CommentResource([]);
+        return new CommentResource($action($request));
     }
 
     /**
