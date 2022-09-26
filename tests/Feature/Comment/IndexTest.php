@@ -31,7 +31,7 @@ class IndexTest extends TestCase
             ->where('post_id', $post->id)
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                return $item->only('id', 'post_id', 'user_id', 'text', 'created_by', 'created_at');
+                return $item;
             })
             ->chunk($perPage)[0]
             ->values()
@@ -71,7 +71,7 @@ class IndexTest extends TestCase
             ->where('post_id', $post->id)
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                return $item->only('id', 'post_id', 'user_id', 'text', 'created_by', 'created_at');
+                return $item;
             })
             ->chunk($perPage)[1]
             ->values()
@@ -119,7 +119,7 @@ class IndexTest extends TestCase
             ->where('post_id', $post->id)
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                return $item->only('id', 'post_id', 'user_id', 'text', 'created_by', 'created_at');
+                return $item;
             })
             ->chunk($perPage)[$lastPage - 1]
             ->values()
@@ -165,7 +165,7 @@ class IndexTest extends TestCase
         $expected = $comments
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                return $item->only('id', 'post_id', 'user_id', 'text', 'created_by', 'created_at');
+                return $item;
             })
             ->sortBy('created_at')
             ->sortBy('id')
@@ -208,7 +208,7 @@ class IndexTest extends TestCase
         $expected = $comments
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                return $item->only('id', 'post_id', 'user_id', 'text', 'created_by', 'created_at');
+                return $item;
             })
             ->sortByDesc('created_at')
             ->sortByDesc('id')
@@ -247,9 +247,9 @@ class IndexTest extends TestCase
         $comments = Comment::factory(15)->create();
 
         // 投稿idをランダムに抽出
-        $post_id = $comments->random()->post->id;
+        $post_id = $comments->random()->post_id;
 
-        // ユーザーidで絞り込み
+        // 投稿idで絞り込み
         $comments = $comments->where('post_id', $post_id);
 
         $total = $comments->count();
@@ -257,7 +257,7 @@ class IndexTest extends TestCase
         $expected = $comments
             ->map(function($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
-                return $item->only('id', 'post_id', 'user_id', 'text', 'created_by', 'created_at');
+                return $item;
             })
             ->chunk($perPage)[0]
             ->values()
