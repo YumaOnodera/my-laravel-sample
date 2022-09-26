@@ -30,7 +30,7 @@ class StoreTest extends TestCase
             'text' => $text
         ]);
 
-        $actual = $response->decodeResponseJson();
+        $actual = $response->json();
 
         $post = Post::where('id', $actual['id'])->first();
 
