@@ -14,6 +14,7 @@ abstract class TestCase extends BaseTestCase
     {
         Schema::disableForeignKeyConstraints();
 
+        DB::table('comments')->truncate();
         DB::table('posts')->truncate();
         DB::table('users')->truncate();
 

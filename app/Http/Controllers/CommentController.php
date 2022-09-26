@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Comment\IndexRequest;
 use App\Http\Resources\CommentResource;
+use App\UseCases\Comment\IndexAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,12 +14,20 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param IndexRequest $request
+     * @param IndexAction $action
      * @return JsonResponse
      */
-    public function index(Request $request): JsonResponse
+    public function index(IndexRequest $request, IndexAction $action): JsonResponse
     {
-        return response()->json();
+        $comments = $action($request);
+
+        return response()->json([
+            'total' => $comments['total'],
+            'next_cursor' => $comments['next_cursor'],
+            'prev_cursor' => $comments['prev_cursor'],
+            'data' => CommentResource::collection($comments['items']),
+        ]);
     }
 
     /**
