@@ -6,14 +6,16 @@ use App\Notifications\EmailVerification;
 use App\Notifications\ResetPassword;
 use DateTimeInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\MassPrunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, MassPrunable;
 
     /**
      * The attributes that are mass assignable.
@@ -56,6 +58,16 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * 整理可能モデルクエリの取得
+     *
+     * @return Builder
+     */
+    public function prunable(): Builder
+    {
+        return static::where('deleted_at', '<', now()->subMonth());
     }
 
     /**
