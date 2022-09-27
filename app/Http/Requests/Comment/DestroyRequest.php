@@ -17,7 +17,7 @@ class DestroyRequest extends FormRequest
     {
         $comment = Comment::where('id', $this->id)->first();
 
-        if (!$comment) {
+        if (! $comment) {
             return true;
         }
 
@@ -34,7 +34,7 @@ class DestroyRequest extends FormRequest
         return [
             'id' => [
                 'required',
-                Rule::exists('comments', 'id')
+                Rule::exists('comments', 'id'),
             ],
         ];
     }

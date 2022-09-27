@@ -7,7 +7,7 @@ use App\Http\Requests\User\UpdateEmailRequest;
 class UpdateEmailAction
 {
     /**
-     * @param UpdateEmailRequest $request
+     * @param  UpdateEmailRequest  $request
      * @return void
      */
     public function __invoke(UpdateEmailRequest $request): void
@@ -16,7 +16,7 @@ class UpdateEmailAction
 
         $user->update([
             'email' => $request->email,
-            'email_verified_at' => null
+            'email_verified_at' => null,
         ]);
 
         $user->sendEmailVerificationNotification();

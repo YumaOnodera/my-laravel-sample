@@ -18,7 +18,7 @@ class RestoreRequest extends FormRequest
             'id' => [
                 'required',
                 Rule::exists('users', 'id')
-                    ->whereNotNull('deleted_at')
+                    ->whereNotNull('deleted_at'),
             ],
         ];
     }

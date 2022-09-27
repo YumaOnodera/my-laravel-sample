@@ -22,7 +22,7 @@ class IndexTest extends TestCase
     {
         $users = User::factory(11)
             ->sequence(fn ($sequence) => [
-                'is_admin' => $sequence->index === 0 ? 1 : 0
+                'is_admin' => $sequence->index === 0 ? 1 : 0,
             ])
             ->create();
 
@@ -43,7 +43,7 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $perPage,
                 'has_more_pages' => true,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -60,7 +60,7 @@ class IndexTest extends TestCase
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $users
-            ->map(function($item) {
+            ->map(function ($item) {
                 return $item->only('id', 'name');
             })
             ->chunk($perPage)[0]
@@ -79,7 +79,7 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $perPage,
                 'has_more_pages' => true,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -92,7 +92,7 @@ class IndexTest extends TestCase
     {
         $users = User::factory(11)
             ->sequence(fn ($sequence) => [
-                'is_admin' => $sequence->index === 0 ? 1 : 0
+                'is_admin' => $sequence->index === 0 ? 1 : 0,
             ])
             ->state(new Sequence(
                 ['deleted_at' => null],
@@ -117,7 +117,7 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $perPage,
                 'has_more_pages' => true,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -140,7 +140,7 @@ class IndexTest extends TestCase
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $users
-            ->map(function($item) {
+            ->map(function ($item) {
                 return $item->only('id', 'name');
             })
             ->chunk($perPage)[0]
@@ -159,7 +159,7 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $total,
                 'has_more_pages' => false,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -172,7 +172,7 @@ class IndexTest extends TestCase
     {
         $users = User::factory(21)
             ->sequence(fn ($sequence) => [
-                'is_admin' => $sequence->index === 0 ? 1 : 0
+                'is_admin' => $sequence->index === 0 ? 1 : 0,
             ])
             ->create();
 
@@ -181,7 +181,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[1]->values()->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL . '?page=2');
+        $response = $this->actingAs($users->first())->post(self::API_URL.'?page=2');
 
         $response
             ->assertStatus(200)
@@ -193,7 +193,7 @@ class IndexTest extends TestCase
                 'first_item' => $perPage + 1,
                 'last_item' => $perPage * 2,
                 'has_more_pages' => true,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -206,7 +206,7 @@ class IndexTest extends TestCase
     {
         $users = User::factory(11)
             ->sequence(fn ($sequence) => [
-                'is_admin' => $sequence->index === 0 ? 1 : 0
+                'is_admin' => $sequence->index === 0 ? 1 : 0,
             ])
             ->create();
 
@@ -216,7 +216,7 @@ class IndexTest extends TestCase
         $firstItem = $perPage * ($lastPage - 1) + 1;
         $expected = $users->chunk($perPage)[$lastPage - 1]->values()->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL . '?page=' . $lastPage);
+        $response = $this->actingAs($users->first())->post(self::API_URL.'?page='.$lastPage);
 
         $response
             ->assertStatus(200)
@@ -228,7 +228,7 @@ class IndexTest extends TestCase
                 'first_item' => $firstItem,
                 'last_item' => $total,
                 'has_more_pages' => false,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -241,7 +241,7 @@ class IndexTest extends TestCase
     {
         $users = User::factory(16)
             ->sequence(fn ($sequence) => [
-                'is_admin' => $sequence->index === 0 ? 1 : 0
+                'is_admin' => $sequence->index === 0 ? 1 : 0,
             ])
             ->create();
 
@@ -251,7 +251,7 @@ class IndexTest extends TestCase
         $expected = $users->chunk($perPage)[0]->values()->toArray();
 
         $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'per_page' => $perPage
+            'per_page' => $perPage,
         ]);
 
         $response
@@ -264,7 +264,7 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $perPage,
                 'has_more_pages' => true,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 }

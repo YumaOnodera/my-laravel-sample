@@ -23,7 +23,7 @@ class DestroyTest extends TestCase
         $user = User::factory()->create();
         $post = Post::factory()->create();
 
-        $response = $this->actingAs($user)->delete(self::API_URL . '/' . $post->id);
+        $response = $this->actingAs($user)->delete(self::API_URL.'/'.$post->id);
 
         $isExists = Post::where('id', $post->id)->exists();
 
@@ -43,10 +43,10 @@ class DestroyTest extends TestCase
         $requestUser = User::factory()->create();
         $otherUser = User::factory()->create();
         $post = Post::factory()->create([
-            'user_id' => $otherUser->id
+            'user_id' => $otherUser->id,
         ]);
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $post->id);
+        $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$post->id);
 
         $response->assertStatus(403);
     }
@@ -60,7 +60,7 @@ class DestroyTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->delete(self::API_URL . '/' . 1);
+        $response = $this->actingAs($user)->delete(self::API_URL.'/'. 1);
 
         $response->assertStatus(422);
     }

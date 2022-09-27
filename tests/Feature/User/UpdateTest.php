@@ -23,12 +23,12 @@ class UpdateTest extends TestCase
     public function test_admin_user_can_update_data()
     {
         $user = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
         $name = Factory::create('ja_JP')->name();
 
         $response = $this->actingAs($user)->put(self::API_URL, [
-            'name' => $name
+            'name' => $name,
         ]);
 
         $user->name = $name;
@@ -55,7 +55,7 @@ class UpdateTest extends TestCase
         $name = Factory::create('ja_JP')->name();
 
         $response = $this->actingAs($user)->put(self::API_URL, [
-            'name' => $name
+            'name' => $name,
         ]);
 
         $user->name = $name;
@@ -75,11 +75,11 @@ class UpdateTest extends TestCase
     /**
      * 2つのModelの値が同じ値であることを確認する
      *
-     * @param Model $expected
-     * @param Model $actual
+     * @param  Model  $expected
+     * @param  Model  $actual
      * @return void
      */
-    public function assertSameData (Model $expected, Model $actual)
+    public function assertSameData(Model $expected, Model $actual)
     {
         $this->assertSame($expected->name, $actual->name);
         $this->assertSame($expected->email, $actual->email);

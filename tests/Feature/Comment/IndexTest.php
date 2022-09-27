@@ -29,8 +29,9 @@ class IndexTest extends TestCase
         $perPage = config('const.PER_PAGE.CURSOR_PAGINATE');
         $expected = $comments
             ->where('post_id', $post->id)
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->chunk($perPage)[0]
@@ -38,7 +39,7 @@ class IndexTest extends TestCase
             ->toArray();
 
         $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'post_id' => $post->id
+            'post_id' => $post->id,
         ]);
 
         $actual = $response->json();
@@ -50,7 +51,7 @@ class IndexTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'total' => $total,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -69,8 +70,9 @@ class IndexTest extends TestCase
         $perPage = config('const.PER_PAGE.CURSOR_PAGINATE');
         $expected = $comments
             ->where('post_id', $post->id)
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->chunk($perPage)[1]
@@ -78,14 +80,14 @@ class IndexTest extends TestCase
             ->toArray();
 
         $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'post_id' => $post->id
+            'post_id' => $post->id,
         ]);
         $nextCursor = $response->json()['next_cursor'];
 
         $nextResponse = $this
             ->actingAs($users->first())
-            ->post(self::API_URL . '?cursor=' . $nextCursor, [
-                'post_id' => $post->id
+            ->post(self::API_URL.'?cursor='.$nextCursor, [
+                'post_id' => $post->id,
             ]);
 
         $actual = $nextResponse->json();
@@ -97,7 +99,7 @@ class IndexTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'total' => $total,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -117,8 +119,9 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $comments
             ->where('post_id', $post->id)
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->chunk($perPage)[$lastPage - 1]
@@ -126,14 +129,14 @@ class IndexTest extends TestCase
             ->toArray();
 
         $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'post_id' => $post->id
+            'post_id' => $post->id,
         ]);
         $nextCursor = $response->json()['next_cursor'];
 
         $nextResponse = $this
             ->actingAs($users->first())
-            ->post(self::API_URL . '?cursor=' . $nextCursor, [
-                'post_id' => $post->id
+            ->post(self::API_URL.'?cursor='.$nextCursor, [
+                'post_id' => $post->id,
             ]);
 
         $actual = $nextResponse->json();
@@ -145,7 +148,7 @@ class IndexTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'total' => $total,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -163,8 +166,9 @@ class IndexTest extends TestCase
         $total = $comments->count();
         $perPage = config('const.PER_PAGE.CURSOR_PAGINATE');
         $expected = $comments
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->sortBy('created_at')
@@ -176,7 +180,7 @@ class IndexTest extends TestCase
         $response = $this->actingAs($users->first())->post(self::API_URL, [
             'post_id' => $post->id,
             'order_by' => 'created_at',
-            'order' => 'asc'
+            'order' => 'asc',
         ]);
 
         $actual = $response->json();
@@ -188,7 +192,7 @@ class IndexTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'total' => $total,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -206,8 +210,9 @@ class IndexTest extends TestCase
         $total = $comments->count();
         $perPage = config('const.PER_PAGE.CURSOR_PAGINATE');
         $expected = $comments
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->sortByDesc('created_at')
@@ -219,7 +224,7 @@ class IndexTest extends TestCase
         $response = $this->actingAs($users->first())->post(self::API_URL, [
             'post_id' => $post->id,
             'order_by' => 'created_at',
-            'order' => 'desc'
+            'order' => 'desc',
         ]);
 
         $actual = $response->json();
@@ -231,7 +236,7 @@ class IndexTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'total' => $total,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -255,8 +260,9 @@ class IndexTest extends TestCase
         $total = $comments->count();
         $perPage = config('const.PER_PAGE.CURSOR_PAGINATE');
         $expected = $comments
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->chunk($perPage)[0]
@@ -264,7 +270,7 @@ class IndexTest extends TestCase
             ->toArray();
 
         $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'post_id' => $post_id
+            'post_id' => $post_id,
         ]);
 
         $actual = $response->json();
@@ -276,7 +282,7 @@ class IndexTest extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'total' => $total,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 class CheckDeletedUserAction
 {
     /**
-     * @param LoginRequest $request
+     * @param  LoginRequest  $request
      * @return bool
      */
     public function __invoke(LoginRequest $request): bool

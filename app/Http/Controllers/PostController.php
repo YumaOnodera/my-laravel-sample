@@ -20,8 +20,8 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param IndexRequest $request
-     * @param IndexAction $action
+     * @param  IndexRequest  $request
+     * @param  IndexAction  $action
      * @return JsonResponse
      */
     public function index(IndexRequest $request, IndexAction $action): JsonResponse
@@ -43,8 +43,8 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreRequest $request
-     * @param StoreAction $action
+     * @param  StoreRequest  $request
+     * @param  StoreAction  $action
      * @return PostResource
      */
     public function store(StoreRequest $request, StoreAction $action): PostResource
@@ -55,8 +55,8 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @param ShowAction $action
+     * @param  int  $id
+     * @param  ShowAction  $action
      * @return PostResource
      */
     public function show(int $id, ShowAction $action): PostResource
@@ -67,9 +67,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateRequest $request
-     * @param int $id
-     * @param UpdateAction $action
+     * @param  UpdateRequest  $request
+     * @param  int  $id
+     * @param  UpdateAction  $action
      * @return PostResource
      */
     public function update(UpdateRequest $request, int $id, UpdateAction $action): PostResource
@@ -80,9 +80,9 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param DestroyRequest $request
-     * @param int $id
-     * @param DestroyAction $action
+     * @param  DestroyRequest  $request
+     * @param  int  $id
+     * @param  DestroyAction  $action
      * @return Response
      */
     public function destroy(DestroyRequest $request, int $id, DestroyAction $action): Response

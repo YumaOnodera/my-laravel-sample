@@ -14,7 +14,7 @@ class IndexAction
     private PaginateService $paginateService;
 
     /**
-     * @param PaginateService $paginateService
+     * @param  PaginateService  $paginateService
      */
     public function __construct(PaginateService $paginateService)
     {
@@ -22,7 +22,7 @@ class IndexAction
     }
 
     /**
-     * @param IndexRequest $request
+     * @param  IndexRequest  $request
      * @return array
      */
     public function __invoke(IndexRequest $request): array

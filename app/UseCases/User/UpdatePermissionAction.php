@@ -8,8 +8,8 @@ use App\Models\User;
 class UpdatePermissionAction
 {
     /**
-     * @param UpdatePermissionRequest $request
-     * @param int $id
+     * @param  UpdatePermissionRequest  $request
+     * @param  int  $id
      * @return void
      */
     public function __invoke(UpdatePermissionRequest $request, int $id): void

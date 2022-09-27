@@ -20,7 +20,7 @@ class MySelfTest extends TestCase
     public function test_admin_user_can_view_data()
     {
         $user = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
 
         $response = $this->actingAs($user)->get(self::API_URL);

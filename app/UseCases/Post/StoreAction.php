@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class StoreAction
 {
     /**
-     * @param StoreRequest $request
+     * @param  StoreRequest  $request
      * @return Model
      */
     public function __invoke(StoreRequest $request): Model

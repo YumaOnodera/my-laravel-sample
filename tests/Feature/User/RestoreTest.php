@@ -24,10 +24,10 @@ class RestoreTest extends TestCase
         Mail::fake();
 
         $requestUser = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
         $otherUser = User::factory()->create([
-            'deleted_at' => now()
+            'deleted_at' => now(),
         ]);
 
         $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'restore');
@@ -54,7 +54,7 @@ class RestoreTest extends TestCase
     {
         $requestUser = User::factory()->create();
         $otherUser = User::factory()->create([
-            'deleted_at' => now()
+            'deleted_at' => now(),
         ]);
 
         $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'restore');
@@ -71,7 +71,7 @@ class RestoreTest extends TestCase
     public function test_not_found()
     {
         $requestUser = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
 
         $uri = sprintf('%s/%s/%s', self::API_URL, 2, 'restore');
@@ -88,7 +88,7 @@ class RestoreTest extends TestCase
     public function test_can_not_restore_not_soft_delete_data()
     {
         $requestUser = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
         $otherUser = User::factory()->create();
 

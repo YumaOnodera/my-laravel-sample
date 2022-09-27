@@ -26,9 +26,9 @@ class EmailVerification extends VerifyEmail
             ->lines([
                 __('mail.email_verification.line_01', [
                     'appName' => config('app.name'),
-                    'user' => $notifiable->name
+                    'user' => $notifiable->name,
                 ]),
-                __('mail.email_verification.line_02')
+                __('mail.email_verification.line_02'),
             ])
             ->action(__('mail.email_verification.action'), $verificationUrl)
             ->line(__('mail.email_verification.line_03'))

@@ -19,7 +19,7 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => User::inRandomOrder()->first()->id,
-            'text' =>  $this->faker->realText()
+            'text' => $this->faker->realText(),
         ];
     }
 }

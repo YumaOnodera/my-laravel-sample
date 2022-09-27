@@ -21,7 +21,7 @@ class CommentFactory extends Factory
         return [
             'post_id' => Post::inRandomOrder()->first()->id,
             'user_id' => User::inRandomOrder()->first()->id,
-            'text' =>  $this->faker->realText()
+            'text' => $this->faker->realText(),
         ];
     }
 }

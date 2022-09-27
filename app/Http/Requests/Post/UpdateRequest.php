@@ -17,7 +17,7 @@ class UpdateRequest extends FormRequest
     {
         $post = Post::where('id', $this->id)->first();
 
-        if (!$post) {
+        if (! $post) {
             return true;
         }
 
@@ -34,9 +34,9 @@ class UpdateRequest extends FormRequest
         return [
             'id' => [
                 'required',
-                Rule::exists('posts', 'id')
+                Rule::exists('posts', 'id'),
             ],
-            'text' => 'required|string|max:20000'
+            'text' => 'required|string|max:20000',
         ];
     }
 

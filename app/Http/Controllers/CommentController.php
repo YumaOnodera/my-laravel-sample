@@ -10,7 +10,6 @@ use App\UseCases\Comment\DestroyAction;
 use App\UseCases\Comment\IndexAction;
 use App\UseCases\Comment\StoreAction;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class CommentController extends Controller
@@ -18,8 +17,8 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param IndexRequest $request
-     * @param IndexAction $action
+     * @param  IndexRequest  $request
+     * @param  IndexAction  $action
      * @return JsonResponse
      */
     public function index(IndexRequest $request, IndexAction $action): JsonResponse
@@ -37,8 +36,8 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreRequest $request
-     * @param StoreAction $action
+     * @param  StoreRequest  $request
+     * @param  StoreAction  $action
      * @return CommentResource
      */
     public function store(StoreRequest $request, StoreAction $action): CommentResource
@@ -49,9 +48,9 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param DestroyRequest $request
-     * @param int $id
-     * @param DestroyAction $action
+     * @param  DestroyRequest  $request
+     * @param  int  $id
+     * @param  DestroyAction  $action
      * @return Response
      */
     public function destroy(DestroyRequest $request, int $id, DestroyAction $action): Response

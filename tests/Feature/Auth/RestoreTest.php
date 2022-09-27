@@ -25,7 +25,7 @@ class RestoreTest extends TestCase
         Mail::fake();
 
         $user = User::factory()->create([
-            'deleted_at' => now()
+            'deleted_at' => now(),
         ]);
 
         $response = $this->post(self::API_URL, [
@@ -53,7 +53,7 @@ class RestoreTest extends TestCase
     public function test_can_not_restore_data_with_invalid_password()
     {
         $user = User::factory()->create([
-            'deleted_at' => now()
+            'deleted_at' => now(),
         ]);
 
         $this->expectException(RuntimeException::class);

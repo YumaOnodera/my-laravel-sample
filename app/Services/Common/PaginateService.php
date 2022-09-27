@@ -9,10 +9,10 @@ class PaginateService
     /**
      * 通常ページングのレスポンスを生成する
      *
-     * @param Builder $builder
-     * @param int $perPage
-     * @param string|null $order_by
-     * @param string|null $order
+     * @param  Builder  $builder
+     * @param  int  $perPage
+     * @param  string|null  $order_by
+     * @param  string|null  $order
      * @return array
      */
     public function paginate(
@@ -43,10 +43,10 @@ class PaginateService
     /**
      * カーソルページングのレスポンスを生成する
      *
-     * @param Builder $builder
-     * @param int $perPage
-     * @param string|null $order_by
-     * @param string|null $order
+     * @param  Builder  $builder
+     * @param  int  $perPage
+     * @param  string|null  $order_by
+     * @param  string|null  $order
      * @return array
      */
     public function cursorPaginate(
@@ -73,13 +73,14 @@ class PaginateService
     }
 
     /**
-     * @param string|null $url
+     * @param  string|null  $url
      * @return string|null
      */
     private function getCursor(string|null $url): string|null
     {
         if ($url) {
             parse_str(parse_url($url, PHP_URL_QUERY), $query);
+
             return $query['cursor'];
         }
 

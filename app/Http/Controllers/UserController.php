@@ -27,7 +27,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return UserResource
      */
     public function mySelf(Request $request): UserResource
@@ -38,8 +38,8 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param IndexRequest $request
-     * @param IndexAction $action
+     * @param  IndexRequest  $request
+     * @param  IndexAction  $action
      * @return JsonResponse
      */
     public function index(IndexRequest $request, IndexAction $action): JsonResponse
@@ -61,9 +61,9 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Request $request
-     * @param int $id
-     * @param ShowAction $action
+     * @param  Request  $request
+     * @param  int  $id
+     * @param  ShowAction  $action
      * @return UserResource
      */
     public function show(Request $request, int $id, ShowAction $action): UserResource
@@ -74,8 +74,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateRequest $request
-     * @param UpdateAction $action
+     * @param  UpdateRequest  $request
+     * @param  UpdateAction  $action
      * @return UserResource
      */
     public function update(UpdateRequest $request, UpdateAction $action): UserResource
@@ -86,8 +86,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateEmailRequest $request
-     * @param UpdateEmailAction $action
+     * @param  UpdateEmailRequest  $request
+     * @param  UpdateEmailAction  $action
      * @return Response
      */
     public function updateEmail(UpdateEmailRequest $request, UpdateEmailAction $action): Response
@@ -100,8 +100,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdatePasswordRequest $request
-     * @param UpdatePasswordAction $action
+     * @param  UpdatePasswordRequest  $request
+     * @param  UpdatePasswordAction  $action
      * @return Response
      */
     public function updatePassword(UpdatePasswordRequest $request, UpdatePasswordAction $action): Response
@@ -114,9 +114,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdatePermissionRequest $request
-     * @param int $id
-     * @param UpdatePermissionAction $action
+     * @param  UpdatePermissionRequest  $request
+     * @param  int  $id
+     * @param  UpdatePermissionAction  $action
      * @return Response
      */
     public function updatePermission(UpdatePermissionRequest $request, int $id, UpdatePermissionAction $action): Response
@@ -129,9 +129,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param DestroyRequest $request
-     * @param int $id
-     * @param DestroyAction $action
+     * @param  DestroyRequest  $request
+     * @param  int  $id
+     * @param  DestroyAction  $action
      * @return Response
      */
     public function destroy(DestroyRequest $request, int $id, DestroyAction $action): Response
@@ -144,9 +144,9 @@ class UserController extends Controller
     /**
      * Restore the specified resource from storage.
      *
-     * @param RestoreRequest $request
-     * @param int $id
-     * @param RestoreAction $action
+     * @param  RestoreRequest  $request
+     * @param  int  $id
+     * @param  RestoreAction  $action
      * @return Response
      */
     public function restore(RestoreRequest $request, int $id, RestoreAction $action): Response

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 class UpdatePasswordAction
 {
     /**
-     * @param UpdatePasswordRequest $request
+     * @param  UpdatePasswordRequest  $request
      * @return void
      */
     public function __invoke(UpdatePasswordRequest $request): void
@@ -18,7 +18,7 @@ class UpdatePasswordAction
         $user = $request->user();
 
         $user->update([
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
         ]);
 
         Mail::to($request->user())->send(new UpdatePassword($user));

@@ -20,6 +20,7 @@ class StoreTest extends TestCase
      * 対象データが送信した値で作成されることを確認する
      *
      * @return void
+     *
      * @throws Throwable
      */
     public function test_can_store_data()
@@ -30,7 +31,7 @@ class StoreTest extends TestCase
 
         $response = $this->actingAs($user)->post(self::API_URL, [
             'post_id' => $post->id,
-            'text' => $text
+            'text' => $text,
         ]);
 
         $actual = $response->json();

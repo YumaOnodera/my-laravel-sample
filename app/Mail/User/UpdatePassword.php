@@ -35,7 +35,7 @@ class UpdatePassword extends Mailable
     {
         return $this->markdown('emails.users.update-password', [
             'user' => $this->user->name,
-            'actionUrl' => config('app.frontend_url') . '/forgot-password'
+            'actionUrl' => config('app.frontend_url').'/forgot-password',
         ])
             ->subject(__('mail.update_password.subject'));
     }

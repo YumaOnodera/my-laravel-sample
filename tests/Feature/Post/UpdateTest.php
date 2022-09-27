@@ -26,8 +26,8 @@ class UpdateTest extends TestCase
         $post = Post::factory()->create();
         $text = Factory::create('ja_JP')->realText();
 
-        $response = $this->actingAs($user)->put(self::API_URL . '/' . $post->id, [
-            'text' => $text
+        $response = $this->actingAs($user)->put(self::API_URL.'/'.$post->id, [
+            'text' => $text,
         ]);
 
         $post->text = $text;
@@ -54,12 +54,12 @@ class UpdateTest extends TestCase
         $requestUser = User::factory()->create();
         $otherUser = User::factory()->create();
         $post = Post::factory()->create([
-            'user_id' => $otherUser->id
+            'user_id' => $otherUser->id,
         ]);
         $text = Factory::create('ja_JP')->realText();
 
-        $response = $this->actingAs($requestUser)->put(self::API_URL . '/' . $post->id, [
-            'text' => $text
+        $response = $this->actingAs($requestUser)->put(self::API_URL.'/'.$post->id, [
+            'text' => $text,
         ]);
 
         $response->assertStatus(403);
@@ -74,7 +74,7 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->put(self::API_URL . '/' . 1);
+        $response = $this->actingAs($user)->put(self::API_URL.'/'. 1);
 
         $response->assertStatus(422);
     }
@@ -82,11 +82,11 @@ class UpdateTest extends TestCase
     /**
      * 2つのModelの値が同じ値であることを確認する
      *
-     * @param Model $expected
-     * @param Model $actual
+     * @param  Model  $expected
+     * @param  Model  $actual
      * @return void
      */
-    public function assertSameData (Model $expected, Model $actual)
+    public function assertSameData(Model $expected, Model $actual)
     {
         $this->assertSame($expected->user_id, $actual->user_id);
         $this->assertSame($expected->text, $actual->text);

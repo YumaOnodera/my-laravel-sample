@@ -20,10 +20,10 @@ class ShowTest extends TestCase
     public function test_admin_user_can_view_data()
     {
         $user = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
 
-        $response = $this->actingAs($user)->get(self::API_URL . '/' . $user->id);
+        $response = $this->actingAs($user)->get(self::API_URL.'/'.$user->id);
 
         $response
             ->assertStatus(200)
@@ -39,7 +39,7 @@ class ShowTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->get(self::API_URL . '/' . $user->id);
+        $response = $this->actingAs($user)->get(self::API_URL.'/'.$user->id);
 
         $filteredUser = $user->only('id', 'name');
 
@@ -56,13 +56,13 @@ class ShowTest extends TestCase
     public function test_admin_user_can_view_soft_delete_data()
     {
         $requestUser = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
         $otherUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
 
-        $response = $this->actingAs($requestUser)->get(self::API_URL . '/' . $otherUser->id);
+        $response = $this->actingAs($requestUser)->get(self::API_URL.'/'.$otherUser->id);
 
         $response
             ->assertStatus(200)
@@ -81,7 +81,7 @@ class ShowTest extends TestCase
             'deleted_at' => now(),
         ]);
 
-        $response = $this->actingAs($requestUser)->get(self::API_URL . '/' . $otherUser->id);
+        $response = $this->actingAs($requestUser)->get(self::API_URL.'/'.$otherUser->id);
 
         $response->assertStatus(404);
     }
@@ -94,10 +94,10 @@ class ShowTest extends TestCase
     public function test_not_found()
     {
         $user = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
 
-        $response = $this->actingAs($user)->get(self::API_URL . '/' . 2);
+        $response = $this->actingAs($user)->get(self::API_URL.'/'. 2);
 
         $response->assertStatus(404);
     }

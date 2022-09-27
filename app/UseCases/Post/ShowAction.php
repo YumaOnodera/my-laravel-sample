@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShowAction
 {
     /**
-     * @param int $id
+     * @param  int  $id
      * @return Model
      */
     public function __invoke(int $id): Model

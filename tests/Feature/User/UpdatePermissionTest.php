@@ -21,13 +21,13 @@ class UpdatePermissionTest extends TestCase
     public function test_admin_user_can_update_data_to_admin()
     {
         $requestUser = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
         $otherUser = User::factory()->create();
 
         $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'update-permission');
         $response = $this->actingAs($requestUser)->put($uri, [
-            'is_admin' => true
+            'is_admin' => true,
         ]);
 
         $otherUser->is_admin = true;
@@ -48,15 +48,15 @@ class UpdatePermissionTest extends TestCase
     public function test_admin_user_can_update_data_to_general()
     {
         $requestUser = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
         $otherUser = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
 
         $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'update-permission');
         $response = $this->actingAs($requestUser)->put($uri, [
-            'is_admin' => false
+            'is_admin' => false,
         ]);
 
         $otherUser->is_admin = false;
@@ -81,7 +81,7 @@ class UpdatePermissionTest extends TestCase
 
         $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'update-permission');
         $response = $this->actingAs($requestUser)->put($uri, [
-            'is_admin' => true
+            'is_admin' => true,
         ]);
 
         $response->assertStatus(403);
@@ -90,11 +90,11 @@ class UpdatePermissionTest extends TestCase
     /**
      * 2つのModelの値が同じ値であることを確認する
      *
-     * @param Model $expected
-     * @param Model $actual
+     * @param  Model  $expected
+     * @param  Model  $actual
      * @return void
      */
-    public function assertSameData (Model $expected, Model $actual)
+    public function assertSameData(Model $expected, Model $actual)
     {
         $this->assertSame($expected->name, $actual->name);
         $this->assertSame($expected->email, $actual->email);

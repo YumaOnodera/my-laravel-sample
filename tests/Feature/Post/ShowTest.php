@@ -23,7 +23,7 @@ class ShowTest extends TestCase
         $user = User::factory()->create();
         $post = Post::factory()->create();
 
-        $response = $this->actingAs($user)->get(self::API_URL . '/' . $post->id);
+        $response = $this->actingAs($user)->get(self::API_URL.'/'.$post->id);
 
         $post->created_by = $user->name;
 
@@ -41,7 +41,7 @@ class ShowTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->get(self::API_URL . '/' . 1);
+        $response = $this->actingAs($user)->get(self::API_URL.'/'. 1);
 
         $response->assertStatus(404);
     }

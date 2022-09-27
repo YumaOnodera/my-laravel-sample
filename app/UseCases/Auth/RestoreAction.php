@@ -12,7 +12,7 @@ use RuntimeException;
 class RestoreAction
 {
     /**
-     * @param LoginRequest $request
+     * @param  LoginRequest  $request
      * @return void
      */
     public function __invoke(LoginRequest $request): void
@@ -22,7 +22,7 @@ class RestoreAction
             ->whereNotNull('deleted_at')
             ->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             throw new RuntimeException(__('exception.auth.restore'));
         }
 

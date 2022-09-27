@@ -30,7 +30,7 @@ class DestroyRequest extends FormRequest
             'id' => [
                 'required',
                 Rule::exists('users', 'id')
-                    ->withoutTrashed()
+                    ->withoutTrashed(),
             ],
         ];
     }

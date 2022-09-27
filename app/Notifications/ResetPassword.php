@@ -28,7 +28,7 @@ class ResetPassword extends BaseResetPassword
             ->action(__('mail.reset_password.action'), $resetPasswordUrl)
             ->lines([
                 __('mail.reset_password.line_02', ['count' => $expiration]),
-                __('mail.reset_password.line_03')
+                __('mail.reset_password.line_03'),
             ]);
     }
 }

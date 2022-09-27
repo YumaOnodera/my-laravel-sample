@@ -84,7 +84,7 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * @param Throwable $e
+     * @param  Throwable  $e
      * @return string
      */
     protected function createMessage(Throwable $e): string

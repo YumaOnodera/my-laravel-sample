@@ -25,7 +25,7 @@ class DestroyTest extends TestCase
 
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->delete(self::API_URL . '/' . $user->id);
+        $response = $this->actingAs($user)->delete(self::API_URL.'/'.$user->id);
 
         $afterUpdate = User::withTrashed()->where('id', $user->id)->first();
 
@@ -49,11 +49,11 @@ class DestroyTest extends TestCase
         Mail::fake();
 
         $requestUser = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
         $otherUser = User::factory()->create();
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $otherUser->id);
+        $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$otherUser->id);
 
         $afterUpdate = User::withTrashed()->where('id', $otherUser->id)->first();
 
@@ -77,7 +77,7 @@ class DestroyTest extends TestCase
         $requestUser = User::factory()->create();
         $otherUser = User::factory()->create();
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $otherUser->id);
+        $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$otherUser->id);
 
         $response->assertStatus(403);
     }
@@ -90,10 +90,10 @@ class DestroyTest extends TestCase
     public function test_not_found()
     {
         $user = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
 
-        $response = $this->actingAs($user)->delete(self::API_URL . '/' . 2);
+        $response = $this->actingAs($user)->delete(self::API_URL.'/'. 2);
 
         $response->assertStatus(422);
     }
@@ -106,13 +106,13 @@ class DestroyTest extends TestCase
     public function test_can_not_delete_soft_delete_data()
     {
         $requestUser = User::factory()->create([
-            'is_admin' => 1
+            'is_admin' => 1,
         ]);
         $otherUser = User::factory()->create([
-            'deleted_at' => now()
+            'deleted_at' => now(),
         ]);
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL . '/' . $otherUser->id);
+        $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$otherUser->id);
 
         $response->assertStatus(422);
     }

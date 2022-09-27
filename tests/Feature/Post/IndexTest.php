@@ -27,8 +27,9 @@ class IndexTest extends TestCase
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->chunk($perPage)[0]
@@ -47,7 +48,7 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $perPage,
                 'has_more_pages' => true,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -65,15 +66,16 @@ class IndexTest extends TestCase
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->chunk($perPage)[1]
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL . '?page=2');
+        $response = $this->actingAs($users->first())->post(self::API_URL.'?page=2');
 
         $response
             ->assertStatus(200)
@@ -85,7 +87,7 @@ class IndexTest extends TestCase
                 'first_item' => $perPage + 1,
                 'last_item' => $perPage * 2,
                 'has_more_pages' => true,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -104,15 +106,16 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $firstItem = $perPage * ($lastPage - 1) + 1;
         $expected = $posts
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->chunk($perPage)[$lastPage - 1]
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL . '?page=' . $lastPage);
+        $response = $this->actingAs($users->first())->post(self::API_URL.'?page='.$lastPage);
 
         $response
             ->assertStatus(200)
@@ -124,7 +127,7 @@ class IndexTest extends TestCase
                 'first_item' => $firstItem,
                 'last_item' => $total,
                 'has_more_pages' => false,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -142,8 +145,9 @@ class IndexTest extends TestCase
         $perPage = 15;
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->chunk($perPage)[0]
@@ -151,7 +155,7 @@ class IndexTest extends TestCase
             ->toArray();
 
         $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'per_page' => $perPage
+            'per_page' => $perPage,
         ]);
 
         $response
@@ -164,7 +168,7 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $perPage,
                 'has_more_pages' => true,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -182,8 +186,9 @@ class IndexTest extends TestCase
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->sortBy('created_at')
@@ -194,7 +199,7 @@ class IndexTest extends TestCase
 
         $response = $this->actingAs($users->first())->post(self::API_URL, [
             'order_by' => 'created_at',
-            'order' => 'asc'
+            'order' => 'asc',
         ]);
 
         $response
@@ -207,7 +212,7 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $perPage,
                 'has_more_pages' => true,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -225,8 +230,9 @@ class IndexTest extends TestCase
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->sortByDesc('created_at')
@@ -237,7 +243,7 @@ class IndexTest extends TestCase
 
         $response = $this->actingAs($users->first())->post(self::API_URL, [
             'order_by' => 'created_at',
-            'order' => 'desc'
+            'order' => 'desc',
         ]);
 
         $response
@@ -250,7 +256,7 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $perPage,
                 'has_more_pages' => true,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 
@@ -274,8 +280,9 @@ class IndexTest extends TestCase
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function($item) use ($users) {
+            ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
+
                 return $item;
             })
             ->chunk($perPage)[0]
@@ -283,7 +290,7 @@ class IndexTest extends TestCase
             ->toArray();
 
         $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'user_ids' => $user_ids
+            'user_ids' => $user_ids,
         ]);
 
         $response
@@ -296,7 +303,7 @@ class IndexTest extends TestCase
                 'first_item' => 1,
                 'last_item' => $total,
                 'has_more_pages' => false,
-                'data' => $expected
+                'data' => $expected,
             ]);
     }
 }

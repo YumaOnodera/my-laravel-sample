@@ -18,7 +18,7 @@ class CheckDeletedUserTest extends TestCase
     public function test_deleted_user()
     {
         $user = User::factory()->create([
-            'deleted_at' => now()
+            'deleted_at' => now(),
         ]);
 
         $response = $this->post('/deleted-user/check', [
@@ -29,7 +29,7 @@ class CheckDeletedUserTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertExactJson([
-                'is_deleted' => true
+                'is_deleted' => true,
             ]);
     }
 
@@ -50,7 +50,7 @@ class CheckDeletedUserTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertExactJson([
-                'is_deleted' => false
+                'is_deleted' => false,
             ]);
     }
 
@@ -62,7 +62,7 @@ class CheckDeletedUserTest extends TestCase
     public function test_deleted_user_with_invalid_password()
     {
         $user = User::factory()->create([
-            'deleted_at' => now()
+            'deleted_at' => now(),
         ]);
 
         $response = $this->post('/deleted-user/check', [
@@ -73,7 +73,7 @@ class CheckDeletedUserTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertExactJson([
-                'is_deleted' => false
+                'is_deleted' => false,
             ]);
     }
 }

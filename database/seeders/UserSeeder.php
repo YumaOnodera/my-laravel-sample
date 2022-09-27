@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         User::factory()
             ->count(50)
             ->sequence(fn ($sequence) => [
-                'is_admin' => $sequence->index === 0 ? 1 : 0
+                'is_admin' => $sequence->index === 0 ? 1 : 0,
             ])
             ->create();
     }

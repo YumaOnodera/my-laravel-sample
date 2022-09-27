@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UpdateAction
 {
     /**
-     * @param UpdateRequest $request
+     * @param  UpdateRequest  $request
      * @return Model
      */
     public function __invoke(UpdateRequest $request): Model

@@ -12,8 +12,8 @@ class CheckDeletedUserController extends Controller
     /**
      * メールアドレスとパスワードをもとにユーザーを取得し、対象ユーザーが削除済みかどうかを判定する。
      *
-     * @param LoginRequest $request
-     * @param CheckDeletedUserAction $action
+     * @param  LoginRequest  $request
+     * @param  CheckDeletedUserAction  $action
      * @return JsonResponse
      */
     public function isDeleted(LoginRequest $request, CheckDeletedUserAction $action): JsonResponse

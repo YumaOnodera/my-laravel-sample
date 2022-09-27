@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class UpdateAction
 {
     /**
-     * @param UpdateRequest $request
-     * @param int $id
+     * @param  UpdateRequest  $request
+     * @param  int  $id
      * @return Model
      */
     public function __invoke(UpdateRequest $request, int $id): Model
@@ -18,7 +18,7 @@ class UpdateAction
         $post = Post::where('id', $id);
 
         $post->update([
-            'text' => $request->text
+            'text' => $request->text,
         ]);
 
         return $post->first();

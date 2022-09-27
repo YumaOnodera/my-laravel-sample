@@ -17,7 +17,7 @@ class DestroyRequest extends FormRequest
     {
         $post = Post::where('id', $this->id)->first();
 
-        if (!$post) {
+        if (! $post) {
             return true;
         }
 
@@ -34,7 +34,7 @@ class DestroyRequest extends FormRequest
         return [
             'id' => [
                 'required',
-                Rule::exists('posts', 'id')
+                Rule::exists('posts', 'id'),
             ],
         ];
     }

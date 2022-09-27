@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 class ShowAction
 {
     /**
-     * @param Request $request
-     * @param int $id
+     * @param  Request  $request
+     * @param  int  $id
      * @return Model
      */
     public function __invoke(Request $request, int $id): Model

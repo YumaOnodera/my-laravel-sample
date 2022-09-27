@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Mail;
 class RestoreAction
 {
     /**
-     * @param RestoreRequest $request
-     * @param int $id
+     * @param  RestoreRequest  $request
+     * @param  int  $id
      * @return void
      */
     public function __invoke(RestoreRequest $request, int $id): void

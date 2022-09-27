@@ -29,7 +29,7 @@ class UpdateEmailTest extends TestCase
         $email = Factory::create('ja_JP')->email();
 
         $response = $this->actingAs($user)->put(self::API_URL, [
-            'email' => $email
+            'email' => $email,
         ]);
 
         $user->email = $email;
@@ -48,11 +48,11 @@ class UpdateEmailTest extends TestCase
     /**
      * 2つのModelの値が同じ値であることを確認する
      *
-     * @param Model $expected
-     * @param Model $actual
+     * @param  Model  $expected
+     * @param  Model  $actual
      * @return void
      */
-    public function assertSameData (Model $expected, Model $actual)
+    public function assertSameData(Model $expected, Model $actual)
     {
         $this->assertSame($expected->name, $actual->name);
         $this->assertSame($expected->email, $actual->email);
