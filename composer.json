@@ -7,9 +7,12 @@
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
+        "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.14.1",
-        "laravel/tinker": "^2.7"
+        "laravel/scout": "^9.4",
+        "laravel/tinker": "^2.7",
+        "meilisearch/meilisearch-php": "^0.24.2"
     },
     "require-dev": {
         "brianium/paratest": "^6.6",
