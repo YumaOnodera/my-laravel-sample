@@ -12,10 +12,11 @@ use Illuminate\Database\Eloquent\MassPrunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, SoftDeletes, MassPrunable;
+    use HasFactory, Notifiable, SoftDeletes, MassPrunable, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -89,5 +90,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return $this->only('name');
     }
 }
