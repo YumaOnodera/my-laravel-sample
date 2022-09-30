@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
+use MeiliSearch\Client;
+use MeiliSearch\MeiliSearch;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         Sanctum::ignoreMigrations();
+
+        $this->updateFilterableAttributes();
     }
 
     /**
@@ -39,7 +43,12 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
     }
 
-    private function addQueryListener()
+    /**
+     * SQLログを出力する
+     *
+     * @return void
+     */
+    private function addQueryListener(): void
     {
         DB::listen(
             static function ($query) {
@@ -50,5 +59,27 @@ class AppServiceProvider extends ServiceProvider
                 Log::channel('sql')->debug(sprintf('%s (%.2fms)', $sql, $query->time));
             }
         );
+    }
+
+    /**
+     * フィルター可能な属性を検索エンジンに設定する
+     *
+     * @return void
+     */
+    private function updateFilterableAttributes(): void
+    {
+        if (class_exists(MeiliSearch::class)) {
+            $client = app(Client::class);
+            $config = config('scout.meilisearch.settings');
+            collect($config)
+                ->each(function ($settings, $class) use ($client) {
+                    $model = new $class;
+                    $index = $client->index($model->searchableAs());
+                    collect($settings)
+                        ->each(function ($params, $method) use ($index) {
+                            $index->{$method}($params);
+                        });
+                });
+        }
     }
 }
