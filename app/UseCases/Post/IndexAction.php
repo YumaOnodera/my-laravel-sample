@@ -27,7 +27,11 @@ class IndexAction
      */
     public function __invoke(IndexRequest $request): array
     {
-        $posts = Post::with('user');
+        if ($request->keyword) {
+            $posts = Post::search($request->keyword);
+        } else {
+            $posts = Post::with('user');
+        }
 
         if ($request->user_ids) {
             $posts->whereIn('user_id', $request->user_ids);

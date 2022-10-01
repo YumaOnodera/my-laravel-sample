@@ -27,7 +27,11 @@ class IndexAction
      */
     public function __invoke(IndexRequest $request): array
     {
-        $users = User::query();
+        if ($request->keyword) {
+            $users = User::search($request->keyword);
+        } else {
+            $users = User::query();
+        }
 
         if ($request->user()->is_admin) {
             $users = $users->withTrashed();

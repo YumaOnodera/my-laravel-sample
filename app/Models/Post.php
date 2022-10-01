@@ -48,6 +48,6 @@ class Post extends Model
      */
     public function toSearchableArray(): array
     {
-        return $this->only('text');
+        return $this->only('user_id', 'text');
     }
 }

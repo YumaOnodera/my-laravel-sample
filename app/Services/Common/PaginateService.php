@@ -3,20 +3,21 @@
 namespace App\Services\Common;
 
 use Illuminate\Database\Eloquent\Builder;
+use Laravel\Scout\Builder as ScoutBuilder;
 
 class PaginateService
 {
     /**
      * 通常ページングのレスポンスを生成する
      *
-     * @param  Builder  $builder
+     * @param  Builder|ScoutBuilder  $builder
      * @param  int  $perPage
      * @param  string|null  $order_by
      * @param  string|null  $order
      * @return array
      */
     public function paginate(
-        Builder $builder,
+        Builder|ScoutBuilder $builder,
         int $perPage,
         string $order_by = null,
         string $order = null
