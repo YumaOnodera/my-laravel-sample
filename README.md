@@ -49,6 +49,23 @@ mailhogはローカル環境でメールの受信をテストできるメール�
 swagger-uiはAPIドキュメントを表示するためのコンテナです。  
 swagger-mergerを用いることで、分割して作成したSwaggerファイルをswagger-ui用に自動でマージできます。
 
+## モデルの説明
+以下は、my-laravel-sampleで用意したモデルです。  
+あくまでサンプルとして用意しただけなので、アプリケーションの要件に合わせて自由にカスタマイズしてください。
+
+### User
+ユーザーのモデルです。  
+削除は論理削除としています。  
+「MassPrunable」によって、論理削除されたユーザーは30日経過で物理削除するよう実装しています。  
+Laravel Scoutと連携し「Searchable」によってユーザー名による検索機能を実装しています。
+
+### Post
+投稿のモデルです。  
+Laravel Scoutと連携し「Searchable」によって投稿文による検索機能を実装しています。
+
+### Comment
+投稿に紐づくコメントのモデルです。
+
 ## 主なディレクトリの説明
 ### app/Console/Kernel.php
 バッチコマンドを定義します。
@@ -239,6 +256,27 @@ exit
 ./vendor/bin/sail php artisan test
 ```
 
+## URL
+フロントエンド
+```
+http://localhost:3000
+```
+
+Swagger UI
+```
+http://localhost:8080
+```
+
+MailHog
+```
+http://localhost:8025
+```
+
+Meilisearch
+```
+http://localhost:7700
+```
+
 ## よく使うコマンド集
 ### マイグレーションとシーディング
 マイグレーション
@@ -328,7 +366,7 @@ my-laravel-sampleはもともとは私自身がLaravelを学び直す上で作�
 
 今後も機能追加・修正等予定しているので、READMEもその都度更新していきます。
 
-機能を盛り込みすぎると扱いにくくなる恐れもあるので、ミニマルな設計を意識して開発していく方針です。
+機能を盛り込みすぎると扱いにくくなる恐れもあるので、なるべくミニマルな設計で開発していく方針です。
 
 ## ライセンス
 [MIT license](https://opensource.org/licenses/MIT) © YumaOnodera
