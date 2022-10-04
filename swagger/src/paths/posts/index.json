@@ -21,6 +21,11 @@
                 "schema": {
                     "type": "object",
                     "properties": {
+                        "keyword": {
+                            "type": "string",
+                            "example": "テスト",
+                            "description": "検索キーワード"
+                        },
                         "per_page": {
                             "type": "integer",
                             "example": 5,
