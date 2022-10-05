@@ -288,6 +288,16 @@ http://localhost:7700
 ./vendor/bin/sail php artisan db:seed
 ```
 
+### 検索インデックス
+検索インデックスにインポート
+```
+php artisan scout:import "モデルのファイルパス"
+```
+検索インデックスから全レコード削除
+```
+php artisan scout:flush "モデルのファイルパス"
+```
+
 ### テスト
 単体テスト
 ```
