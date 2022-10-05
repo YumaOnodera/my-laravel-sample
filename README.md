@@ -281,43 +281,43 @@ http://localhost:7700
 ### マイグレーションとシーディング
 マイグレーション
 ```
-./vendor/bin/sail php artisan migrate
+./vendor/bin/sail artisan migrate
 ```
 シーディング
 ```
-./vendor/bin/sail php artisan db:seed
+./vendor/bin/sail artisan db:seed
 ```
 
 ### 検索インデックス
 検索インデックスにインポート
 ```
-php artisan scout:import "モデルのファイルパス"
+./vendor/bin/sail artisan scout:import "モデルのファイルパス"
 ```
 検索インデックスから全レコード削除
 ```
-php artisan scout:flush "モデルのファイルパス"
+./vendor/bin/sail artisan scout:flush "モデルのファイルパス"
 ```
 
 ### テスト
 単体テスト
 ```
-./vendor/bin/sail php artisan test ファイルパス
+./vendor/bin/sail test ファイルパス
 ```
 全体テスト
 ```
-./vendor/bin/sail php artisan test
+./vendor/bin/sail test
 ```
 並列テスト
 ```
-./vendor/bin/sail php artisan test --parallel
+./vendor/bin/sail test --parallel
 ```
 テストカバレッジ
 ```
-./vendor/bin/sail php artisan test --coverage
+./vendor/bin/sail test --coverage
 ```
 並列テストとテストカバレッジ
 ```
-./vendor/bin/sail php artisan test --parallel --coverage
+./vendor/bin/sail test --parallel --coverage
 ```
 
 ### コードフォーマット
@@ -334,35 +334,35 @@ vendor/bin/pint --test
 ### ファイル作成
 モデル作成
 ```
-./vendor/bin/sail php artisan make:model ファイル名
+./vendor/bin/sail artisan make:model ファイル名
 ```
 マイグレーション作成
 ```
-./vendor/bin/sail php artisan make:migration ファイル名 --table=モデル
+./vendor/bin/sail artisan make:migration ファイル名 --table=モデル
 ```
 ファクトリ作成
 ```
-./vendor/bin/sail php artisan make:factory ファイル名
+./vendor/bin/sail artisan make:factory ファイル名
 ```
 シーダー作成
 ```
-./vendor/bin/sail php artisan make:seeder ファイル名
+./vendor/bin/sail artisan make:seeder ファイル名
 ```
 コントローラ作成
 ```
-./vendor/bin/sail php artisan make:controller ファイル名
+./vendor/bin/sail artisan make:controller ファイル名
 ```
 リソース作成
 ```
-./vendor/bin/sail php artisan make:resource ファイル名
+./vendor/bin/sail artisan make:resource ファイル名
 ```
 フォームリクエスト作成
 ```
-./vendor/bin/sail php artisan make:request ファイル名
+./vendor/bin/sail artisan make:request ファイル名
 ```
 テスト作成
 ```
-./vendor/bin/sail php artisan make:test ファイル名
+./vendor/bin/sail artisan make:test ファイル名
 ```
 
 ## 今後の開発方針
