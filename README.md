@@ -290,12 +290,16 @@ http://localhost:7700
 
 ### 検索インデックス
 検索インデックスにインポート
+
+例）
 ```
-./vendor/bin/sail artisan scout:import "モデルのファイルパス"
+./vendor/bin/sail artisan scout:import "App\Models\Post"
 ```
 検索インデックスから全レコード削除
+
+例）
 ```
-./vendor/bin/sail artisan scout:flush "モデルのファイルパス"
+./vendor/bin/sail artisan scout:flush "App\Models\Post"
 ```
 
 ### テスト
