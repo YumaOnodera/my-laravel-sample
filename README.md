@@ -253,7 +253,7 @@ exit
 
 - テストが成功することを確認
 ```
-./vendor/bin/sail php artisan test
+./vendor/bin/sail artisan test
 ```
 
 ## URL
