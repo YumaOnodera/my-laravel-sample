@@ -20,6 +20,7 @@ class UpdateAction
         $post->update([
             'text' => $request->text,
         ]);
+        $post->searchable();
 
         return $post->first();
     }

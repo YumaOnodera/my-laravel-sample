@@ -14,8 +14,11 @@ class UpdatePermissionAction
      */
     public function __invoke(UpdatePermissionRequest $request, int $id): void
     {
-        User::where('id', $id)->update([
+        $user = User::where('id', $id);
+
+        $user->update([
             'is_admin' => $request->is_admin,
         ]);
+        $user->searchable();
     }
 }

@@ -19,6 +19,7 @@ class RestoreAction
         $user = User::withTrashed()->findOrFail($id);
 
         $user->restore();
+        $user->searchable();
 
         Mail::to($request->user())
             ->cc($user)

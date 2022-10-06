@@ -19,6 +19,7 @@ class DestroyAction
         $user = User::findOrFail($id);
 
         $user->delete();
+        $user->searchable();
 
         Mail::to($request->user())
             ->cc($user)

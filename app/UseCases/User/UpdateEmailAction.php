@@ -18,6 +18,7 @@ class UpdateEmailAction
             'email' => $request->email,
             'email_verified_at' => null,
         ]);
+        $user->searchable();
 
         $user->sendEmailVerificationNotification();
     }

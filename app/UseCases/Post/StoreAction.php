@@ -14,9 +14,12 @@ class StoreAction
      */
     public function __invoke(StoreRequest $request): Model
     {
-        return Post::create([
+        $post = Post::create([
             'user_id' => $request->user()->id,
             'text' => $request->text,
         ]);
+        $post->searchable();
+
+        return $post;
     }
 }

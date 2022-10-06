@@ -27,6 +27,7 @@ class RestoreAction
         }
 
         $user->restore();
+        $user->searchable();
 
         Mail::to($user)->send(new Restore($user));
     }

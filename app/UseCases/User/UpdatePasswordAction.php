@@ -20,6 +20,7 @@ class UpdatePasswordAction
         $user->update([
             'password' => Hash::make($request->password),
         ]);
+        $user->searchable();
 
         Mail::to($request->user())->send(new UpdatePassword($user));
     }

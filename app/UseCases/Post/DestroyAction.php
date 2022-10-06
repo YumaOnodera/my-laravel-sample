@@ -14,6 +14,9 @@ class DestroyAction
      */
     public function __invoke(DestroyRequest $request, int $id): void
     {
-        Post::findOrFail($id)->delete();
+        $post = Post::findOrFail($id);
+
+        $post->delete();
+        $post->unsearchable();
     }
 }

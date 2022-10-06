@@ -18,7 +18,8 @@ class UpdateAction
         $user->update([
             'name' => $request->name,
         ]);
+        $user->searchable();
 
-        return $user->first();
+        return $user;
     }
 }

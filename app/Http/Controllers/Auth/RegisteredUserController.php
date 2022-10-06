@@ -33,6 +33,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        $user->searchable();
 
         event(new Registered($user));
 
