@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use App\Models\User;
 
 return [
 
@@ -85,7 +86,7 @@ return [
     |
     */
 
-    'soft_delete' => false,
+    'soft_delete' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -135,6 +136,9 @@ return [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY', null),
         'settings' => [
+            User::class => [
+                'updateFilterableAttributes' => ['__soft_deleted'],
+            ],
             Post::class => [
                 'updateFilterableAttributes' => ['user_id'],
             ],
