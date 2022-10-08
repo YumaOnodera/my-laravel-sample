@@ -172,12 +172,12 @@
         }
       }
     },
-    "/deleted-user/check": {
+    "/restore-token": {
       "post": {
         "tags": [
           "Auth"
         ],
-        "description": "メールアドレスとパスワードをもとにユーザーを取得し、対象ユーザーが削除済みかどうかを判定する。",
+        "description": "メールアドレスとパスワードをもとにユーザーを検索し、対象ユーザーの復活用トークンを取得する。",
         "requestBody": {
           "content": {
             "application/json:": {
@@ -209,9 +209,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "is_deleted": {
-                      "type": "boolean",
-                      "example": true
+                    "restore_token": {
+                      "type": "string",
+                      "example": "2UWS1KkuBUAe0oot9hOYtJrqZUUnUykRR6EruXJU9vL4TnMm2CXLwpNFoIAj"
                     }
                   }
                 }

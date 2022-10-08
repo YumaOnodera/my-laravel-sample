@@ -33,9 +33,9 @@
                 "$ref": "./paths/auth/register.json"
             }
         },
-        "/deleted-user/check": {
+        "/restore-token": {
             "post": {
-                "$ref": "./paths/auth/checkDeletedUser.json"
+                "$ref": "./paths/auth/restoreToken.json"
             }
         },
         "/restore": {

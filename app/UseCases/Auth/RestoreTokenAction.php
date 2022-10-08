@@ -6,19 +6,22 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class CheckDeletedUserAction
+class RestoreTokenAction
 {
     /**
      * @param  LoginRequest  $request
-     * @return bool
+     * @return string|null
      */
-    public function __invoke(LoginRequest $request): bool
+    public function __invoke(LoginRequest $request): string|null
     {
         $user = User::withTrashed()
             ->where('email', $request->email)
-            ->whereNotNull('deleted_at')
             ->first();
 
-        return $user && Hash::check($request->password, $user->password);
+        if ($user && Hash::check($request->password, $user->password)) {
+            return $user->makeVisible(['restore_token'])->restore_token;
+        }
+
+        return null;
     }
 }

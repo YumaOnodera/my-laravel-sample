@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\CheckDeletedUserController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -14,9 +13,9 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
                 ->middleware('guest')
                 ->name('register');
 
-Route::post('/deleted-user/check', [CheckDeletedUserController::class, 'isDeleted'])
+Route::post('/restore-token', [RestoreUserController::class, 'restoreToken'])
                 ->middleware('guest')
-                ->name('check_deleted_user');
+                ->name('restore_token');
 
 Route::post('/restore', [RestoreUserController::class, 'restore'])
                 ->middleware('guest')
