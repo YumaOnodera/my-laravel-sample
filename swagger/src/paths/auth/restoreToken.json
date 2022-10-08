@@ -45,6 +45,9 @@
         },
         "419": {
             "description": "CORS not allowed"
+        },
+        "422": {
+            "description": "validation error"
         }
     }
 }

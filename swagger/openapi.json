@@ -220,6 +220,9 @@
           },
           "419": {
             "description": "CORS not allowed"
+          },
+          "422": {
+            "description": "validation error"
           }
         }
       }
@@ -229,25 +232,20 @@
         "tags": [
           "Auth"
         ],
-        "description": "メールアドレスとパスワードをもとに、指定したユーザーを復活させる。",
+        "description": "トークンをもとにユーザーを検索し、対象ユーザーを復活させる。",
         "requestBody": {
           "content": {
             "application/json:": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "email": {
+                  "restore_token": {
                     "type": "string",
-                    "example": "test@example.com"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "password"
+                    "example": "2UWS1KkuBUAe0oot9hOYtJrqZUUnUykRR6EruXJU9vL4TnMm2CXLwpNFoIAj"
                   }
                 },
                 "required": [
-                  "email",
-                  "password"
+                  "restore_token"
                 ]
               }
             }
@@ -259,6 +257,9 @@
           },
           "419": {
             "description": "CORS not allowed"
+          },
+          "422": {
+            "description": "validation error"
           }
         }
       }
