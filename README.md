@@ -342,7 +342,11 @@ vendor/bin/pint --test
 ```
 マイグレーション作成
 ```
-./vendor/bin/sail artisan make:migration ファイル名 --table=モデル
+// テーブルの作成
+./vendor/bin/sail artisan make:migration ファイル名 --create=テーブル名
+
+// テーブルの編集
+./vendor/bin/sail artisan make:migration ファイル名 --table=テーブル名
 ```
 ファクトリ作成
 ```
