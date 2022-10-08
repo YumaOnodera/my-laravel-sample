@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
 
         $models = [
             User::class,
-            Post::class
+            Post::class,
         ];
         $this->ScoutImport($models);
     }
@@ -37,17 +37,17 @@ class DatabaseSeeder extends Seeder
     /**
      * データを検索インデックスに反映させる
      *
-     * @param array $models
+     * @param  array  $models
      * @return void
      */
     private function ScoutImport(array $models): void
     {
         foreach ($models as $model) {
             Artisan::call('scout:flush', [
-                'model' => $model
+                'model' => $model,
             ]);
             Artisan::call('scout:import', [
-                'model' => $model
+                'model' => $model,
             ]);
         }
     }

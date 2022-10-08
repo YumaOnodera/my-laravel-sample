@@ -61,6 +61,7 @@ class UpdatePasswordTest extends TestCase
         $this->assertSame((string) $expected->email_verified_at, (string) $actual->email_verified_at);
         $this->assertTrue(Hash::check($expected->password, $actual->password));
         $this->assertSame($expected->remember_token, $actual->remember_token);
+        $this->assertSame($expected->restore_token, $actual->restore_token);
         $this->assertSame($expected->is_admin, $actual->is_admin);
         $this->assertSame((string) $expected->created_at, (string) $actual->created_at);
         $this->assertSame((string) $expected->deleted_at, (string) $actual->deleted_at);
