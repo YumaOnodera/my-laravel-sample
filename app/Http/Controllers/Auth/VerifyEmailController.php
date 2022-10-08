@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Str;
 
 class VerifyEmailController extends Controller
 {
@@ -25,10 +24,6 @@ class VerifyEmailController extends Controller
         }
 
         if ($request->user()->markEmailAsVerified()) {
-            $request->user()->forceFill([
-                'restore_token' => Str::random(60),
-            ])->save();
-
             event(new Verified($request->user()));
         }
 

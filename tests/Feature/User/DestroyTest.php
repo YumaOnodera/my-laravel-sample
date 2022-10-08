@@ -31,6 +31,8 @@ class DestroyTest extends TestCase
 
         // 対象データが論理削除されているか確認する
         $this->assertNotNull($afterUpdate->deleted_at);
+        // ユーザー復活用トークンが保存されているか確認する
+        $this->assertNotNull($afterUpdate->restore_token);
 
         $response->assertStatus(204);
 
@@ -59,6 +61,8 @@ class DestroyTest extends TestCase
 
         // 対象データが論理削除されているか確認する
         $this->assertNotNull($afterUpdate->deleted_at);
+        // ユーザー復活用トークンが保存されているか確認する
+        $this->assertNotNull($afterUpdate->restore_token);
 
         $response->assertStatus(204);
 

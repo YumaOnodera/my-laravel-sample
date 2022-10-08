@@ -18,7 +18,6 @@ class EmailVerificationTest extends TestCase
     {
         $user = User::factory()->create([
             'email_verified_at' => null,
-            'restore_token' => null,
         ]);
 
         Event::fake();
@@ -31,10 +30,7 @@ class EmailVerificationTest extends TestCase
 
         $response = $this->actingAs($user)->get($verificationUrl);
 
-        $expected = User::where('id', $user->id)->first();
-
         Event::assertDispatched(Verified::class);
-        $this->assertNotNull($expected->restore_token);
         $this->assertTrue($user->fresh()->hasVerifiedEmail());
         $response->assertRedirect(config('app.frontend_url').RouteServiceProvider::HOME.'?verified=1');
     }
@@ -43,7 +39,6 @@ class EmailVerificationTest extends TestCase
     {
         $user = User::factory()->create([
             'email_verified_at' => null,
-            'restore_token' => null,
         ]);
 
         $verificationUrl = URL::temporarySignedRoute(
@@ -54,9 +49,6 @@ class EmailVerificationTest extends TestCase
 
         $this->actingAs($user)->get($verificationUrl);
 
-        $expected = User::where('id', $user->id)->first();
-
         $this->assertFalse($user->fresh()->hasVerifiedEmail());
-        $this->assertNull($expected->restore_token);
     }
 }
