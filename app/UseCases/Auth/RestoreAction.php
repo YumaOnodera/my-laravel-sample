@@ -2,31 +2,33 @@
 
 namespace App\UseCases\Auth;
 
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RestoreRequest;
 use App\Mail\Auth\Restore;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use RuntimeException;
 
 class RestoreAction
 {
     /**
-     * @param  LoginRequest  $request
+     * @param  RestoreRequest  $request
      * @return void
      */
-    public function __invoke(LoginRequest $request): void
+    public function __invoke(RestoreRequest $request): void
     {
         $user = User::withTrashed()
-            ->where('email', $request->email)
+            ->where('restore_token', $request->restore_token)
             ->whereNotNull('deleted_at')
             ->first();
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw new RuntimeException(__('exception.auth.restore'));
+        if (! $user) {
+            throw new RuntimeException(__('exception.auth.restore', ['admin' => config('app.name')]));
         }
 
         $user->restore();
+        $user->forceFill([
+            'restore_token' => null,
+        ])->save();
         $user->searchable();
 
         Mail::to($user)->send(new Restore($user));

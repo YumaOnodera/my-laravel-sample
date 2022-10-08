@@ -6,7 +6,7 @@ use App\Mail\Auth\Restore;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
-use RuntimeException;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class RestoreTest extends TestCase
@@ -24,19 +24,23 @@ class RestoreTest extends TestCase
     {
         Mail::fake();
 
+        $restoreToken = Str::random(10);
+
         $user = User::factory()->create([
             'deleted_at' => now(),
+            'restore_token' => $restoreToken,
         ]);
 
         $response = $this->post(self::API_URL, [
-            'email' => $user->email,
-            'password' => 'password',
+            'restore_token' => $restoreToken,
         ]);
 
         $afterUpdate = User::where('id', $user->id)->first();
 
         // 対象データが復活しているか確認する
         $this->assertNull($afterUpdate->deleted_at);
+        // ユーザー復活用トークンが破棄されているか確認する
+        $this->assertNull($afterUpdate->restore_token);
 
         $response->assertStatus(204);
 
@@ -46,24 +50,21 @@ class RestoreTest extends TestCase
     }
 
     /**
-     * パスワードが異なる時、実行できないことを確認する
+     * トークンが異なる時、実行できないことを確認する
      *
      * @return void
      */
-    public function test_can_not_restore_data_with_invalid_password()
+    public function test_can_not_restore_data_with_invalid_token()
     {
-        $user = User::factory()->create([
+        User::factory()->create([
             'deleted_at' => now(),
+            'restore_token' => Str::random(10),
         ]);
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage(__('exception.auth.restore'));
-
-        $response = $this->withoutExceptionHandling()->post(self::API_URL, [
-            'email' => $user->email,
-            'password' => 'wrong-password',
+        $response = $this->post(self::API_URL, [
+            'restore_token' => Str::random(10),
         ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 }

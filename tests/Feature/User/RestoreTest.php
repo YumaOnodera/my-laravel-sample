@@ -37,6 +37,8 @@ class RestoreTest extends TestCase
 
         // 対象データが復活しているか確認する
         $this->assertNull($afterUpdate->deleted_at);
+        // ユーザー復活用トークンが破棄されているか確認する
+        $this->assertNull($afterUpdate->restore_token);
 
         $response->assertStatus(204);
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RestoreRequest;
 use App\UseCases\Auth\RestoreAction;
 use App\UseCases\Auth\RestoreTokenAction;
 use Illuminate\Http\JsonResponse;
@@ -26,11 +27,11 @@ class RestoreUserController extends Controller
     /**
      * Restore the specified resource from storage.
      *
-     * @param  LoginRequest  $request
+     * @param  RestoreRequest  $request
      * @param  RestoreAction  $action
      * @return Response
      */
-    public function restore(LoginRequest $request, RestoreAction $action): Response
+    public function restore(RestoreRequest $request, RestoreAction $action): Response
     {
         $action($request);
 
