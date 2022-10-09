@@ -104,7 +104,7 @@
                 "$ref": "./paths/users/updatePassword.json"
             }
         },
-        "/users/update-permission": {
+        "/users/{id}/update-permission": {
             "put": {
                 "$ref": "./paths/users/updatePermission.json"
             }
