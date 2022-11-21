@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'mySelf');
-        Route::post('/users', 'index');
+        Route::get('/users', 'index');
         Route::get('/users/{id}', 'show');
         Route::put('/users', 'update');
         Route::put('/users/update-email', 'updateEmail');

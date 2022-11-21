@@ -31,7 +31,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[0]->values()->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL);
+        $response = $this->actingAs($users->first())->get(self::API_URL);
 
         $response
             ->assertStatus(200)
@@ -67,7 +67,7 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL);
+        $response = $this->actingAs($users->first())->get(self::API_URL);
 
         $response
             ->assertStatus(200)
@@ -105,7 +105,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[0]->values()->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL);
+        $response = $this->actingAs($users->first())->get(self::API_URL);
 
         $response
             ->assertStatus(200)
@@ -147,7 +147,7 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL);
+        $response = $this->actingAs($users->first())->get(self::API_URL);
 
         $response
             ->assertStatus(200)
@@ -181,7 +181,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[1]->values()->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL.'?page=2');
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?page=2');
 
         $response
             ->assertStatus(200)
@@ -216,7 +216,7 @@ class IndexTest extends TestCase
         $firstItem = $perPage * ($lastPage - 1) + 1;
         $expected = $users->chunk($perPage)[$lastPage - 1]->values()->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL.'?page='.$lastPage);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?page='.$lastPage);
 
         $response
             ->assertStatus(200)
@@ -250,9 +250,7 @@ class IndexTest extends TestCase
         $lastPage = ceil($total / $perPage);
         $expected = $users->chunk($perPage)[0]->values()->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'per_page' => $perPage,
-        ]);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?per_page='.$perPage);
 
         $response
             ->assertStatus(200)
