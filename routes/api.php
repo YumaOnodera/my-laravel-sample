@@ -27,8 +27,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::delete('/users/{id}', 'destroy');
     });
     Route::controller(PostController::class)->group(function () {
-        Route::post('/posts', 'index');
-        Route::post('/posts/store', 'store');
+        Route::get('/posts', 'index');
+        Route::post('/posts', 'store');
         Route::get('/posts/{id}', 'show');
         Route::put('/posts/{id}', 'update');
         Route::delete('/posts/{id}', 'destroy');

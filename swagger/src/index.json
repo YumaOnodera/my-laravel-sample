@@ -115,8 +115,11 @@
             }
         },
         "/posts": {
-            "post": {
+            "get": {
                 "$ref": "./paths/posts/index.json"
+            },
+            "post": {
+                "$ref": "./paths/posts/store.json"
             },
             "put": {
                 "$ref": "./paths/posts/update.json"
@@ -128,11 +131,6 @@
             },
             "delete": {
                 "$ref": "./paths/posts/destroy.json"
-            }
-        },
-        "/posts/store": {
-            "post": {
-                "$ref": "./paths/posts/store.json"
             }
         },
         "/comments": {

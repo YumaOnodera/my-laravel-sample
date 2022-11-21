@@ -13,7 +13,7 @@ class StoreTest extends TestCase
 {
     use RefreshDatabase;
 
-    private const API_URL = 'api/posts/store';
+    private const API_URL = 'api/posts';
 
     /**
      * 対象データが送信した値で作成されることを確認する

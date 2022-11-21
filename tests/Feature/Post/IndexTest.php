@@ -36,7 +36,7 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL);
+        $response = $this->actingAs($users->first())->get(self::API_URL);
 
         $response
             ->assertStatus(200)
@@ -75,7 +75,7 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL.'?page=2');
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?page=2');
 
         $response
             ->assertStatus(200)
@@ -115,7 +115,7 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL.'?page='.$lastPage);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?page='.$lastPage);
 
         $response
             ->assertStatus(200)
@@ -154,9 +154,7 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'per_page' => $perPage,
-        ]);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?per_page='.$perPage);
 
         $response
             ->assertStatus(200)
@@ -197,10 +195,7 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'order_by' => 'created_at',
-            'order' => 'asc',
-        ]);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?order_by=created_at&order=asc');
 
         $response
             ->assertStatus(200)
@@ -241,10 +236,7 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'order_by' => 'created_at',
-            'order' => 'desc',
-        ]);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?order_by=created_at&order=desc');
 
         $response
             ->assertStatus(200)
@@ -289,9 +281,8 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'user_ids' => $user_ids,
-        ]);
+        $query = '?user_ids[]='.implode('&user_ids[]=', $user_ids);
+        $response = $this->actingAs($users->first())->get(self::API_URL.$query);
 
         $response
             ->assertStatus(200)
