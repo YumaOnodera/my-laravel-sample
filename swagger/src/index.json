@@ -79,7 +79,7 @@
             }
         },
         "/users": {
-            "post": {
+            "get": {
                 "$ref": "./paths/users/index.json"
             },
             "put": {

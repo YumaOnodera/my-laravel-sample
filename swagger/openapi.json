@@ -571,7 +571,7 @@
       }
     },
     "/users": {
-      "post": {
+      "get": {
         "tags": [
           "User"
         ],
@@ -586,29 +586,28 @@
               "type": "integer",
               "example": 1
             }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "keyword": {
-                    "type": "string",
-                    "example": "郎",
-                    "description": "検索キーワード"
-                  },
-                  "per_page": {
-                    "type": "integer",
-                    "example": 5,
-                    "description": "1ページに表示する件数"
-                  }
-                }
-              }
+          },
+          {
+            "description": "検索キーワード",
+            "in": "query",
+            "name": "keyword",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "郎"
+            }
+          },
+          {
+            "description": "1ページに表示する件数",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 5
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "成功",
