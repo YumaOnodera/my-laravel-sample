@@ -38,9 +38,7 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'post_id' => $post->id,
-        ]);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?post_id='.$post->id);
 
         $actual = $response->json();
 
@@ -79,16 +77,12 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'post_id' => $post->id,
-        ]);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?post_id='.$post->id);
         $nextCursor = $response->json()['next_cursor'];
 
         $nextResponse = $this
             ->actingAs($users->first())
-            ->post(self::API_URL.'?cursor='.$nextCursor, [
-                'post_id' => $post->id,
-            ]);
+            ->get(self::API_URL.'?cursor='.$nextCursor.'&post_id='.$post->id);
 
         $actual = $nextResponse->json();
 
@@ -128,16 +122,12 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'post_id' => $post->id,
-        ]);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?post_id='.$post->id);
         $nextCursor = $response->json()['next_cursor'];
 
         $nextResponse = $this
             ->actingAs($users->first())
-            ->post(self::API_URL.'?cursor='.$nextCursor, [
-                'post_id' => $post->id,
-            ]);
+            ->get(self::API_URL.'?cursor='.$nextCursor.'&post_id='.$post->id);
 
         $actual = $nextResponse->json();
 
@@ -177,11 +167,9 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'post_id' => $post->id,
-            'order_by' => 'created_at',
-            'order' => 'asc',
-        ]);
+        $response = $this
+            ->actingAs($users->first())
+            ->get(self::API_URL.'?post_id='.$post->id.'&order_by=created_at&order=asc');
 
         $actual = $response->json();
 
@@ -221,11 +209,9 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'post_id' => $post->id,
-            'order_by' => 'created_at',
-            'order' => 'desc',
-        ]);
+        $response = $this
+            ->actingAs($users->first())
+            ->get(self::API_URL.'?post_id='.$post->id.'&order_by=created_at&order=desc');
 
         $actual = $response->json();
 
@@ -269,9 +255,7 @@ class IndexTest extends TestCase
             ->values()
             ->toArray();
 
-        $response = $this->actingAs($users->first())->post(self::API_URL, [
-            'post_id' => $post_id,
-        ]);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?post_id='.$post_id);
 
         $actual = $response->json();
 

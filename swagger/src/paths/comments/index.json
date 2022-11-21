@@ -13,37 +13,38 @@
                 "type": "string",
                 "example": "eyJjb21tZW50cy5pZCI6MTUsIl9wb2ludHNUb05leHRJdGVtcyI6dHJ1ZX0"
             }
-        }
-    ],
-    "requestBody": {
-        "content": {
-            "application/json": {
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "post_id": {
-                            "type": "integer",
-                            "example": 1,
-                            "description": "投稿のID"
-                        },
-                        "order_by": {
-                            "type": "string",
-                            "example": "created_by",
-                            "description": "並び順のキー"
-                        },
-                        "order": {
-                            "type": "string",
-                            "example": "asc",
-                            "description": "昇順・降順の指定"
-                        }
-                    },
-                    "required": [
-                        "post_id"
-                    ]
-                }
+        },
+        {
+            "description": "投稿のID",
+            "in": "query",
+            "name": "post_id",
+            "required": true,
+            "schema": {
+                "type": "integer",
+                "example": 1
+            }
+        },
+        {
+            "description": "並び順のキー",
+            "in": "query",
+            "name": "order_by",
+            "required": false,
+            "schema": {
+                "type": "string",
+                "example": "created_by"
+            }
+        },
+        {
+            "description": "昇順・降順の指定",
+            "in": "query",
+            "name": "order_by",
+            "required": false,
+            "schema": {
+                "type": "string",
+                "example": "asc"
             }
         }
-    },
+    ],
     "responses": {
         "200": {
             "description": "成功",

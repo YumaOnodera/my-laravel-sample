@@ -34,8 +34,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::delete('/posts/{id}', 'destroy');
     });
     Route::controller(CommentController::class)->group(function () {
-        Route::post('/comments', 'index');
-        Route::post('/comments/store', 'store');
+        Route::get('/comments', 'index');
+        Route::post('/comments', 'store');
         Route::delete('/comments/{id}', 'destroy');
     });
 });

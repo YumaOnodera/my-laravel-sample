@@ -134,11 +134,11 @@
             }
         },
         "/comments": {
-            "post": {
+            "get": {
                 "$ref": "./paths/comments/index.json"
             }
         },
-        "/comments/store": {
+        "/comments": {
             "post": {
                 "$ref": "./paths/comments/store.json"
             }
