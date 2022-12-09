@@ -16,20 +16,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::controller(UserController::class)->group(function () {
+    Route::get('/users', 'index');
+    Route::get('/users/{id}', 'show');
+});
+
+Route::controller(PostController::class)->group(function () {
+    Route::get('/posts', 'index');
+    Route::get('/posts/{id}', 'show');
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'mySelf');
-        Route::get('/users', 'index');
-        Route::get('/users/{id}', 'show');
         Route::put('/users', 'update');
         Route::put('/users/update-email', 'updateEmail');
         Route::put('/users/update-password', 'updatePassword');
         Route::delete('/users/{id}', 'destroy');
     });
     Route::controller(PostController::class)->group(function () {
-        Route::get('/posts', 'index');
         Route::post('/posts', 'store');
-        Route::get('/posts/{id}', 'show');
         Route::put('/posts/{id}', 'update');
         Route::delete('/posts/{id}', 'destroy');
     });
