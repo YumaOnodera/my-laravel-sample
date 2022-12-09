@@ -14,6 +14,45 @@ class IndexTest extends TestCase
     private const API_URL = 'api/posts';
 
     /**
+     * 未ログインで実行した時、レスポンスが想定通りであることを確認する
+     *
+     * @return void
+     */
+    public function test_not_logged_in_can_view_data()
+    {
+        $users = User::factory(10)->create();
+        $posts = Post::factory(11)->create();
+
+        $total = $posts->count();
+        $perPage = config('const.PER_PAGE.PAGINATE');
+        $lastPage = ceil($total / $perPage);
+        $expected = $posts
+            ->map(function ($item) use ($users) {
+                $item['created_by'] = $users->find($item['user_id'])->name;
+
+                return $item;
+            })
+            ->chunk($perPage)[0]
+            ->values()
+            ->toArray();
+
+        $response = $this->get(self::API_URL);
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson([
+                'total' => $total,
+                'per_page' => $perPage,
+                'current_page' => 1,
+                'last_page' => $lastPage,
+                'first_item' => 1,
+                'last_item' => $perPage,
+                'has_more_pages' => true,
+                'data' => $expected,
+            ]);
+    }
+
+    /**
      * レスポンスが想定通りであることを確認する
      *
      * @return void

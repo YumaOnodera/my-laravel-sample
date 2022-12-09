@@ -13,6 +13,24 @@ class ShowTest extends TestCase
     private const API_URL = 'api/users';
 
     /**
+     * 未ログインで実行した時、レスポンスが想定通りであることを確認する
+     *
+     * @return void
+     */
+    public function test_not_logged_in_can_view_data()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->get(self::API_URL.'/'.$user->id);
+
+        $filteredUser = $user->only('id', 'name');
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson($filteredUser);
+    }
+
+    /**
      * 管理者ユーザーが実行した時、レスポンスが想定通りであることを確認する
      *
      * @return void
