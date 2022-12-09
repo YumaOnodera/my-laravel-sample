@@ -17,7 +17,7 @@ class ShowAction
     {
         $users = User::query();
 
-        if ($request->user()->is_admin) {
+        if ($request->user()?->is_admin) {
             $users = $users->withTrashed();
         }
 

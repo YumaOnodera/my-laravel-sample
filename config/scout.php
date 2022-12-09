@@ -138,9 +138,11 @@ return [
         'settings' => [
             User::class => [
                 'updateFilterableAttributes' => ['__soft_deleted'],
+                'updateSearchableAttributes' => ['name'],
             ],
             Post::class => [
-                'updateFilterableAttributes' => ['user_id'],
+                'updateSearchableAttributes' => ['text'],
+                'updateSortableAttributes' => ['id', 'created_at', 'updated_at'],
             ],
         ],
     ],
