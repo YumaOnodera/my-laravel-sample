@@ -14,7 +14,7 @@ class UpdatePasswordTest extends TestCase
 {
     use RefreshDatabase;
 
-    private const API_URL = 'api/users/update-password';
+    private const API_URL = 'api/users';
 
     /**
      * 対象データが送信した値で更新されることを確認する
@@ -28,14 +28,15 @@ class UpdatePasswordTest extends TestCase
         $user = User::factory()->create();
         $password = 'password';
 
-        $response = $this->actingAs($user)->put(self::API_URL, [
+        $uri = sprintf('%s/%s/%s', self::API_URL, $user->id, 'update-password');
+        $response = $this->actingAs($user)->put($uri, [
             'password' => $password,
             'password_confirmation' => $password,
         ]);
 
         $user->password = $password;
 
-        $afterUpdate = User::where('id', $user->id)->first();
+        $afterUpdate = User::find($user->id);
 
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($user, $afterUpdate);
@@ -45,6 +46,26 @@ class UpdatePasswordTest extends TestCase
         Mail::assertSent(UpdatePassword::class, static function ($mail) use ($user) {
             return $mail->hasTo($user->email);
         });
+    }
+
+    /**
+     * 他のユーザーを対象にできないことを確認する
+     *
+     * @return void
+     */
+    public function test_can_not_update_other_users_data()
+    {
+        $requestUser = User::factory()->create();
+        $otherUser = User::factory()->create();
+        $password = 'password';
+
+        $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'update-password');
+        $response = $this->actingAs($requestUser)->put($uri, [
+            'password' => $password,
+            'password_confirmation' => $password,
+        ]);
+
+        $response->assertStatus(403);
     }
 
     /**

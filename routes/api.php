@@ -29,9 +29,9 @@ Route::controller(PostController::class)->group(function () {
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'mySelf');
-        Route::put('/users', 'update');
-        Route::put('/users/update-email', 'updateEmail');
-        Route::put('/users/update-password', 'updatePassword');
+        Route::put('/users/{id}', 'update');
+        Route::put('/users/{id}/update-email', 'updateEmail');
+        Route::put('/users/{id}/update-password', 'updatePassword');
         Route::delete('/users/{id}', 'destroy');
     });
     Route::controller(PostController::class)->group(function () {

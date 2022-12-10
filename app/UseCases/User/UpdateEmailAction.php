@@ -3,16 +3,18 @@
 namespace App\UseCases\User;
 
 use App\Http\Requests\User\UpdateEmailRequest;
+use App\Models\User;
 
 class UpdateEmailAction
 {
     /**
      * @param  UpdateEmailRequest  $request
+     * @param  int  $id
      * @return void
      */
-    public function __invoke(UpdateEmailRequest $request): void
+    public function __invoke(UpdateEmailRequest $request, int $id): void
     {
-        $user = $request->user();
+        $user = User::where('id', $id);
 
         $user->update([
             'email' => $request->email,
@@ -20,6 +22,6 @@ class UpdateEmailAction
         ]);
         $user->searchable();
 
-        $user->sendEmailVerificationNotification();
+        $user->first()->sendEmailVerificationNotification();
     }
 }

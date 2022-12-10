@@ -75,24 +75,26 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  UpdateRequest  $request
+     * @param  int  $id
      * @param  UpdateAction  $action
      * @return UserResource
      */
-    public function update(UpdateRequest $request, UpdateAction $action): UserResource
+    public function update(UpdateRequest $request, int $id, UpdateAction $action): UserResource
     {
-        return new UserResource($action($request));
+        return new UserResource($action($request, $id));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  UpdateEmailRequest  $request
+     * @param  int  $id
      * @param  UpdateEmailAction  $action
      * @return Response
      */
-    public function updateEmail(UpdateEmailRequest $request, UpdateEmailAction $action): Response
+    public function updateEmail(UpdateEmailRequest $request, int $id, UpdateEmailAction $action): Response
     {
-        $action($request);
+        $action($request, $id);
 
         return response()->noContent();
     }
@@ -101,12 +103,13 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  UpdatePasswordRequest  $request
+     * @param  int  $id
      * @param  UpdatePasswordAction  $action
      * @return Response
      */
-    public function updatePassword(UpdatePasswordRequest $request, UpdatePasswordAction $action): Response
+    public function updatePassword(UpdatePasswordRequest $request, int $id, UpdatePasswordAction $action): Response
     {
-        $action($request);
+        $action($request, $id);
 
         return response()->noContent();
     }

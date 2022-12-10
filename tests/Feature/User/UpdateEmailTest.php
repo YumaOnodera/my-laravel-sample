@@ -14,7 +14,7 @@ class UpdateEmailTest extends TestCase
 {
     use RefreshDatabase;
 
-    private const API_URL = 'api/users/update-email';
+    private const API_URL = 'api/users';
 
     /**
      * 対象データが送信した値で更新されることを確認する
@@ -28,14 +28,15 @@ class UpdateEmailTest extends TestCase
         $user = User::factory()->create();
         $email = Factory::create('ja_JP')->email();
 
-        $response = $this->actingAs($user)->put(self::API_URL, [
+        $uri = sprintf('%s/%s/%s', self::API_URL, $user->id, 'update-email');
+        $response = $this->actingAs($user)->put($uri, [
             'email' => $email,
         ]);
 
         $user->email = $email;
         $user->email_verified_at = null;
 
-        $afterUpdate = User::where('id', $user->id)->first();
+        $afterUpdate = User::find($user->id);
 
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($user, $afterUpdate);
@@ -43,6 +44,25 @@ class UpdateEmailTest extends TestCase
         $response->assertStatus(204);
 
         Notification::assertSentTo($user, EmailVerification::class);
+    }
+
+    /**
+     * 他のユーザーを対象にできないことを確認する
+     *
+     * @return void
+     */
+    public function test_can_not_update_other_users_data()
+    {
+        $requestUser = User::factory()->create();
+        $otherUser = User::factory()->create();
+        $email = Factory::create('ja_JP')->email();
+
+        $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'update-email');
+        $response = $this->actingAs($requestUser)->put($uri, [
+            'email' => $email,
+        ]);
+
+        $response->assertStatus(403);
     }
 
     /**

@@ -27,13 +27,13 @@ class UpdateTest extends TestCase
         ]);
         $name = Factory::create('ja_JP')->name();
 
-        $response = $this->actingAs($user)->put(self::API_URL, [
+        $response = $this->actingAs($user)->put(self::API_URL.'/'.$user->id, [
             'name' => $name,
         ]);
 
         $user->name = $name;
 
-        $afterUpdate = User::where('id', $user->id)->first();
+        $afterUpdate = User::find($user->id);
 
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($user, $afterUpdate);
@@ -54,13 +54,13 @@ class UpdateTest extends TestCase
         $user = User::factory()->create();
         $name = Factory::create('ja_JP')->name();
 
-        $response = $this->actingAs($user)->put(self::API_URL, [
+        $response = $this->actingAs($user)->put(self::API_URL.'/'.$user->id, [
             'name' => $name,
         ]);
 
         $user->name = $name;
 
-        $afterUpdate = User::where('id', $user->id)->first();
+        $afterUpdate = User::find($user->id);
 
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($user, $afterUpdate);
@@ -70,6 +70,24 @@ class UpdateTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertExactJson($filteredAfterUpdate);
+    }
+
+    /**
+     * 他のユーザーを対象にできないことを確認する
+     *
+     * @return void
+     */
+    public function test_can_not_update_other_users_data()
+    {
+        $requestUser = User::factory()->create();
+        $otherUser = User::factory()->create();
+        $name = Factory::create('ja_JP')->name();
+
+        $response = $this->actingAs($requestUser)->put(self::API_URL.'/'.$otherUser->id, [
+            'name' => $name,
+        ]);
+
+        $response->assertStatus(403);
     }
 
     /**
