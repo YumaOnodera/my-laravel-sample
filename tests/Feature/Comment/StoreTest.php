@@ -36,7 +36,7 @@ class StoreTest extends TestCase
 
         $actual = $response->json();
 
-        $comment = Comment::where('id', $actual['id'])->first();
+        $comment = Comment::find($actual['id']);
 
         // 対象データが送信した値で作成されていることを確認する
         $this->assertSame($user->id, $comment->user_id);

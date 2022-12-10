@@ -33,7 +33,7 @@ class StoreTest extends TestCase
 
         $actual = $response->json();
 
-        $post = Post::where('id', $actual['id'])->first();
+        $post = Post::find($actual['id']);
 
         // 対象データが送信した値で作成されていることを確認する
         $this->assertSame($user->id, $post->user_id);

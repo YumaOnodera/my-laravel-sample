@@ -27,7 +27,7 @@ class DestroyTest extends TestCase
 
         $response = $this->actingAs($user)->delete(self::API_URL.'/'.$user->id);
 
-        $afterUpdate = User::withTrashed()->where('id', $user->id)->first();
+        $afterUpdate = User::withTrashed()->find($user->id);
 
         // 対象データが論理削除されているか確認する
         $this->assertNotNull($afterUpdate->deleted_at);
@@ -57,7 +57,7 @@ class DestroyTest extends TestCase
 
         $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$otherUser->id);
 
-        $afterUpdate = User::withTrashed()->where('id', $otherUser->id)->first();
+        $afterUpdate = User::withTrashed()->find($otherUser->id);
 
         // 対象データが論理削除されているか確認する
         $this->assertNotNull($afterUpdate->deleted_at);

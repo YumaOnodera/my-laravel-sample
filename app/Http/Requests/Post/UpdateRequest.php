@@ -15,7 +15,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $post = Post::where('id', $this->id)->first();
+        $post = Post::find($this->id);
 
         if (! $post) {
             return true;
@@ -34,6 +34,7 @@ class UpdateRequest extends FormRequest
         return [
             'id' => [
                 'required',
+                'integer',
                 Rule::exists('posts', 'id'),
             ],
             'text' => 'required|string|max:20000',

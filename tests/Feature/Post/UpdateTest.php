@@ -32,7 +32,7 @@ class UpdateTest extends TestCase
 
         $post->text = $text;
 
-        $afterUpdate = Post::where('id', $post->id)->first();
+        $afterUpdate = Post::find($post->id);
 
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($post, $afterUpdate);

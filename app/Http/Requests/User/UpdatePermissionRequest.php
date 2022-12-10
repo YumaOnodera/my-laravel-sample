@@ -17,6 +17,7 @@ class UpdatePermissionRequest extends FormRequest
         return [
             'id' => [
                 'required',
+                'integer',
                 Rule::exists('users', 'id')
                     ->withoutTrashed(),
             ],

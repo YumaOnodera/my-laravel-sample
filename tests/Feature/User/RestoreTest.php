@@ -33,7 +33,7 @@ class RestoreTest extends TestCase
         $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'restore');
         $response = $this->actingAs($requestUser)->post($uri);
 
-        $afterUpdate = User::where('id', $otherUser->id)->first();
+        $afterUpdate = User::find($otherUser->id);
 
         // 対象データが復活しているか確認する
         $this->assertNull($afterUpdate->deleted_at);

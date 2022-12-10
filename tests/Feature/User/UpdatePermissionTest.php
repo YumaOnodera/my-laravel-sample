@@ -32,7 +32,7 @@ class UpdatePermissionTest extends TestCase
 
         $otherUser->is_admin = true;
 
-        $afterUpdate = User::where('id', $otherUser->id)->first();
+        $afterUpdate = User::find($otherUser->id);
 
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($otherUser, $afterUpdate);
@@ -61,7 +61,7 @@ class UpdatePermissionTest extends TestCase
 
         $otherUser->is_admin = false;
 
-        $afterUpdate = User::where('id', $otherUser->id)->first();
+        $afterUpdate = User::find($otherUser->id);
 
         // 対象データが送信した値で更新されていることを確認する
         $this->assertSameData($otherUser, $afterUpdate);

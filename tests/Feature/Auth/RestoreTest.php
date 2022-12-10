@@ -35,7 +35,7 @@ class RestoreTest extends TestCase
             'restore_token' => $restoreToken,
         ]);
 
-        $afterUpdate = User::where('id', $user->id)->first();
+        $afterUpdate = User::find($user->id);
 
         // 対象データが復活しているか確認する
         $this->assertNull($afterUpdate->deleted_at);

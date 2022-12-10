@@ -15,7 +15,7 @@ class DestroyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $comment = Comment::where('id', $this->id)->first();
+        $comment = Comment::find($this->id);
 
         if (! $comment) {
             return true;
@@ -34,6 +34,7 @@ class DestroyRequest extends FormRequest
         return [
             'id' => [
                 'required',
+                'integer',
                 Rule::exists('comments', 'id'),
             ],
         ];
