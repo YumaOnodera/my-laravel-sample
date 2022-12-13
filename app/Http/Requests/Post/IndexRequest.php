@@ -14,13 +14,13 @@ class IndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'keyword' => 'nullable|string',
             'page' => 'nullable|integer',
             'per_page' => 'nullable|integer',
-            'order_by' => 'nullable|string|in:created_at',
-            'order' => 'nullable|string|in:asc,desc',
+            'keyword' => 'nullable|string',
             'user_ids' => 'nullable|array',
             'user_ids.*' => 'nullable|integer',
+            'order_by' => 'nullable|string|in:created_at',
+            'order' => 'nullable|string|in:asc,desc',
         ];
     }
 
