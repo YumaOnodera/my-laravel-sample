@@ -14,13 +14,15 @@ class PaginateService
      * @param  int  $perPage
      * @param  string|null  $order_by
      * @param  string|null  $order
+     * @param  array|null  $load
      * @return array
      */
     public function paginate(
         Builder|ScoutBuilder $builder,
         int $perPage,
         string $order_by = null,
-        string $order = null
+        string $order = null,
+        array $load = null,
     ): array {
         if ($order_by && $order) {
             $builder->orderBy($order_by, $order)
@@ -28,6 +30,9 @@ class PaginateService
         }
 
         $data = $builder->paginate($perPage);
+        if ($load) {
+            $data->load($load);
+        }
 
         return [
             'total' => $data->total(),
@@ -37,7 +42,7 @@ class PaginateService
             'first_item' => $data->firstItem(),
             'last_item' => $data->lastItem(),
             'has_more_pages' => $data->hasMorePages(),
-            'items' => $data->items(),
+            'items' => $data,
         ];
     }
 

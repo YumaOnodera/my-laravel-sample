@@ -30,7 +30,7 @@ class IndexAction
         if ($request->keyword) {
             $posts = Post::search($request->keyword);
         } else {
-            $posts = Post::with('user');
+            $posts = Post::query();
         }
 
         if ($request->user_ids) {
@@ -41,7 +41,8 @@ class IndexAction
             $posts,
             $request->perPage(),
             $request->order_by,
-            $request->order
+            $request->order,
+            ['user', 'comments']
         );
     }
 }
