@@ -15,6 +15,16 @@
             }
         },
         {
+            "description": "1ページに表示する件数",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "schema": {
+                "type": "integer",
+                "example": 5
+            }
+        },
+        {
             "description": "検索キーワード",
             "in": "query",
             "name": "keyword",
@@ -25,13 +35,13 @@
             }
         },
         {
-            "description": "1ページに表示する件数",
+            "description": "投稿者による絞り込み",
             "in": "query",
-            "name": "per_page",
+            "name": "user_ids[]",
             "required": false,
             "schema": {
-                "type": "integer",
-                "example": 5
+                "type": "array",
+                "example": [1, 2, 3, 4, 5]
             }
         },
         {
@@ -52,16 +62,6 @@
             "schema": {
                 "type": "string",
                 "example": "desc"
-            }
-        },
-        {
-            "description": "投稿者による絞り込み",
-            "in": "query",
-            "name": "user_ids[]",
-            "required": false,
-            "schema": {
-                "type": "array",
-                "example": [1, 2, 3, 4, 5]
             }
         }
     ],

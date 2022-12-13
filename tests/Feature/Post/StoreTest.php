@@ -39,6 +39,7 @@ class StoreTest extends TestCase
         $this->assertSame($user->id, $post->user_id);
         $this->assertSame($text, $post->text);
 
+        $post->comments = [];
         $post->created_by = $user->name;
 
         $response

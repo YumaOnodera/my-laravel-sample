@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Post;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,12 +23,22 @@ class IndexTest extends TestCase
     {
         $users = User::factory(10)->create();
         $posts = Post::factory(11)->create();
+        $comments = Comment::factory(2)->create();
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function ($item) use ($users) {
+            ->map(function ($item) use ($users, $comments) {
+                $item['comments'] = $comments
+                    ->where('post_id', $item->id)
+                    ->map(function ($item) use ($users) {
+                        $item['created_by'] = $users->find($item['user_id'])->name;
+
+                        return $item;
+                    })
+                    ->values()
+                    ->toArray();
                 $item['created_by'] = $users->find($item['user_id'])->name;
 
                 return $item;
@@ -61,12 +72,22 @@ class IndexTest extends TestCase
     {
         $users = User::factory(10)->create();
         $posts = Post::factory(11)->create();
+        $comments = Comment::factory(2)->create();
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function ($item) use ($users) {
+            ->map(function ($item) use ($users, $comments) {
+                $item['comments'] = $comments
+                    ->where('post_id', $item->id)
+                    ->map(function ($item) use ($users) {
+                        $item['created_by'] = $users->find($item['user_id'])->name;
+
+                        return $item;
+                    })
+                    ->values()
+                    ->toArray();
                 $item['created_by'] = $users->find($item['user_id'])->name;
 
                 return $item;
@@ -100,12 +121,22 @@ class IndexTest extends TestCase
     {
         $users = User::factory(10)->create();
         $posts = Post::factory(21)->create();
+        $comments = Comment::factory(2)->create();
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function ($item) use ($users) {
+            ->map(function ($item) use ($users, $comments) {
+                $item['comments'] = $comments
+                    ->where('post_id', $item->id)
+                    ->map(function ($item) use ($users) {
+                        $item['created_by'] = $users->find($item['user_id'])->name;
+
+                        return $item;
+                    })
+                    ->values()
+                    ->toArray();
                 $item['created_by'] = $users->find($item['user_id'])->name;
 
                 return $item;
@@ -139,13 +170,23 @@ class IndexTest extends TestCase
     {
         $users = User::factory(10)->create();
         $posts = Post::factory(11)->create();
+        $comments = Comment::factory(2)->create();
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $firstItem = $perPage * ($lastPage - 1) + 1;
         $expected = $posts
-            ->map(function ($item) use ($users) {
+            ->map(function ($item) use ($users, $comments) {
+                $item['comments'] = $comments
+                    ->where('post_id', $item->id)
+                    ->map(function ($item) use ($users) {
+                        $item['created_by'] = $users->find($item['user_id'])->name;
+
+                        return $item;
+                    })
+                    ->values()
+                    ->toArray();
                 $item['created_by'] = $users->find($item['user_id'])->name;
 
                 return $item;
@@ -179,12 +220,22 @@ class IndexTest extends TestCase
     {
         $users = User::factory(10)->create();
         $posts = Post::factory(16)->create();
+        $comments = Comment::factory(2)->create();
 
         $total = $posts->count();
         $perPage = 15;
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function ($item) use ($users) {
+            ->map(function ($item) use ($users, $comments) {
+                $item['comments'] = $comments
+                    ->where('post_id', $item->id)
+                    ->map(function ($item) use ($users) {
+                        $item['created_by'] = $users->find($item['user_id'])->name;
+
+                        return $item;
+                    })
+                    ->values()
+                    ->toArray();
                 $item['created_by'] = $users->find($item['user_id'])->name;
 
                 return $item;
@@ -218,12 +269,22 @@ class IndexTest extends TestCase
     {
         $users = User::factory(10)->create();
         $posts = Post::factory(11)->create();
+        $comments = Comment::factory(2)->create();
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function ($item) use ($users) {
+            ->map(function ($item) use ($users, $comments) {
+                $item['comments'] = $comments
+                    ->where('post_id', $item->id)
+                    ->map(function ($item) use ($users) {
+                        $item['created_by'] = $users->find($item['user_id'])->name;
+
+                        return $item;
+                    })
+                    ->values()
+                    ->toArray();
                 $item['created_by'] = $users->find($item['user_id'])->name;
 
                 return $item;
@@ -259,12 +320,22 @@ class IndexTest extends TestCase
     {
         $users = User::factory(10)->create();
         $posts = Post::factory(11)->create();
+        $comments = Comment::factory(2)->create();
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function ($item) use ($users) {
+            ->map(function ($item) use ($users, $comments) {
+                $item['comments'] = $comments
+                    ->where('post_id', $item->id)
+                    ->map(function ($item) use ($users) {
+                        $item['created_by'] = $users->find($item['user_id'])->name;
+
+                        return $item;
+                    })
+                    ->values()
+                    ->toArray();
                 $item['created_by'] = $users->find($item['user_id'])->name;
 
                 return $item;
@@ -300,6 +371,7 @@ class IndexTest extends TestCase
     {
         $users = User::factory(10)->create();
         $posts = Post::factory(10)->create();
+        $comments = Comment::factory(2)->create();
 
         // ユーザーidをランダムに5件抽出
         $user_ids = $users->random(5)->pluck('id')->toArray();
@@ -311,7 +383,16 @@ class IndexTest extends TestCase
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $expected = $posts
-            ->map(function ($item) use ($users) {
+            ->map(function ($item) use ($users, $comments) {
+                $item['comments'] = $comments
+                    ->where('post_id', $item->id)
+                    ->map(function ($item) use ($users) {
+                        $item['created_by'] = $users->find($item['user_id'])->name;
+
+                        return $item;
+                    })
+                    ->values()
+                    ->toArray();
                 $item['created_by'] = $users->find($item['user_id'])->name;
 
                 return $item;

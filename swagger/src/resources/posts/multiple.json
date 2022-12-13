@@ -36,6 +36,24 @@
                     "id": 5,
                     "user_id": 3,
                     "text": "テスト",
+                    "comments": [
+                        {
+                            "id": 1,
+                            "post_id": 1,
+                            "user_id": 1,
+                            "text": "テスト",
+                            "created_by": "山田一郎",
+                            "created_at": "2022-01-01 00:00:00"
+                        },
+                        {
+                            "id": 2,
+                            "post_id": 1,
+                            "user_id": 1,
+                            "text": "テスト",
+                            "created_by": "山田一郎",
+                            "created_at": "2022-01-02 00:00:00"
+                        }
+                    ],
                     "created_by": "中田三郎",
                     "created_at": "2022-01-03 00:00:00",
                     "updated_at": "2022-01-04 00:00:00"
@@ -44,6 +62,7 @@
                     "id": 4,
                     "user_id": 3,
                     "text": "テスト",
+                    "comments": [],
                     "created_by": "中田三郎",
                     "created_at": "2022-01-02 00:00:00",
                     "updated_at": "2022-01-02 00:00:00"
@@ -52,6 +71,7 @@
                     "id": 3,
                     "user_id": 3,
                     "text": "テスト",
+                    "comments": [],
                     "created_by": "中田三郎",
                     "created_at": "2022-01-01 00:00:00",
                     "updated_at": "2022-01-02 00:00:00"
@@ -60,6 +80,7 @@
                     "id": 2,
                     "user_id": 2,
                     "text": "テスト",
+                    "comments": [],
                     "created_by": "田中二郎",
                     "created_at": "2022-01-01 00:00:00",
                     "updated_at": "2022-01-02 00:00:00"
@@ -68,6 +89,7 @@
                     "id": 1,
                     "user_id": 1,
                     "text": "テスト",
+                    "comments": [],
                     "created_by": "山田一郎",
                     "created_at": "2022-01-01 00:00:00",
                     "updated_at": "2022-01-02 00:00:00"

@@ -13,6 +13,24 @@
             "type": "string",
             "example": "テスト"
         },
+        "comments": [
+            {
+                "id": 1,
+                "post_id": 1,
+                "user_id": 1,
+                "text": "テスト",
+                "created_by": "山田一郎",
+                "created_at": "2022-01-01 00:00:00"
+            },
+            {
+                "id": 2,
+                "post_id": 1,
+                "user_id": 1,
+                "text": "テスト",
+                "created_by": "山田一郎",
+                "created_at": "2022-01-02 00:00:00"
+            }
+        ],
         "created_by": {
             "type": "string",
             "example": "山田一郎"

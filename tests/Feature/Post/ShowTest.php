@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Post;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,12 +21,22 @@ class ShowTest extends TestCase
      */
     public function test_not_logged_in_can_view_data()
     {
-        $user = User::factory()->create();
+        $users = User::factory(10)->create();
         $post = Post::factory()->create();
+        $comments = Comment::factory(2)->create();
 
         $response = $this->get(self::API_URL.'/'.$post->id);
 
-        $post->created_by = $user->name;
+        $post->comments = $comments
+            ->where('post_id', $post->id)
+            ->map(function ($item) use ($users) {
+                $item['created_by'] = $users->find($item['user_id'])->name;
+
+                return $item;
+            })
+            ->values()
+            ->toArray();
+        $post->created_by = $users->find($post->user_id)->name;
 
         $response
             ->assertStatus(200)
@@ -39,12 +50,22 @@ class ShowTest extends TestCase
      */
     public function test_can_view_data()
     {
-        $user = User::factory()->create();
+        $users = User::factory(10)->create();
         $post = Post::factory()->create();
+        $comments = Comment::factory(2)->create();
 
-        $response = $this->actingAs($user)->get(self::API_URL.'/'.$post->id);
+        $response = $this->actingAs($users->first())->get(self::API_URL.'/'.$post->id);
 
-        $post->created_by = $user->name;
+        $post->comments = $comments
+            ->where('post_id', $post->id)
+            ->map(function ($item) use ($users) {
+                $item['created_by'] = $users->find($item['user_id'])->name;
+
+                return $item;
+            })
+            ->values()
+            ->toArray();
+        $post->created_by = $users->find($post->user_id)->name;
 
         $response
             ->assertStatus(200)
