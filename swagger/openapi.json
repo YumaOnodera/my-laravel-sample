@@ -588,16 +588,6 @@
             }
           },
           {
-            "description": "検索キーワード",
-            "in": "query",
-            "name": "keyword",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "郎"
-            }
-          },
-          {
             "description": "1ページに表示する件数",
             "in": "query",
             "name": "per_page",
@@ -605,6 +595,16 @@
             "schema": {
               "type": "integer",
               "example": 5
+            }
+          },
+          {
+            "description": "検索キーワード",
+            "in": "query",
+            "name": "keyword",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "郎"
             }
           }
         ],
@@ -771,30 +771,26 @@
             }
           }
         }
-      },
-      "put": {
+      }
+    },
+    "/users/{id}": {
+      "get": {
         "tags": [
           "User"
         ],
-        "description": "指定したユーザーを更新する。",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "山田一郎"
-                  }
-                },
-                "required": [
-                  "name"
-                ]
-              }
+        "description": "指定したユーザーを取得する。",
+        "parameters": [
+          {
+            "description": "ユーザーのID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "成功",
@@ -862,26 +858,30 @@
             }
           }
         }
-      }
-    },
-    "/users/{id}": {
-      "get": {
+      },
+      "put": {
         "tags": [
           "User"
         ],
-        "description": "指定したユーザーを取得する。",
-        "parameters": [
-          {
-            "description": "ユーザーのID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1
+        "description": "指定したユーザーを更新する。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "山田一郎"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "成功",
@@ -990,7 +990,7 @@
         }
       }
     },
-    "/users/update-email": {
+    "/users/{id}/update-email": {
       "put": {
         "tags": [
           "User"
@@ -1021,7 +1021,7 @@
         }
       }
     },
-    "/users/update-password": {
+    "/users/{id}/update-password": {
       "put": {
         "tags": [
           "User"

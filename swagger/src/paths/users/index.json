@@ -15,16 +15,6 @@
             }
         },
         {
-            "description": "検索キーワード",
-            "in": "query",
-            "name": "keyword",
-            "required": false,
-            "schema": {
-                "type": "string",
-                "example": "郎"
-            }
-        },
-        {
             "description": "1ページに表示する件数",
             "in": "query",
             "name": "per_page",
@@ -32,6 +22,16 @@
             "schema": {
                 "type": "integer",
                 "example": 5
+            }
+        },
+        {
+            "description": "検索キーワード",
+            "in": "query",
+            "name": "keyword",
+            "required": false,
+            "schema": {
+                "type": "string",
+                "example": "郎"
             }
         }
     ],
