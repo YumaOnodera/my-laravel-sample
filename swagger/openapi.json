@@ -46,6 +46,31 @@
           }
         }
       },
+      "EmailReset": {
+        "type": "object",
+        "required": [
+          "user_id",
+          "new_email",
+          "token"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "new_email": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          }
+        }
+      },
       "Post": {
         "type": "object",
         "required": [
@@ -990,37 +1015,6 @@
         }
       }
     },
-    "/users/{id}/update-email": {
-      "put": {
-        "tags": [
-          "User"
-        ],
-        "description": "指定したユーザーのメールアドレスを更新する。",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "test@example.co.jp"
-                  }
-                },
-                "required": [
-                  "email"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "成功"
-          }
-        }
-      }
-    },
     "/users/{id}/update-password": {
       "put": {
         "tags": [
@@ -1137,6 +1131,68 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/email-resets/send-reset-link": {
+      "post": {
+        "tags": [
+          "EmailReset"
+        ],
+        "description": "新しいメールアドレスを一時テーブルに保存し、メールアドレス確認通知を送信する。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "new_email": {
+                    "type": "string",
+                    "example": "test@example.co.jp"
+                  }
+                },
+                "required": [
+                  "new_email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "成功"
+          }
+        }
+      }
+    },
+    "/email-resets/{token}": {
+      "put": {
+        "tags": [
+          "EmailReset"
+        ],
+        "description": "トークンを用いてユーザーを取得し、対象ユーザーのメールアドレスを更新する。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "example": "4vIzesVBxRvrugX6uSxdENL2QkaL56iCE0aHlZbzVI7iNYEy46TIXHaNHZGx"
+                  }
+                },
+                "required": [
+                  "token"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "成功"
           }
         }
       }

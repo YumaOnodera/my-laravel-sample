@@ -1,21 +1,21 @@
 {
     "tags": [
-        "User"
+        "EmailReset"
     ],
-    "description": "指定したユーザーのメールアドレスを更新する。",
+    "description": "新しいメールアドレスを一時テーブルに保存し、メールアドレス確認通知を送信する。",
     "requestBody": {
         "content": {
             "application/json": {
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "email": {
+                        "new_email": {
                             "type": "string",
                             "example": "test@example.co.jp"
                         }
                     },
                     "required": [
-                        "email"
+                        "new_email"
                     ]
                 }
             }

@@ -1,0 +1,25 @@
+{
+    "type": "object",
+    "required": [
+        "user_id",
+        "new_email",
+        "token"
+    ],
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": "integer"
+        },
+        "new_email": {
+            "type": "string"
+        },
+        "token": {
+            "type": "string"
+        },
+        "created_at": {
+            "type": "string"
+        }
+    }
+}

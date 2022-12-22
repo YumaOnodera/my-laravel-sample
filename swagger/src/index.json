@@ -14,6 +14,9 @@
             "User": {
                 "$ref": "./schemas/user.json"
             },
+            "EmailReset": {
+                "$ref": "./schemas/emailReset.json"
+            },
             "Post": {
                 "$ref": "./schemas/post.json"
             },
@@ -94,11 +97,6 @@
                 "$ref": "./paths/users/destroy.json"
             }
         },
-        "/users/{id}/update-email": {
-            "put": {
-                "$ref": "./paths/users/updateEmail.json"
-            }
-        },
         "/users/{id}/update-password": {
             "put": {
                 "$ref": "./paths/users/updatePassword.json"
@@ -112,6 +110,16 @@
         "/users/{id}/restore": {
             "put": {
                 "$ref": "./paths/users/restore.json"
+            }
+        },
+        "/email-resets/send-reset-link": {
+            "post": {
+                "$ref": "./paths/emailResets/store.json"
+            }
+        },
+        "/email-resets/{token}": {
+            "put": {
+                "$ref": "./paths/emailResets/update.json"
             }
         },
         "/posts": {
