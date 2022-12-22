@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\EmailResetController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -30,9 +31,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'mySelf');
         Route::put('/users/{id}', 'update');
-        Route::put('/users/{id}/update-email', 'updateEmail');
         Route::put('/users/{id}/update-password', 'updatePassword');
         Route::delete('/users/{id}', 'destroy');
+    });
+    Route::controller(EmailResetController::class)->group(function () {
+        Route::post('/email-resets/send-reset-link', 'store');
+        Route::put('/email-resets/{token}', 'update');
     });
     Route::controller(PostController::class)->group(function () {
         Route::post('/posts', 'store');

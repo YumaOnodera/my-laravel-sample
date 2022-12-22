@@ -153,6 +153,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'new_email' => 'メールアドレス',
+    ],
 
 ];
