@@ -3,7 +3,7 @@
 namespace App\UseCases\EmailReset;
 
 use App\Http\Requests\EmailReset\StoreRequest;
-use App\Mail\EmailResets\Store;
+use App\Mail\EmailReset\Store;
 use App\Models\EmailReset;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;

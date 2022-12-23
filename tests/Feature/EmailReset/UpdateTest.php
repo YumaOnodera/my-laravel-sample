@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\EmailResets;
+namespace Tests\Feature\EmailReset;
 
 use App\Models\EmailReset;
 use App\Models\User;

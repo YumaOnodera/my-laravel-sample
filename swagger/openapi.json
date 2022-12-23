@@ -520,7 +520,7 @@
         }
       }
     },
-    "/user": {
+    "/api/user": {
       "get": {
         "tags": [
           "User"
@@ -595,7 +595,7 @@
         }
       }
     },
-    "/users": {
+    "/api/users": {
       "get": {
         "tags": [
           "User"
@@ -798,7 +798,7 @@
         }
       }
     },
-    "/users/{id}": {
+    "/api/users/{id}": {
       "get": {
         "tags": [
           "User"
@@ -1015,7 +1015,7 @@
         }
       }
     },
-    "/users/{id}/update-permission": {
+    "/api/users/{id}/update-permission": {
       "put": {
         "tags": [
           "User"
@@ -1058,7 +1058,7 @@
         }
       }
     },
-    "/users/{id}/restore": {
+    "/api/users/{id}/restore": {
       "put": {
         "tags": [
           "User"
@@ -1099,7 +1099,7 @@
         }
       }
     },
-    "/email-resets/send-reset-link": {
+    "/api/email-resets/send-reset-link": {
       "post": {
         "tags": [
           "EmailReset"
@@ -1130,7 +1130,7 @@
         }
       }
     },
-    "/email-resets/{token}": {
+    "/api/email-resets/{token}": {
       "put": {
         "tags": [
           "EmailReset"
@@ -1161,7 +1161,7 @@
         }
       }
     },
-    "/password-resets": {
+    "/api/password-resets": {
       "put": {
         "tags": [
           "PasswordReset"
@@ -1202,7 +1202,7 @@
         }
       }
     },
-    "/posts": {
+    "/api/posts": {
       "get": {
         "tags": [
           "Post"
@@ -1559,7 +1559,7 @@
         }
       }
     },
-    "/posts/{id}": {
+    "/api/posts/{id}": {
       "get": {
         "tags": [
           "Post"
@@ -1658,7 +1658,7 @@
         }
       }
     },
-    "/comments": {
+    "/api/comments": {
       "get": {
         "tags": [
           "Comment"
@@ -1921,7 +1921,7 @@
         }
       }
     },
-    "/comments/{id}": {
+    "/api/comments/{id}": {
       "delete": {
         "tags": [
           "Comment"

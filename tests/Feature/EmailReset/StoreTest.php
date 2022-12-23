@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature\EmailResets;
+namespace Tests\Feature\EmailReset;
 
-use App\Mail\EmailResets\Store;
+use App\Mail\EmailReset\Store;
 use App\Models\EmailReset;
 use App\Models\User;
 use Faker\Factory;

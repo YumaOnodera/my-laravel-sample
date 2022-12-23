@@ -76,17 +76,17 @@
                 "$ref": "./paths/auth/logout.json"
             }
         },
-        "/user": {
+        "/api/user": {
             "get": {
                 "$ref": "./paths/users/mySelf.json"
             }
         },
-        "/users": {
+        "/api/users": {
             "get": {
                 "$ref": "./paths/users/index.json"
             }
         },
-        "/users/{id}": {
+        "/api/users/{id}": {
             "get": {
                 "$ref": "./paths/users/show.json"
             },
@@ -97,32 +97,32 @@
                 "$ref": "./paths/users/destroy.json"
             }
         },
-        "/users/{id}/update-permission": {
+        "/api/users/{id}/update-permission": {
             "put": {
                 "$ref": "./paths/users/updatePermission.json"
             }
         },
-        "/users/{id}/restore": {
+        "/api/users/{id}/restore": {
             "put": {
                 "$ref": "./paths/users/restore.json"
             }
         },
-        "/email-resets/send-reset-link": {
+        "/api/email-resets/send-reset-link": {
             "post": {
-                "$ref": "./paths/emailResets/store.json"
+                "$ref": "./paths/email-resets/store.json"
             }
         },
-        "/email-resets/{token}": {
+        "/api/email-resets/{token}": {
             "put": {
-                "$ref": "./paths/emailResets/update.json"
+                "$ref": "./paths/email-resets/update.json"
             }
         },
-        "/password-resets": {
+        "/api/password-resets": {
             "put": {
                 "$ref": "./paths/password-resets/update.json"
             }
         },
-        "/posts": {
+        "/api/posts": {
             "get": {
                 "$ref": "./paths/posts/index.json"
             },
@@ -133,7 +133,7 @@
                 "$ref": "./paths/posts/update.json"
             }
         },
-        "/posts/{id}": {
+        "/api/posts/{id}": {
             "get": {
                 "$ref": "./paths/posts/show.json"
             },
@@ -141,7 +141,7 @@
                 "$ref": "./paths/posts/destroy.json"
             }
         },
-        "/comments": {
+        "/api/comments": {
             "get": {
                 "$ref": "./paths/comments/index.json"
             },
@@ -149,7 +149,7 @@
                 "$ref": "./paths/comments/store.json"
             }
         },
-        "/comments/{id}": {
+        "/api/comments/{id}": {
             "delete": {
                 "$ref": "./paths/comments/destroy.json"
             }

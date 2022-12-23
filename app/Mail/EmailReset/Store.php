@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\EmailResets;
+namespace App\Mail\EmailReset;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
