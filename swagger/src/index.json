@@ -97,11 +97,6 @@
                 "$ref": "./paths/users/destroy.json"
             }
         },
-        "/users/{id}/update-password": {
-            "put": {
-                "$ref": "./paths/users/updatePassword.json"
-            }
-        },
         "/users/{id}/update-permission": {
             "put": {
                 "$ref": "./paths/users/updatePermission.json"
@@ -120,6 +115,11 @@
         "/email-resets/{token}": {
             "put": {
                 "$ref": "./paths/emailResets/update.json"
+            }
+        },
+        "/password-resets": {
+            "put": {
+                "$ref": "./paths/password-resets/update.json"
             }
         },
         "/posts": {

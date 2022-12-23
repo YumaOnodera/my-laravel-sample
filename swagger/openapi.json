@@ -1015,42 +1015,6 @@
         }
       }
     },
-    "/users/{id}/update-password": {
-      "put": {
-        "tags": [
-          "User"
-        ],
-        "description": "指定したユーザーのパスワードを更新する。",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "password": {
-                    "type": "string",
-                    "example": "password"
-                  },
-                  "password_confirmation": {
-                    "type": "string",
-                    "example": "password"
-                  }
-                },
-                "required": [
-                  "password",
-                  "password_confirmation"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "成功"
-          }
-        }
-      }
-    },
     "/users/{id}/update-permission": {
       "put": {
         "tags": [
@@ -1185,6 +1149,47 @@
                 },
                 "required": [
                   "token"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "成功"
+          }
+        }
+      }
+    },
+    "/password-resets": {
+      "put": {
+        "tags": [
+          "PasswordReset"
+        ],
+        "description": "ログインユーザーのパスワードを更新する。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "new_password": {
+                    "type": "string",
+                    "example": "new_password"
+                  },
+                  "new_password_confirmation": {
+                    "type": "string",
+                    "example": "new_password"
+                  }
+                },
+                "required": [
+                  "password",
+                  "new_password",
+                  "new_password_confirmation"
                 ]
               }
             }

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Mail\User;
+namespace App\Mail\UpdatePassword;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class UpdatePassword extends Mailable
+class Update extends Mailable
 {
     use Queueable, SerializesModels;
 

@@ -1,8 +1,8 @@
 {
     "tags": [
-        "User"
+        "PasswordReset"
     ],
-    "description": "指定したユーザーのパスワードを更新する。",
+    "description": "ログインユーザーのパスワードを更新する。",
     "requestBody": {
         "content": {
             "application/json": {
@@ -13,14 +13,19 @@
                             "type": "string",
                             "example": "password"
                         },
-                        "password_confirmation": {
+                        "new_password": {
                             "type": "string",
-                            "example": "password"
+                            "example": "new_password"
+                        },
+                        "new_password_confirmation": {
+                            "type": "string",
+                            "example": "new_password"
                         }
                     },
                     "required": [
                         "password",
-                        "password_confirmation"
+                        "new_password",
+                        "new_password_confirmation"
                     ]
                 }
             }

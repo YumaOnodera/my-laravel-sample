@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\DestroyRequest;
 use App\Http\Requests\User\IndexRequest;
 use App\Http\Requests\User\RestoreRequest;
-use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdatePermissionRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
@@ -14,7 +13,6 @@ use App\UseCases\User\IndexAction;
 use App\UseCases\User\RestoreAction;
 use App\UseCases\User\ShowAction;
 use App\UseCases\User\UpdateAction;
-use App\UseCases\User\UpdatePasswordAction;
 use App\UseCases\User\UpdatePermissionAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -80,21 +78,6 @@ class UserController extends Controller
     public function update(UpdateRequest $request, int $id, UpdateAction $action): UserResource
     {
         return new UserResource($action($request, $id));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  UpdatePasswordRequest  $request
-     * @param  int  $id
-     * @param  UpdatePasswordAction  $action
-     * @return Response
-     */
-    public function updatePassword(UpdatePasswordRequest $request, int $id, UpdatePasswordAction $action): Response
-    {
-        $action($request, $id);
-
-        return response()->noContent();
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature\User;
+namespace Tests\Feature\PasswordReset;
 
-use App\Mail\User\UpdatePassword;
+use App\Mail\UpdatePassword\Update;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,7 +14,7 @@ class UpdatePasswordTest extends TestCase
 {
     use RefreshDatabase;
 
-    private const API_URL = 'api/users';
+    private const API_URL = 'api/password-resets';
 
     /**
      * 対象データが送信した値で更新されることを確認する
@@ -27,14 +27,15 @@ class UpdatePasswordTest extends TestCase
 
         $user = User::factory()->create();
         $password = 'password';
+        $newPassword = 'new_password';
 
-        $uri = sprintf('%s/%s/%s', self::API_URL, $user->id, 'update-password');
-        $response = $this->actingAs($user)->put($uri, [
+        $response = $this->actingAs($user)->put(self::API_URL, [
             'password' => $password,
-            'password_confirmation' => $password,
+            'new_password' => $newPassword,
+            'new_password_confirmation' => $newPassword,
         ]);
 
-        $user->password = $password;
+        $user->password = $newPassword;
 
         $afterUpdate = User::find($user->id);
 
@@ -43,29 +44,29 @@ class UpdatePasswordTest extends TestCase
 
         $response->assertStatus(204);
 
-        Mail::assertSent(UpdatePassword::class, static function ($mail) use ($user) {
+        Mail::assertSent(Update::class, static function ($mail) use ($user) {
             return $mail->hasTo($user->email);
         });
     }
 
     /**
-     * 他のユーザーを対象にできないことを確認する
+     * パスワードが異なる時、実行できないことを確認する
      *
      * @return void
      */
-    public function test_can_not_update_other_users_data()
+    public function test_can_not_update_with_invalid_password()
     {
-        $requestUser = User::factory()->create();
-        $otherUser = User::factory()->create();
-        $password = 'password';
+        $user = User::factory()->create();
+        $password = 'wrong-password';
+        $newPassword = 'new_password';
 
-        $uri = sprintf('%s/%s/%s', self::API_URL, $otherUser->id, 'update-password');
-        $response = $this->actingAs($requestUser)->put($uri, [
+        $response = $this->actingAs($user)->put(self::API_URL, [
             'password' => $password,
-            'password_confirmation' => $password,
+            'new_password' => $newPassword,
+            'new_password_confirmation' => $newPassword,
         ]);
 
-        $response->assertStatus(403);
+        $response->assertStatus(422);
     }
 
     /**
