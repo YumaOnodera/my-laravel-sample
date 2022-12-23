@@ -33,6 +33,7 @@ class EmailReset extends Model
     public function prunable(): Builder
     {
         $expiration = config('const.email_resets.expire');
+
         return static::where('created_at', '<', now()->subMinutes($expiration));
     }
 }
