@@ -155,6 +155,7 @@ return [
 
     'attributes' => [
         'new_email' => 'メールアドレス',
+        'new_password' => '新しいパスワード',
     ],
 
 ];
