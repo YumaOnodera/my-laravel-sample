@@ -16,6 +16,8 @@ class StoreAction
      */
     public function __invoke(StoreRequest $request): void
     {
+        EmailReset::where('user_id', $request->user()->id)->delete();
+
         $emailReset = EmailReset::create([
             'user_id' => $request->user()->id,
             'new_email' => $request->new_email,

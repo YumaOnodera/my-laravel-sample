@@ -14,7 +14,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'new_email' => 'required|string|email|max:255|unique:users,email|unique:email_resets',
+            'new_email' => 'required|string|email|max:255|unique:users,email',
         ];
     }
 }
