@@ -32,7 +32,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'mySelf');
         Route::put('/users/{id}', 'update');
-        Route::put('/users/{id}/update-password', 'updatePassword');
         Route::delete('/users/{id}', 'destroy');
     });
     Route::controller(EmailResetController::class)->group(function () {
