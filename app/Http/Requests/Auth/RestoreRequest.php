@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class RestoreRequest extends FormRequest
 {
@@ -15,10 +14,7 @@ class RestoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'restore_token' => [
-                'required',
-                Rule::exists('users', 'restore_token'),
-            ],
+            'restore_token' => ['required', 'exists:users'],
         ];
     }
 }

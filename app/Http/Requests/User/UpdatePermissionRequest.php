@@ -21,7 +21,7 @@ class UpdatePermissionRequest extends FormRequest
                 Rule::exists('users', 'id')
                     ->withoutTrashed(),
             ],
-            'is_admin' => 'required|boolean',
+            'is_admin' => ['required', 'boolean'],
         ];
     }
 

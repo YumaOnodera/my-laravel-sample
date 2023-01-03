@@ -14,10 +14,10 @@ class IndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cursor' => 'nullable|string',
-            'post_id' => 'required|integer',
-            'order_by' => 'nullable|string|in:created_at',
-            'order' => 'nullable|string|in:asc,desc',
+            'cursor' => ['nullable', 'string'],
+            'post_id' => ['required', 'integer'],
+            'order_by' => ['nullable', 'string', 'in:created_at'],
+            'order' => ['nullable', 'string', 'in:asc,desc'],
         ];
     }
 

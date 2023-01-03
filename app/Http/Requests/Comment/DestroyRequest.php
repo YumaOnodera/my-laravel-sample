@@ -4,7 +4,6 @@ namespace App\Http\Requests\Comment;
 
 use App\Models\Comment;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class DestroyRequest extends FormRequest
 {
@@ -32,11 +31,7 @@ class DestroyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => [
-                'required',
-                'integer',
-                Rule::exists('comments', 'id'),
-            ],
+            'id' => ['required', 'integer', 'exists:comments'],
         ];
     }
 

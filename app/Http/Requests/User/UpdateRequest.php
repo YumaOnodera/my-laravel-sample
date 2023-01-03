@@ -4,7 +4,6 @@ namespace App\Http\Requests\User;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -32,12 +31,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => [
-                'required',
-                'integer',
-                Rule::exists('users', 'id'),
-            ],
-            'name' => 'required|string|max:255',
+            'id' => ['required', 'integer', 'exists:users'],
+            'name' => ['required', 'string', 'max:255'],
         ];
     }
 

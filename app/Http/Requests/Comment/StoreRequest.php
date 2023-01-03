@@ -14,8 +14,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'post_id' => 'required|integer',
-            'text' => 'required|string|max:255',
+            'post_id' => ['required', 'integer'],
+            'text' => ['required', 'string', 'max:255'],
         ];
     }
 }

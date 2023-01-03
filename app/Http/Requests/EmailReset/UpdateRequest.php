@@ -17,7 +17,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'token' => 'required|string|exists:email_resets',
+            'token' => ['required', 'string', 'exists:email_resets'],
         ];
     }
 
