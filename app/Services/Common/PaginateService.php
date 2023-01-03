@@ -14,7 +14,6 @@ class PaginateService
      * @param  int  $perPage
      * @param  string|null  $order_by
      * @param  string|null  $order
-     * @param  array|null  $load
      * @return array
      */
     public function paginate(
@@ -22,17 +21,15 @@ class PaginateService
         int $perPage,
         string $order_by = null,
         string $order = null,
-        array $load = null,
     ): array {
         if ($order_by && $order) {
             $builder->orderBy($order_by, $order)
                 ->orderBy('id', $order);
+        } else {
+            $builder->orderBy('id');
         }
 
         $data = $builder->paginate($perPage);
-        if ($load) {
-            $data->load($load);
-        }
 
         return [
             'total' => $data->total(),
@@ -66,6 +63,8 @@ class PaginateService
         if ($order_by && $order) {
             $builder->orderBy($order_by, $order)
                 ->orderBy('id', $order);
+        } else {
+            $builder->orderBy('id');
         }
 
         $data = $builder->cursorPaginate($perPage);

@@ -28,9 +28,14 @@ class IndexAction
     public function __invoke(IndexRequest $request): array
     {
         if ($request->keyword) {
-            $posts = Post::search($request->keyword);
+            $posts = Post::search($request->keyword)
+                ->query(function ($query) {
+                    return $query->with('user', 'comments', 'comments.user')
+                        ->active();
+                });
         } else {
-            $posts = Post::query();
+            $posts = Post::with('user', 'comments', 'comments.user')
+                ->active();
         }
 
         if ($request->user_ids) {
@@ -42,7 +47,6 @@ class IndexAction
             $request->perPage(),
             $request->order_by,
             $request->order,
-            ['user', 'comments']
         );
     }
 }

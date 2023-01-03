@@ -5,6 +5,8 @@ namespace Tests\Feature\Post;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,20 +17,23 @@ class IndexTest extends TestCase
     private const API_URL = 'api/posts';
 
     /**
-     * 未ログインで実行した時、レスポンスが想定通りであることを確認する
+     * 期待値を生成する
      *
-     * @return void
+     * @param  Model|Collection  $posts
+     * @param  Model|Collection  $users
+     * @param  Model|Collection  $comments
+     * @param  int  $perPage
+     * @param  int  $page
+     * @return array
      */
-    public function test_not_logged_in_can_view_data()
-    {
-        $users = User::factory(10)->create();
-        $posts = Post::factory(11)->create();
-        $comments = Comment::factory(2)->create();
-
-        $total = $posts->count();
-        $perPage = config('const.PER_PAGE.PAGINATE');
-        $lastPage = ceil($total / $perPage);
-        $expected = $posts
+    private function expected(
+        Model|Collection $posts,
+        Model|Collection $users,
+        Model|Collection $comments,
+        int $perPage,
+        int $page
+    ): array {
+        return $posts
             ->map(function ($item) use ($users, $comments) {
                 $item['comments'] = $comments
                     ->where('post_id', $item->id)
@@ -43,9 +48,36 @@ class IndexTest extends TestCase
 
                 return $item;
             })
-            ->chunk($perPage)[0]
+            ->chunk($perPage)[$page - 1]
             ->values()
             ->toArray();
+    }
+
+    /**
+     * 未ログインで実行した時、レスポンスが想定通りであることを確認する
+     *
+     * @return void
+     */
+    public function test_not_logged_in_can_view_data()
+    {
+        $users = User::factory(10)->create();
+        $deleted_user = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
+        $posts = Post::factory(12)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+            ])
+            ->create();
+        $comments = Comment::factory(2)->create();
+
+        // 削除ユーザーの投稿は除外する
+        $posts = $posts->where('user_id', '<>', $deleted_user->id);
+
+        $total = $posts->count();
+        $perPage = config('const.PER_PAGE.PAGINATE');
+        $lastPage = ceil($total / $perPage);
+        $expected = $this->expected($posts, $users, $comments, $perPage, 1);
 
         $response = $this->get(self::API_URL);
 
@@ -71,30 +103,23 @@ class IndexTest extends TestCase
     public function test_can_view_data()
     {
         $users = User::factory(10)->create();
-        $posts = Post::factory(11)->create();
+        $deleted_user = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
+        $posts = Post::factory(12)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+            ])
+            ->create();
         $comments = Comment::factory(2)->create();
+
+        // 削除ユーザーの投稿は除外する
+        $posts = $posts->where('user_id', '<>', $deleted_user->id);
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
-        $expected = $posts
-            ->map(function ($item) use ($users, $comments) {
-                $item['comments'] = $comments
-                    ->where('post_id', $item->id)
-                    ->map(function ($item) use ($users) {
-                        $item['created_by'] = $users->find($item['user_id'])->name;
-
-                        return $item;
-                    })
-                    ->values()
-                    ->toArray();
-                $item['created_by'] = $users->find($item['user_id'])->name;
-
-                return $item;
-            })
-            ->chunk($perPage)[0]
-            ->values()
-            ->toArray();
+        $expected = $this->expected($posts, $users, $comments, $perPage, 1);
 
         $response = $this->actingAs($users->first())->get(self::API_URL);
 
@@ -120,30 +145,23 @@ class IndexTest extends TestCase
     public function test_can_view_data_next_page()
     {
         $users = User::factory(10)->create();
-        $posts = Post::factory(21)->create();
+        $deleted_user = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
+        $posts = Post::factory(22)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 10 ? $deleted_user->id : $users->random()->id,
+            ])
+            ->create();
         $comments = Comment::factory(2)->create();
+
+        // 削除ユーザーの投稿は除外する
+        $posts = $posts->where('user_id', '<>', $deleted_user->id);
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
-        $expected = $posts
-            ->map(function ($item) use ($users, $comments) {
-                $item['comments'] = $comments
-                    ->where('post_id', $item->id)
-                    ->map(function ($item) use ($users) {
-                        $item['created_by'] = $users->find($item['user_id'])->name;
-
-                        return $item;
-                    })
-                    ->values()
-                    ->toArray();
-                $item['created_by'] = $users->find($item['user_id'])->name;
-
-                return $item;
-            })
-            ->chunk($perPage)[1]
-            ->values()
-            ->toArray();
+        $expected = $this->expected($posts, $users, $comments, $perPage, 2);
 
         $response = $this->actingAs($users->first())->get(self::API_URL.'?page=2');
 
@@ -169,31 +187,24 @@ class IndexTest extends TestCase
     public function test_can_view_data_last_page()
     {
         $users = User::factory(10)->create();
-        $posts = Post::factory(11)->create();
+        $deleted_user = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
+        $posts = Post::factory(12)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+            ])
+            ->create();
         $comments = Comment::factory(2)->create();
+
+        // 削除ユーザーの投稿は除外する
+        $posts = $posts->where('user_id', '<>', $deleted_user->id);
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
         $firstItem = $perPage * ($lastPage - 1) + 1;
-        $expected = $posts
-            ->map(function ($item) use ($users, $comments) {
-                $item['comments'] = $comments
-                    ->where('post_id', $item->id)
-                    ->map(function ($item) use ($users) {
-                        $item['created_by'] = $users->find($item['user_id'])->name;
-
-                        return $item;
-                    })
-                    ->values()
-                    ->toArray();
-                $item['created_by'] = $users->find($item['user_id'])->name;
-
-                return $item;
-            })
-            ->chunk($perPage)[$lastPage - 1]
-            ->values()
-            ->toArray();
+        $expected = $this->expected($posts, $users, $comments, $perPage, $lastPage);
 
         $response = $this->actingAs($users->first())->get(self::API_URL.'?page='.$lastPage);
 
@@ -219,30 +230,23 @@ class IndexTest extends TestCase
     public function test_can_view_data_per_page()
     {
         $users = User::factory(10)->create();
-        $posts = Post::factory(16)->create();
+        $deleted_user = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
+        $posts = Post::factory(17)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+            ])
+            ->create();
         $comments = Comment::factory(2)->create();
+
+        // 削除ユーザーの投稿は除外する
+        $posts = $posts->where('user_id', '<>', $deleted_user->id);
 
         $total = $posts->count();
         $perPage = 15;
         $lastPage = ceil($total / $perPage);
-        $expected = $posts
-            ->map(function ($item) use ($users, $comments) {
-                $item['comments'] = $comments
-                    ->where('post_id', $item->id)
-                    ->map(function ($item) use ($users) {
-                        $item['created_by'] = $users->find($item['user_id'])->name;
-
-                        return $item;
-                    })
-                    ->values()
-                    ->toArray();
-                $item['created_by'] = $users->find($item['user_id'])->name;
-
-                return $item;
-            })
-            ->chunk($perPage)[0]
-            ->values()
-            ->toArray();
+        $expected = $this->expected($posts, $users, $comments, $perPage, 1);
 
         $response = $this->actingAs($users->first())->get(self::API_URL.'?per_page='.$perPage);
 
@@ -268,32 +272,28 @@ class IndexTest extends TestCase
     public function test_can_view_data_with_sort_in_asc_order_of_created_at()
     {
         $users = User::factory(10)->create();
-        $posts = Post::factory(11)->create();
+        $deleted_user = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
+        $posts = Post::factory(12)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+            ])
+            ->create();
         $comments = Comment::factory(2)->create();
+
+        // 削除ユーザーの投稿は除外し、作成日時の昇順で並び替え
+        $posts = $posts
+            ->where('user_id', '<>', $deleted_user->id)
+            ->sortBy([
+                ['created_at', 'asc'],
+                ['id', 'asc'],
+            ]);
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
-        $expected = $posts
-            ->map(function ($item) use ($users, $comments) {
-                $item['comments'] = $comments
-                    ->where('post_id', $item->id)
-                    ->map(function ($item) use ($users) {
-                        $item['created_by'] = $users->find($item['user_id'])->name;
-
-                        return $item;
-                    })
-                    ->values()
-                    ->toArray();
-                $item['created_by'] = $users->find($item['user_id'])->name;
-
-                return $item;
-            })
-            ->sortBy('created_at')
-            ->sortBy('id')
-            ->chunk($perPage)[0]
-            ->values()
-            ->toArray();
+        $expected = $this->expected($posts, $users, $comments, $perPage, 1);
 
         $response = $this->actingAs($users->first())->get(self::API_URL.'?order_by=created_at&order=asc');
 
@@ -319,32 +319,28 @@ class IndexTest extends TestCase
     public function test_can_view_data_with_sort_in_desc_order_of_created_at()
     {
         $users = User::factory(10)->create();
-        $posts = Post::factory(11)->create();
+        $deleted_user = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
+        $posts = Post::factory(12)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+            ])
+            ->create();
         $comments = Comment::factory(2)->create();
+
+        // 削除ユーザーの投稿は除外し、作成日時の降順で並び替え
+        $posts = $posts
+            ->where('user_id', '<>', $deleted_user->id)
+            ->sortBy([
+                ['created_at', 'desc'],
+                ['id', 'desc'],
+            ]);
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
-        $expected = $posts
-            ->map(function ($item) use ($users, $comments) {
-                $item['comments'] = $comments
-                    ->where('post_id', $item->id)
-                    ->map(function ($item) use ($users) {
-                        $item['created_by'] = $users->find($item['user_id'])->name;
-
-                        return $item;
-                    })
-                    ->values()
-                    ->toArray();
-                $item['created_by'] = $users->find($item['user_id'])->name;
-
-                return $item;
-            })
-            ->sortByDesc('created_at')
-            ->sortByDesc('id')
-            ->chunk($perPage)[0]
-            ->values()
-            ->toArray();
+        $expected = $this->expected($posts, $users, $comments, $perPage, 1);
 
         $response = $this->actingAs($users->first())->get(self::API_URL.'?order_by=created_at&order=desc');
 
@@ -370,36 +366,28 @@ class IndexTest extends TestCase
     public function test_can_view_data_by_user_id()
     {
         $users = User::factory(10)->create();
-        $posts = Post::factory(10)->create();
+        $deleted_user = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
+        $posts = Post::factory(11)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+            ])
+            ->create();
         $comments = Comment::factory(2)->create();
 
         // ユーザーidをランダムに5件抽出
         $user_ids = $users->random(5)->pluck('id')->toArray();
 
-        // ユーザーidで絞り込み
-        $posts = $posts->whereIn('user_id', $user_ids);
+        // 削除ユーザーの投稿は除外し、ユーザーidで絞り込み
+        $posts = $posts
+            ->where('user_id', '<>', $deleted_user->id)
+            ->whereIn('user_id', $user_ids);
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
         $lastPage = ceil($total / $perPage);
-        $expected = $posts
-            ->map(function ($item) use ($users, $comments) {
-                $item['comments'] = $comments
-                    ->where('post_id', $item->id)
-                    ->map(function ($item) use ($users) {
-                        $item['created_by'] = $users->find($item['user_id'])->name;
-
-                        return $item;
-                    })
-                    ->values()
-                    ->toArray();
-                $item['created_by'] = $users->find($item['user_id'])->name;
-
-                return $item;
-            })
-            ->chunk($perPage)[0]
-            ->values()
-            ->toArray();
+        $expected = $this->expected($posts, $users, $comments, $perPage, 1);
 
         $query = '?user_ids[]='.implode('&user_ids[]=', $user_ids);
         $response = $this->actingAs($users->first())->get(self::API_URL.$query);
