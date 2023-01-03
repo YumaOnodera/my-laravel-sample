@@ -61,18 +61,18 @@ class IndexTest extends TestCase
     public function test_not_logged_in_can_view_data()
     {
         $users = User::factory(10)->create();
-        $deleted_user = User::factory()->create([
+        $deletedUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
         $posts = Post::factory(12)
             ->sequence(fn ($sequence) => [
-                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
         $comments = Comment::factory(2)->create();
 
         // 削除ユーザーの投稿は除外する
-        $posts = $posts->where('user_id', '<>', $deleted_user->id);
+        $posts = $posts->where('user_id', '<>', $deletedUser->id);
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
@@ -103,18 +103,18 @@ class IndexTest extends TestCase
     public function test_can_view_data()
     {
         $users = User::factory(10)->create();
-        $deleted_user = User::factory()->create([
+        $deletedUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
         $posts = Post::factory(12)
             ->sequence(fn ($sequence) => [
-                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
         $comments = Comment::factory(2)->create();
 
         // 削除ユーザーの投稿は除外する
-        $posts = $posts->where('user_id', '<>', $deleted_user->id);
+        $posts = $posts->where('user_id', '<>', $deletedUser->id);
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
@@ -145,18 +145,18 @@ class IndexTest extends TestCase
     public function test_can_view_data_next_page()
     {
         $users = User::factory(10)->create();
-        $deleted_user = User::factory()->create([
+        $deletedUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
         $posts = Post::factory(22)
             ->sequence(fn ($sequence) => [
-                'user_id' => $sequence->index === 10 ? $deleted_user->id : $users->random()->id,
+                'user_id' => $sequence->index === 10 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
         $comments = Comment::factory(2)->create();
 
         // 削除ユーザーの投稿は除外する
-        $posts = $posts->where('user_id', '<>', $deleted_user->id);
+        $posts = $posts->where('user_id', '<>', $deletedUser->id);
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
@@ -187,18 +187,18 @@ class IndexTest extends TestCase
     public function test_can_view_data_last_page()
     {
         $users = User::factory(10)->create();
-        $deleted_user = User::factory()->create([
+        $deletedUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
         $posts = Post::factory(12)
             ->sequence(fn ($sequence) => [
-                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
         $comments = Comment::factory(2)->create();
 
         // 削除ユーザーの投稿は除外する
-        $posts = $posts->where('user_id', '<>', $deleted_user->id);
+        $posts = $posts->where('user_id', '<>', $deletedUser->id);
 
         $total = $posts->count();
         $perPage = config('const.PER_PAGE.PAGINATE');
@@ -230,18 +230,18 @@ class IndexTest extends TestCase
     public function test_can_view_data_per_page()
     {
         $users = User::factory(10)->create();
-        $deleted_user = User::factory()->create([
+        $deletedUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
         $posts = Post::factory(17)
             ->sequence(fn ($sequence) => [
-                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
         $comments = Comment::factory(2)->create();
 
         // 削除ユーザーの投稿は除外する
-        $posts = $posts->where('user_id', '<>', $deleted_user->id);
+        $posts = $posts->where('user_id', '<>', $deletedUser->id);
 
         $total = $posts->count();
         $perPage = 15;
@@ -272,19 +272,19 @@ class IndexTest extends TestCase
     public function test_can_view_data_with_sort_in_asc_order_of_created_at()
     {
         $users = User::factory(10)->create();
-        $deleted_user = User::factory()->create([
+        $deletedUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
         $posts = Post::factory(12)
             ->sequence(fn ($sequence) => [
-                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
         $comments = Comment::factory(2)->create();
 
         // 削除ユーザーの投稿は除外し、作成日時の昇順で並び替え
         $posts = $posts
-            ->where('user_id', '<>', $deleted_user->id)
+            ->where('user_id', '<>', $deletedUser->id)
             ->sortBy([
                 ['created_at', 'asc'],
                 ['id', 'asc'],
@@ -319,19 +319,19 @@ class IndexTest extends TestCase
     public function test_can_view_data_with_sort_in_desc_order_of_created_at()
     {
         $users = User::factory(10)->create();
-        $deleted_user = User::factory()->create([
+        $deletedUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
         $posts = Post::factory(12)
             ->sequence(fn ($sequence) => [
-                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
         $comments = Comment::factory(2)->create();
 
         // 削除ユーザーの投稿は除外し、作成日時の降順で並び替え
         $posts = $posts
-            ->where('user_id', '<>', $deleted_user->id)
+            ->where('user_id', '<>', $deletedUser->id)
             ->sortBy([
                 ['created_at', 'desc'],
                 ['id', 'desc'],
@@ -366,12 +366,12 @@ class IndexTest extends TestCase
     public function test_can_view_data_by_user_id()
     {
         $users = User::factory(10)->create();
-        $deleted_user = User::factory()->create([
+        $deletedUser = User::factory()->create([
             'deleted_at' => now(),
         ]);
         $posts = Post::factory(11)
             ->sequence(fn ($sequence) => [
-                'user_id' => $sequence->index === 1 ? $deleted_user->id : $users->random()->id,
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
         $comments = Comment::factory(2)->create();
@@ -381,7 +381,7 @@ class IndexTest extends TestCase
 
         // 削除ユーザーの投稿は除外し、ユーザーidで絞り込み
         $posts = $posts
-            ->where('user_id', '<>', $deleted_user->id)
+            ->where('user_id', '<>', $deletedUser->id)
             ->whereIn('user_id', $user_ids);
 
         $total = $posts->count();
