@@ -73,7 +73,7 @@ class ShowTest extends TestCase
     }
 
     /**
-     * 存在しないデータを指定した時、実行できないことを確認する
+     * 存在しないデータを指定した時、参照できないことを確認する
      *
      * @return void
      */
@@ -82,6 +82,26 @@ class ShowTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get(self::API_URL.'/'. 1);
+
+        $response->assertStatus(404);
+    }
+
+    /**
+     * 削除ユーザーのデータを指定した時、参照できないことを確認する
+     *
+     * @return void
+     */
+    public function test_can_not_view_data_by_deleted_user()
+    {
+        $user = User::factory()->create();
+        $deletedUser = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
+        $post = Post::factory()->create([
+            'user_id' => $deletedUser->id,
+        ]);
+
+        $response = $this->actingAs($user)->get(self::API_URL.'/'.$post->id);
 
         $response->assertStatus(404);
     }

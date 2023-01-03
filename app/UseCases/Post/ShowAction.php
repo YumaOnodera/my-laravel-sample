@@ -13,6 +13,6 @@ class ShowAction
      */
     public function __invoke(int $id): Model
     {
-        return Post::findOrFail($id);
+        return Post::active()->findOrFail($id);
     }
 }
