@@ -15,6 +15,24 @@
             }
         }
     ],
+    "requestBody": {
+        "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "password": {
+                            "type": "string",
+                            "example": "password"
+                        }
+                    },
+                    "required": [
+                        "password"
+                    ]
+                }
+            }
+        }
+    },
     "responses": {
         "204": {
             "description": "成功"

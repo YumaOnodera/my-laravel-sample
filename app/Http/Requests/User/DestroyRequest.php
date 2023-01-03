@@ -33,6 +33,10 @@ class DestroyRequest extends FormRequest
                 Rule::exists('users', 'id')
                     ->withoutTrashed(),
             ],
+            'password' => [
+                Rule::requiredIf(! $this->user()->is_admin),
+                'current_password',
+            ],
         ];
     }
 

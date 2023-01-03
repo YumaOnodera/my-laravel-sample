@@ -25,7 +25,9 @@ class DestroyTest extends TestCase
 
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->delete(self::API_URL.'/'.$user->id);
+        $response = $this->actingAs($user)->delete(self::API_URL.'/'.$user->id, [
+            'password' => 'password',
+        ]);
 
         $afterUpdate = User::withTrashed()->find($user->id);
 
@@ -55,7 +57,9 @@ class DestroyTest extends TestCase
         ]);
         $otherUser = User::factory()->create();
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$otherUser->id);
+        $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$otherUser->id, [
+            'password' => 'password',
+        ]);
 
         $afterUpdate = User::withTrashed()->find($otherUser->id);
 
@@ -81,7 +85,9 @@ class DestroyTest extends TestCase
         $requestUser = User::factory()->create();
         $otherUser = User::factory()->create();
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$otherUser->id);
+        $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$otherUser->id, [
+            'password' => 'password',
+        ]);
 
         $response->assertStatus(403);
     }
@@ -97,7 +103,9 @@ class DestroyTest extends TestCase
             'is_admin' => 1,
         ]);
 
-        $response = $this->actingAs($user)->delete(self::API_URL.'/'. 2);
+        $response = $this->actingAs($user)->delete(self::API_URL.'/'. 2, [
+            'password' => 'password',
+        ]);
 
         $response->assertStatus(422);
     }
@@ -116,7 +124,25 @@ class DestroyTest extends TestCase
             'deleted_at' => now(),
         ]);
 
-        $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$otherUser->id);
+        $response = $this->actingAs($requestUser)->delete(self::API_URL.'/'.$otherUser->id, [
+            'password' => 'password',
+        ]);
+
+        $response->assertStatus(422);
+    }
+
+    /**
+     * パスワードが異なる時、実行できないことを確認する
+     *
+     * @return void
+     */
+    public function test_can_not_delete_with_invalid_password()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->delete(self::API_URL.'/'.$user->id, [
+            'password' => 'wrong-password',
+        ]);
 
         $response->assertStatus(422);
     }
