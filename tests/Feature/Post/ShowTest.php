@@ -73,7 +73,7 @@ class ShowTest extends TestCase
     }
 
     /**
-     * 存在しないデータを指定した時、参照できないことを確認する
+     * 存在しないデータを指定した時、実行できないことを確認する
      *
      * @return void
      */
@@ -87,7 +87,7 @@ class ShowTest extends TestCase
     }
 
     /**
-     * 削除ユーザーのデータを指定した時、参照できないことを確認する
+     * 削除ユーザーのデータを指定した時、実行できないことを確認する
      *
      * @return void
      */
