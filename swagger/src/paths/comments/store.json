@@ -9,13 +9,18 @@
                 "schema": {
                     "type": "object",
                     "properties": {
+                        "post_id": {
+                            "type": "integer",
+                            "example": 1
+                        },
                         "text": {
                             "type": "string",
                             "example": "テスト"
                         }
                     },
                     "required": [
-                        "text"
+                        "text",
+                        "post_id"
                     ]
                 }
             }
