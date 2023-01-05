@@ -30,11 +30,11 @@ class IndexAction
         if ($request->keyword) {
             $posts = Post::search($request->keyword)
                 ->query(function ($query) {
-                    return $query->with('user', 'comments', 'comments.user')
+                    return $query->with(['user', 'comments', 'comments.user'])
                         ->active();
                 });
         } else {
-            $posts = Post::with('user', 'comments', 'comments.user')
+            $posts = Post::with(['user', 'comments', 'comments.user'])
                 ->active();
         }
 
@@ -42,11 +42,6 @@ class IndexAction
             $posts->whereIn('user_id', $request->user_ids);
         }
 
-        return $this->paginateService->paginate(
-            $posts,
-            $request->perPage(),
-            $request->order_by,
-            $request->order,
-        );
+        return $this->paginateService->paginate($posts, $request->perPage(), $request->order());
     }
 }

@@ -48,6 +48,9 @@ class IndexTest extends TestCase
 
                 return $item;
             })
+            ->sortBy([
+                ['id', 'desc'],
+            ])
             ->chunk($perPage)[$page - 1]
             ->values()
             ->toArray();
@@ -249,100 +252,6 @@ class IndexTest extends TestCase
         $expected = $this->expected($posts, $users, $comments, $perPage, 1);
 
         $response = $this->actingAs($users->first())->get(self::API_URL.'?per_page='.$perPage);
-
-        $response
-            ->assertStatus(200)
-            ->assertExactJson([
-                'total' => $total,
-                'per_page' => $perPage,
-                'current_page' => 1,
-                'last_page' => $lastPage,
-                'first_item' => 1,
-                'last_item' => $perPage,
-                'has_more_pages' => true,
-                'data' => $expected,
-            ]);
-    }
-
-    /**
-     * 作成日時の昇順で並び替えられるかを確認する
-     *
-     * @return void
-     */
-    public function test_can_view_data_with_sort_in_asc_order_of_created_at()
-    {
-        $users = User::factory(10)->create();
-        $deletedUser = User::factory()->create([
-            'deleted_at' => now(),
-        ]);
-        $posts = Post::factory(12)
-            ->sequence(fn ($sequence) => [
-                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
-            ])
-            ->create();
-        $comments = Comment::factory(2)->create();
-
-        // 削除ユーザーの投稿は除外し、作成日時の昇順で並び替え
-        $posts = $posts
-            ->where('user_id', '<>', $deletedUser->id)
-            ->sortBy([
-                ['created_at', 'asc'],
-                ['id', 'asc'],
-            ]);
-
-        $total = $posts->count();
-        $perPage = config('const.PER_PAGE.PAGINATE');
-        $lastPage = ceil($total / $perPage);
-        $expected = $this->expected($posts, $users, $comments, $perPage, 1);
-
-        $response = $this->actingAs($users->first())->get(self::API_URL.'?order_by=created_at&order=asc');
-
-        $response
-            ->assertStatus(200)
-            ->assertExactJson([
-                'total' => $total,
-                'per_page' => $perPage,
-                'current_page' => 1,
-                'last_page' => $lastPage,
-                'first_item' => 1,
-                'last_item' => $perPage,
-                'has_more_pages' => true,
-                'data' => $expected,
-            ]);
-    }
-
-    /**
-     * 作成日時の降順で並び替えられるかを確認する
-     *
-     * @return void
-     */
-    public function test_can_view_data_with_sort_in_desc_order_of_created_at()
-    {
-        $users = User::factory(10)->create();
-        $deletedUser = User::factory()->create([
-            'deleted_at' => now(),
-        ]);
-        $posts = Post::factory(12)
-            ->sequence(fn ($sequence) => [
-                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
-            ])
-            ->create();
-        $comments = Comment::factory(2)->create();
-
-        // 削除ユーザーの投稿は除外し、作成日時の降順で並び替え
-        $posts = $posts
-            ->where('user_id', '<>', $deletedUser->id)
-            ->sortBy([
-                ['created_at', 'desc'],
-                ['id', 'desc'],
-            ]);
-
-        $total = $posts->count();
-        $perPage = config('const.PER_PAGE.PAGINATE');
-        $lastPage = ceil($total / $perPage);
-        $expected = $this->expected($posts, $users, $comments, $perPage, 1);
-
-        $response = $this->actingAs($users->first())->get(self::API_URL.'?order_by=created_at&order=desc');
 
         $response
             ->assertStatus(200)

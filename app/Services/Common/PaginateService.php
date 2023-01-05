@@ -12,21 +12,18 @@ class PaginateService
      *
      * @param  Builder|ScoutBuilder  $builder
      * @param  int  $perPage
-     * @param  string|null  $order_by
-     * @param  string|null  $order
+     * @param  array|null  $sortOrder
      * @return array
      */
     public function paginate(
         Builder|ScoutBuilder $builder,
         int $perPage,
-        string $order_by = null,
-        string $order = null,
+        array $sortOrder = null
     ): array {
-        if ($order_by && $order) {
-            $builder->orderBy($order_by, $order)
-                ->orderBy('id', $order);
-        } else {
-            $builder->orderBy('id');
+        if ($sortOrder) {
+            foreach ($sortOrder as $orderBy => $order) {
+                $builder->orderBy($orderBy, $order);
+            }
         }
 
         $data = $builder->paginate($perPage);
@@ -48,23 +45,20 @@ class PaginateService
      *
      * @param  Builder  $builder
      * @param  int  $perPage
-     * @param  string|null  $order_by
-     * @param  string|null  $order
+     * @param  array|null  $sortOrder
      * @return array
      */
     public function cursorPaginate(
         Builder $builder,
         int $perPage,
-        string $order_by = null,
-        string $order = null
+        array $sortOrder = null
     ): array {
         $total = $builder->count();
 
-        if ($order_by && $order) {
-            $builder->orderBy($order_by, $order)
-                ->orderBy('id', $order);
-        } else {
-            $builder->orderBy('id');
+        if ($sortOrder) {
+            foreach ($sortOrder as $orderBy => $order) {
+                $builder->orderBy($orderBy, $order);
+            }
         }
 
         $data = $builder->cursorPaginate($perPage);

@@ -19,8 +19,7 @@ class IndexRequest extends FormRequest
             'keyword' => ['nullable', 'string'],
             'user_ids' => ['nullable', 'array'],
             'user_ids.*' => ['nullable', 'integer'],
-            'order_by' => ['nullable', 'string', 'in:created_at'],
-            'order' => ['nullable', 'string', 'in:asc,desc'],
+            'order' => ['nullable', 'string', 'in:popular'],
         ];
     }
 
@@ -30,5 +29,19 @@ class IndexRequest extends FormRequest
     public function perPage(): int
     {
         return $this->input('per_page', config('const.PER_PAGE.PAGINATE'));
+    }
+
+    /**
+     * @return array|null
+     */
+    public function order(): array|null
+    {
+        if (! $this->keyword) {
+            return [
+                'id' => 'desc',
+            ];
+        }
+
+        return null;
     }
 }

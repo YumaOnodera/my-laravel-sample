@@ -45,23 +45,13 @@
             }
         },
         {
-            "description": "並び順のキー",
-            "in": "query",
-            "name": "order_by",
-            "required": false,
-            "schema": {
-                "type": "string",
-                "example": "created_by"
-            }
-        },
-        {
-            "description": "昇順・降順の指定",
+            "description": "並び順の指定",
             "in": "query",
             "name": "order",
             "required": false,
             "schema": {
                 "type": "string",
-                "example": "desc"
+                "example": "popular"
             }
         }
     ],

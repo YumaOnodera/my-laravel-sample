@@ -30,11 +30,6 @@ class IndexAction
         $comments = Comment::with('user')
             ->where('post_id', $request->post_id);
 
-        return $this->paginateService->cursorPaginate(
-            $comments,
-            $request->perPage(),
-            $request->order_by,
-            $request->order
-        );
+        return $this->paginateService->cursorPaginate($comments, $request->perPage());
     }
 }
