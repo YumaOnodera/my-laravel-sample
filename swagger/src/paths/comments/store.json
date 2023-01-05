@@ -19,8 +19,8 @@
                         }
                     },
                     "required": [
-                        "text",
-                        "post_id"
+                        "post_id",
+                        "text"
                     ]
                 }
             }
