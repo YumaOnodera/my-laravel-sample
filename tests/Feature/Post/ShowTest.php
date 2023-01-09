@@ -22,13 +22,25 @@ class ShowTest extends TestCase
     public function test_not_logged_in_can_view_data()
     {
         $users = User::factory(10)->create();
+        $deletedUser = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
         $post = Post::factory()->create();
-        $comments = Comment::factory(2)->create();
+        $comments = Comment::factory(3)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
+            ])
+            ->create();
 
         $response = $this->get(self::API_URL.'/'.$post->id);
 
         $post->comments = $comments
             ->where('post_id', $post->id)
+            ->filter(function ($item) use ($users) {
+                $user = $users->find($item['user_id']);
+
+                return $user && $user->deleted_at === null;
+            })
             ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
 
@@ -51,13 +63,25 @@ class ShowTest extends TestCase
     public function test_can_view_data()
     {
         $users = User::factory(10)->create();
+        $deletedUser = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
         $post = Post::factory()->create();
-        $comments = Comment::factory(2)->create();
+        $comments = Comment::factory(3)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
+            ])
+            ->create();
 
         $response = $this->actingAs($users->first())->get(self::API_URL.'/'.$post->id);
 
         $post->comments = $comments
             ->where('post_id', $post->id)
+            ->filter(function ($item) use ($users) {
+                $user = $users->find($item['user_id']);
+
+                return $user && $user->deleted_at === null;
+            })
             ->map(function ($item) use ($users) {
                 $item['created_by'] = $users->find($item['user_id'])->name;
 

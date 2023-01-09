@@ -55,13 +55,19 @@ class Post extends Model
      * 有効な投稿
      *
      * @param  Builder  $query
-     * @return Builder
+     * @return void
      */
-    public function scopeActive(Builder $query): Builder
+    public function scopeActive(Builder $query): void
     {
-        return $query->whereHas('user', function ($query) {
+        $query->whereHas('user', function ($query) {
             $query->whereNull('deleted_at');
         });
+
+        $query->with(['comments' => function ($query) {
+            $query->whereHas('user', function ($query) {
+                $query->whereNull('deleted_at');
+            })->orderBy('id');
+        }]);
     }
 
     /**

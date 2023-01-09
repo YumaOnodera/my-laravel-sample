@@ -37,6 +37,11 @@ class IndexTest extends TestCase
             ->map(function ($item) use ($users, $comments) {
                 $item['comments'] = $comments
                     ->where('post_id', $item->id)
+                    ->filter(function ($item) use ($users) {
+                        $user = $users->find($item['user_id']);
+
+                        return $user && $user->deleted_at === null;
+                    })
                     ->map(function ($item) use ($users) {
                         $item['created_by'] = $users->find($item['user_id'])->name;
 
@@ -72,7 +77,11 @@ class IndexTest extends TestCase
                 'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
-        $comments = Comment::factory(2)->create();
+        $comments = Comment::factory(3)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
+            ])
+            ->create();
 
         // 削除ユーザーの投稿は除外する
         $posts = $posts->where('user_id', '<>', $deletedUser->id);
@@ -114,7 +123,11 @@ class IndexTest extends TestCase
                 'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
-        $comments = Comment::factory(2)->create();
+        $comments = Comment::factory(3)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
+            ])
+            ->create();
 
         // 削除ユーザーの投稿は除外する
         $posts = $posts->where('user_id', '<>', $deletedUser->id);
@@ -156,7 +169,11 @@ class IndexTest extends TestCase
                 'user_id' => $sequence->index === 10 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
-        $comments = Comment::factory(2)->create();
+        $comments = Comment::factory(3)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
+            ])
+            ->create();
 
         // 削除ユーザーの投稿は除外する
         $posts = $posts->where('user_id', '<>', $deletedUser->id);
@@ -198,7 +215,11 @@ class IndexTest extends TestCase
                 'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
-        $comments = Comment::factory(2)->create();
+        $comments = Comment::factory(3)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
+            ])
+            ->create();
 
         // 削除ユーザーの投稿は除外する
         $posts = $posts->where('user_id', '<>', $deletedUser->id);
@@ -241,7 +262,11 @@ class IndexTest extends TestCase
                 'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
-        $comments = Comment::factory(2)->create();
+        $comments = Comment::factory(3)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
+            ])
+            ->create();
 
         // 削除ユーザーの投稿は除外する
         $posts = $posts->where('user_id', '<>', $deletedUser->id);
@@ -283,7 +308,11 @@ class IndexTest extends TestCase
                 'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
             ])
             ->create();
-        $comments = Comment::factory(2)->create();
+        $comments = Comment::factory(3)
+            ->sequence(fn ($sequence) => [
+                'user_id' => $sequence->index === 1 ? $deletedUser->id : $users->random()->id,
+            ])
+            ->create();
 
         // ユーザーidをランダムに5件抽出
         $user_ids = $users->random(5)->pluck('id')->toArray();

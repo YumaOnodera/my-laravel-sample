@@ -13,6 +13,8 @@ class ShowAction
      */
     public function __invoke(int $id): Model
     {
-        return Post::active()->findOrFail($id);
+        return Post::with(['user', 'comments', 'comments.user'])
+            ->active()
+            ->findOrFail($id);
     }
 }
