@@ -301,4 +301,46 @@ class IndexTest extends TestCase
                 'data' => $expected,
             ]);
     }
+
+    /**
+     * 有効ユーザーのみで絞り込めるかを確認する
+     *
+     * @return void
+     */
+    public function test_can_view_active_data_only()
+    {
+        $users = User::factory(11)
+            ->sequence(fn ($sequence) => [
+                'is_admin' => $sequence->index === 0 ? 1 : 0,
+            ])
+            ->state(new Sequence(
+                ['deleted_at' => null],
+                ['deleted_at' => now()],
+            ))
+            ->create();
+
+        $total = $users->whereNull('deleted_at')->count();
+        $perPage = config('const.PER_PAGE.PAGINATE');
+        $lastPage = ceil($total / $perPage);
+        $expected = $users
+            ->whereNull('deleted_at')
+            ->chunk($perPage)[0]
+            ->values()
+            ->toArray();
+
+        $response = $this->actingAs($users->first())->get(self::API_URL.'?active_only=true');
+
+        $response
+            ->assertStatus(200)
+            ->assertExactJson([
+                'total' => $total,
+                'per_page' => $perPage,
+                'current_page' => 1,
+                'last_page' => $lastPage,
+                'first_item' => 1,
+                'last_item' => $total,
+                'has_more_pages' => false,
+                'data' => $expected,
+            ]);
+    }
 }

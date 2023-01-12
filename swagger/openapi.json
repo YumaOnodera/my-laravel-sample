@@ -631,6 +631,16 @@
               "type": "string",
               "example": "郎"
             }
+          },
+          {
+            "description": "論理削除されていないデータのみに絞り込み",
+            "in": "query",
+            "name": "active_only",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "example": false
+            }
           }
         ],
         "responses": {

@@ -33,7 +33,7 @@ class IndexAction
             $users = User::query();
         }
 
-        if ($request->user()?->is_admin) {
+        if (! $request->active_only && $request->user()?->is_admin) {
             $users = $users->withTrashed();
         }
 

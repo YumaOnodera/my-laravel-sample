@@ -17,7 +17,20 @@ class IndexRequest extends FormRequest
             'page' => ['nullable', 'integer'],
             'per_page' => ['nullable', 'integer'],
             'keyword' => ['nullable', 'string'],
+            'active_only' => ['nullable', 'boolean'],
         ];
+    }
+
+    /**
+     * バリデーションのためにデータを準備
+     *
+     * @return void
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'active_only' => (bool) $this->active_only,
+        ]);
     }
 
     /**
