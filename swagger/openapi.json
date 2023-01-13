@@ -252,7 +252,7 @@
         }
       }
     },
-    "/restore": {
+    "/restore/{token}": {
       "post": {
         "tags": [
           "Auth"

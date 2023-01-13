@@ -41,7 +41,7 @@
                 "$ref": "./paths/auth/restoreToken.json"
             }
         },
-        "/restore": {
+        "/restore/{token}": {
             "post": {
                 "$ref": "./paths/auth/restore.json"
             }
