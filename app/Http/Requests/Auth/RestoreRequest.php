@@ -14,7 +14,19 @@ class RestoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'restore_token' => ['required', 'exists:users'],
+            'token' => ['required', 'string', 'exists:user_restores'],
         ];
+    }
+
+    /**
+     * バリデーションのためにデータを準備
+     *
+     * @return void
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'token' => $this->token,
+        ]);
     }
 }

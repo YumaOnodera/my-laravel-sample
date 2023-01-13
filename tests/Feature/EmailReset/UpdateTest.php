@@ -38,7 +38,7 @@ class UpdateTest extends TestCase
 
         $isExists = EmailReset::where('id', $emailReset->id)->exists();
 
-        // 一時テーブルの対象データが削除されているか確認する
+        // 一時テーブルの対象データが削除されていることを確認する
         $this->assertFalse($isExists);
 
         $response->assertStatus(204);

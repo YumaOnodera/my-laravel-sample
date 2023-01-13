@@ -3,24 +3,18 @@
         "EmailReset"
     ],
     "description": "トークンを用いてユーザーを取得し、対象ユーザーのメールアドレスを更新する。",
-    "requestBody": {
-        "content": {
-            "application/json": {
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "token": {
-                            "type": "string",
-                            "example": "4vIzesVBxRvrugX6uSxdENL2QkaL56iCE0aHlZbzVI7iNYEy46TIXHaNHZGx"
-                        }
-                    },
-                    "required": [
-                        "token"
-                    ]
-                }
+    "parameters": [
+        {
+            "description": "メールアドレス更新用トークン",
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+                "type": "string",
+                "example": "4vIzesVBxRvrugX6uSxdENL2QkaL56iCE0aHlZbzVI7iNYEy46TIXHaNHZGx"
             }
         }
-    },
+    ],
     "responses": {
         "204": {
             "description": "成功"

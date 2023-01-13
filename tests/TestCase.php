@@ -15,6 +15,7 @@ abstract class TestCase extends BaseTestCase
         Schema::disableForeignKeyConstraints();
 
         DB::table('email_resets')->truncate();
+        DB::table('user_restores')->truncate();
         DB::table('comments')->truncate();
         DB::table('posts')->truncate();
         DB::table('users')->truncate();

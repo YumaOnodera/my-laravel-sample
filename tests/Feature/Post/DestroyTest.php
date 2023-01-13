@@ -27,7 +27,7 @@ class DestroyTest extends TestCase
 
         $isExists = Post::where('id', $post->id)->exists();
 
-        // 対象データが削除されているか確認する
+        // 対象データが削除されていることを確認する
         $this->assertFalse($isExists);
 
         $response->assertStatus(204);

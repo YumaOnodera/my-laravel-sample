@@ -4,6 +4,7 @@ namespace App\UseCases\Auth;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
+use App\Models\UserRestore;
 use Illuminate\Support\Facades\Hash;
 
 class RestoreTokenAction
@@ -19,7 +20,7 @@ class RestoreTokenAction
             ->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
-            return $user->makeVisible(['restore_token'])->restore_token;
+            return UserRestore::where('user_id', $user->id)->first()?->token;
         }
 
         return null;

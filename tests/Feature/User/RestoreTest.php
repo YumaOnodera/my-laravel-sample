@@ -35,15 +35,13 @@ class RestoreTest extends TestCase
 
         $afterUpdate = User::find($otherUser->id);
 
-        // 対象データが復活しているか確認する
+        // 対象データが復活していることを確認する
         $this->assertNull($afterUpdate->deleted_at);
-        // ユーザー復活用トークンが破棄されているか確認する
-        $this->assertNull($afterUpdate->restore_token);
 
         $response->assertStatus(204);
 
-        Mail::assertSent(Restore::class, static function ($mail) use ($requestUser, $otherUser) {
-            return $mail->hasTo($requestUser->email) && $mail->hasCc($otherUser->email);
+        Mail::assertSent(Restore::class, static function ($mail) use ($otherUser) {
+            return $mail->hasTo($otherUser->email);
         });
     }
 

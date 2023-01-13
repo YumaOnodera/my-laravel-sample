@@ -10,7 +10,7 @@ use App\UseCases\Auth\RestoreTokenAction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
-class RestoreUserController extends Controller
+class UserRestoreController extends Controller
 {
     /**
      * メールアドレスとパスワードをもとにユーザーを検索し、対象ユーザーの復活用トークンを取得する。
@@ -21,19 +21,22 @@ class RestoreUserController extends Controller
      */
     public function restoreToken(LoginRequest $request, RestoreTokenAction $action): JsonResponse
     {
-        return response()->json(['restore_token' => $action($request)]);
+        return response()->json([
+            'restore_token' => $action($request),
+        ]);
     }
 
     /**
      * Restore the specified resource from storage.
      *
      * @param  RestoreRequest  $request
+     * @param  string  $token
      * @param  RestoreAction  $action
      * @return Response
      */
-    public function restore(RestoreRequest $request, RestoreAction $action): Response
+    public function restore(RestoreRequest $request, string $token, RestoreAction $action): Response
     {
-        $action($request);
+        $action($request, $token);
 
         return response()->noContent();
     }

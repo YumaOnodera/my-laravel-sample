@@ -4,6 +4,7 @@ namespace Tests\Feature\User;
 
 use App\Mail\User\Destroy;
 use App\Models\User;
+use App\Models\UserRestore;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
@@ -30,16 +31,18 @@ class DestroyTest extends TestCase
         ]);
 
         $afterUpdate = User::withTrashed()->find($user->id);
+        $userRestore = UserRestore::where('user_id', $user->id)->first();
 
-        // 対象データが論理削除されているか確認する
+        // 対象データが論理削除されていることを確認する
         $this->assertNotNull($afterUpdate->deleted_at);
-        // ユーザー復活用トークンが保存されているか確認する
-        $this->assertNotNull($afterUpdate->restore_token);
+        // ユーザー復活用トークンが保存されていることを確認する
+        $this->assertSame($user->id, $userRestore->user_id);
+        $this->assertNotNull($userRestore->token);
 
         $response->assertStatus(204);
 
-        Mail::assertSent(Destroy::class, static function ($mail) use ($user, $afterUpdate) {
-            return $mail->hasTo($user->email) && $mail->hasCc($afterUpdate->email);
+        Mail::assertSent(Destroy::class, static function ($mail) use ($user) {
+            return $mail->hasTo($user->email);
         });
     }
 
@@ -62,16 +65,50 @@ class DestroyTest extends TestCase
         ]);
 
         $afterUpdate = User::withTrashed()->find($otherUser->id);
+        $userRestoreExists = UserRestore::where('user_id', $otherUser->id)->exists();
 
-        // 対象データが論理削除されているか確認する
+        // 対象データが論理削除されていることを確認する
         $this->assertNotNull($afterUpdate->deleted_at);
-        // ユーザー復活用トークンが保存されているか確認する
-        $this->assertNotNull($afterUpdate->restore_token);
+        // ユーザー復活用トークンが保存されていないことを確認する
+        $this->assertFalse($userRestoreExists);
 
         $response->assertStatus(204);
 
-        Mail::assertSent(Destroy::class, static function ($mail) use ($requestUser, $afterUpdate) {
-            return $mail->hasTo($requestUser->email) && $mail->hasCc($afterUpdate->email);
+        Mail::assertSent(Destroy::class, static function ($mail) use ($otherUser) {
+            return $mail->hasTo($otherUser->email);
+        });
+    }
+
+    /**
+     * 管理者ユーザーが自身を対象にできることを確認する
+     *
+     * @return void
+     */
+    public function test_admin_user_can_delete_self()
+    {
+        Mail::fake();
+
+        $user = User::factory()->create([
+            'is_admin' => 1,
+        ]);
+
+        $response = $this->actingAs($user)->delete(self::API_URL.'/'.$user->id, [
+            'password' => 'password',
+        ]);
+
+        $afterUpdate = User::withTrashed()->find($user->id);
+        $userRestore = UserRestore::where('user_id', $user->id)->first();
+
+        // 対象データが論理削除されていることを確認する
+        $this->assertNotNull($afterUpdate->deleted_at);
+        // ユーザー復活用トークンが保存されていることを確認する
+        $this->assertSame($user->id, $userRestore->user_id);
+        $this->assertNotNull($userRestore->token);
+
+        $response->assertStatus(204);
+
+        Mail::assertSent(Destroy::class, static function ($mail) use ($user) {
+            return $mail->hasTo($user->email);
         });
     }
 

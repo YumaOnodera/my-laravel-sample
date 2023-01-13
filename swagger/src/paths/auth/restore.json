@@ -3,24 +3,18 @@
         "Auth"
     ],
     "description": "トークンをもとにユーザーを検索し、対象ユーザーを復活させる。",
-    "requestBody": {
-        "content": {
-            "application/json:": {
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "restore_token": {
-                            "type": "string",
-                            "example": "2UWS1KkuBUAe0oot9hOYtJrqZUUnUykRR6EruXJU9vL4TnMm2CXLwpNFoIAj"
-                        }
-                    },
-                    "required": [
-                        "restore_token"
-                    ]
-                }
+    "parameters": [
+        {
+            "description": "ユーザー復活用トークン",
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+                "type": "string",
+                "example": "2UWS1KkuBUAe0oot9hOYtJrqZUUnUykRR6EruXJU9vL4TnMm2CXLwpNFoIAj"
             }
         }
-    },
+    ],
     "responses": {
         "204": {
             "description": "成功"

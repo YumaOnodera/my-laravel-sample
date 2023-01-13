@@ -19,13 +19,8 @@ class RestoreAction
         $user = User::withTrashed()->findOrFail($id);
 
         $user->restore();
-        $user->forceFill([
-            'restore_token' => null,
-        ])->save();
         $user->searchable();
 
-        Mail::to($request->user())
-            ->cc($user)
-            ->send(new Restore($user));
+        Mail::to($user)->send(new Restore($user));
     }
 }

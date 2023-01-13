@@ -3,8 +3,8 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use App\Models\UserRestore;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class RestoreTokenTest extends TestCase
@@ -22,8 +22,8 @@ class RestoreTokenTest extends TestCase
     {
         $user = User::factory()->create([
             'deleted_at' => now(),
-            'restore_token' => Str::random(10),
         ]);
+        UserRestore::factory()->create();
 
         $response = $this->post(self::API_URL, [
             'email' => $user->email,
@@ -59,6 +59,29 @@ class RestoreTokenTest extends TestCase
     }
 
     /**
+     * 復活用トークンが存在しない時、レスポンスが想定通りであることを確認する
+     *
+     * @return void
+     */
+    public function test_deleted_user_with_not_found_token()
+    {
+        $user = User::factory()->create([
+            'deleted_at' => now(),
+        ]);
+
+        $response = $this->post(self::API_URL, [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $actual = $response->json();
+
+        $this->assertNull($actual['restore_token']);
+
+        $response->assertStatus(200);
+    }
+
+    /**
      * パスワードが異なる時、レスポンスが想定通りであることを確認する
      *
      * @return void
@@ -68,6 +91,7 @@ class RestoreTokenTest extends TestCase
         $user = User::factory()->create([
             'deleted_at' => now(),
         ]);
+        UserRestore::factory()->create();
 
         $response = $this->post(self::API_URL, [
             'email' => $user->email,

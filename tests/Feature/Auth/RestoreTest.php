@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\Mail\Auth\Restore;
 use App\Models\User;
+use App\Models\UserRestore;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -24,23 +25,20 @@ class RestoreTest extends TestCase
     {
         Mail::fake();
 
-        $restoreToken = Str::random(10);
-
         $user = User::factory()->create([
             'deleted_at' => now(),
-            'restore_token' => $restoreToken,
         ]);
+        $userRestore = UserRestore::factory()->create();
 
-        $response = $this->post(self::API_URL, [
-            'restore_token' => $restoreToken,
-        ]);
+        $response = $this->post(self::API_URL.'/'.$userRestore->token);
 
-        $afterUpdate = User::find($user->id);
+        $afterUpdate = User::find($userRestore->user_id);
+        $userRestoreExists = UserRestore::where('user_id', $userRestore->user_id)->exists();
 
-        // 対象データが復活しているか確認する
+        // 対象データが復活していることを確認する
         $this->assertNull($afterUpdate->deleted_at);
-        // ユーザー復活用トークンが破棄されているか確認する
-        $this->assertNull($afterUpdate->restore_token);
+        // ユーザー復活用トークンが破棄されていることを確認する
+        $this->assertFalse($userRestoreExists);
 
         $response->assertStatus(204);
 
@@ -58,12 +56,9 @@ class RestoreTest extends TestCase
     {
         User::factory()->create([
             'deleted_at' => now(),
-            'restore_token' => Str::random(10),
         ]);
 
-        $response = $this->post(self::API_URL, [
-            'restore_token' => Str::random(10),
-        ]);
+        $response = $this->post(self::API_URL.'/'.Str::random(10));
 
         $response->assertStatus(422);
     }
