@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
 
 class UserResource extends JsonResource
 {
@@ -16,7 +15,7 @@ class UserResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $isAdmin = Auth::user()?->is_admin;
+        $isAdmin = $request->user()?->is_admin;
 
         return [
             'id' => $this->id,
