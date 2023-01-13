@@ -14,11 +14,10 @@ class UpdatePermissionAction
      */
     public function __invoke(UpdatePermissionRequest $request, int $id): void
     {
-        $user = User::where('id', $id);
+        $user = User::findOrFail($id);
 
         $user->update([
             'is_admin' => $request->is_admin,
         ]);
-        $user->searchable();
     }
 }

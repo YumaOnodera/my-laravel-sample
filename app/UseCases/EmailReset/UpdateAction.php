@@ -17,14 +17,13 @@ class UpdateAction
     public function __invoke(UpdateRequest $request, string $token): void
     {
         $emailReset = EmailReset::where('token', $token)->first();
-        $user = User::where('id', $emailReset->user_id);
+        $user = User::findOrFail($emailReset->user_id);
 
         DB::transaction(static function () use ($emailReset, $user) {
             $user->update([
                 'email' => $emailReset->new_email,
                 'email_verified_at' => now(),
             ]);
-            $user->searchable();
 
             $emailReset->delete();
         });

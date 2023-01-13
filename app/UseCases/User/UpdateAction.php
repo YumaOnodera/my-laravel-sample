@@ -15,13 +15,13 @@ class UpdateAction
      */
     public function __invoke(UpdateRequest $request, int $id): Model
     {
-        $user = User::where('id', $id);
+        $user = User::findOrFail($id);
 
         $user->update([
             'name' => $request->name,
         ]);
         $user->searchable();
 
-        return $user->first();
+        return $user;
     }
 }
