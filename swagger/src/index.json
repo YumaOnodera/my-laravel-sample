@@ -103,7 +103,7 @@
             }
         },
         "/api/users/{id}/restore": {
-            "put": {
+            "post": {
                 "$ref": "./paths/users/restore.json"
             }
         },
