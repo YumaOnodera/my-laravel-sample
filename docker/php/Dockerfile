@@ -10,7 +10,7 @@ ENV PATH $PATH:/composer/vendor/bin
 
 RUN docker-php-ext-install pdo_mysql opcache
 RUN apk update \
-    && apk add autoconf gcc g++ make
+    && apk add autoconf gcc g++ linux-headers make
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 RUN adduser -u 1000 sail -D
