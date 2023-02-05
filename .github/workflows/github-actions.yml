@@ -42,5 +42,5 @@ jobs:
             --project ${{ secrets.PROJECT_ID }} \
             --region ${{ env.REGION }} \
             --platform "managed" \
-            --source
+            --source .
             --quiet
