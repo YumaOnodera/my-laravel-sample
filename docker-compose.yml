@@ -7,9 +7,9 @@ services:
         volumes:
             - ./:/var/www/html:cached
     nginx:
-        image: nginx:alpine
+        image: nginx:alpine3.17
         ports:
-            - '8000:8000'
+            - '8080:8080'
         environment:
             TZ: Asia/Tokyo
         volumes:
@@ -34,7 +34,7 @@ services:
             - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
             - ./docker/mysql/sql:/docker-entrypoint-initdb.d
     meilisearch:
-        image: getmeili/meilisearch:latest
+        image: getmeili/meilisearch:v1.1
         ports:
             - '7700:7700'
         volumes:
@@ -49,7 +49,7 @@ services:
     swagger-ui:
         image: swaggerapi/swagger-ui:latest
         ports:
-            - '8080:8080'
+            - '8008:8008'
         environment:
             API_URL: openapi.json
         volumes:

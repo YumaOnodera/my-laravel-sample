@@ -1,18 +1,20 @@
-FROM php:8.1-fpm-alpine
+FROM php:8.1.17-fpm-alpine3.17
 
-WORKDIR /var/www/html
+# PHP
+COPY php.ini /usr/local/etc/php/
 
+RUN apk update \
+    && apk add autoconf gcc g++ linux-headers make \
+    && docker-php-ext-install pdo_mysql opcache \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && adduser -u 1000 sail -D
+
+# Composer install
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV PATH $PATH:/composer/vendor/bin
 
-RUN docker-php-ext-install pdo_mysql opcache
-RUN apk update \
-    && apk add autoconf gcc g++ linux-headers make
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
-RUN adduser -u 1000 sail -D
-
-COPY php.ini /usr/local/etc/php/
+WORKDIR /var/www/html
