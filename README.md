@@ -148,7 +148,7 @@ larastepでは、各テストケースで更新されたデータが他のテス
 ### 前提
 ローカル環境に以下がインストールされていること
 - docker v20.10.17以上
-- docker-compose v2.10.2以上
+- docker compose v2.10.2以上
 
 ### 手順
 - リポジトリをクローン
@@ -188,7 +188,7 @@ CREATE DATABASE文とGRANT文を編集する。
 
 - Dockerコンテナを作成して起動
 ```
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 - 起動中コンテナの一覧を表示し、PHPコンテナの「NAMES」を確認
@@ -233,16 +233,28 @@ php artisan db:seed
 exit
 ```
 
-- Laravelのバージョン確認し、同時にLaravel Sailが有効であることを確認
+- sailのエイリアスを設定
 ```
-./vendor/bin/sail artisan -V
+// シェルファイルを開く
+vi ~/.zshrc
+
+// 下記を記述
+alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+
+// シェルファイルを閉じた後、下記コマンドで反映させる
+source ~/.zshrc
 ```
 
-以降、composerやartisanコマンドは`./vendor/bin/sail`をつけることで、アプリケーション直下で実行できるようになります。
+- Laravelのバージョン確認し、同時にLaravel Sailが有効であることを確認
+```
+sail artisan -V
+```
+
+以降、composerやartisanコマンドは`sail`をつけることで、アプリケーション直下で実行できるようになります。
 
 - テストが成功することを確認
 ```
-./vendor/bin/sail artisan test
+sail artisan test
 ```
 
 ## URL
@@ -270,17 +282,17 @@ http://localhost:7700
 ### Dockerの操作
 - Dockerコンテナを作成して起動
 ```
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 ### マイグレーションとシーディング
 マイグレーション
 ```
-./vendor/bin/sail artisan migrate
+sail artisan migrate
 ```
 シーディング
 ```
-./vendor/bin/sail artisan db:seed
+sail artisan db:seed
 ```
 
 ### 検索インデックス
@@ -288,35 +300,35 @@ docker-compose up --build -d
 
 例）
 ```
-./vendor/bin/sail artisan scout:import "App\Models\Post"
+sail artisan scout:import "App\Models\Post"
 ```
 検索インデックスから全レコード削除
 
 例）
 ```
-./vendor/bin/sail artisan scout:flush "App\Models\Post"
+sail artisan scout:flush "App\Models\Post"
 ```
 
 ### テスト
 単体テスト
 ```
-./vendor/bin/sail test ファイルパス
+sail test ファイルパス
 ```
 全体テスト
 ```
-./vendor/bin/sail test
+sail test
 ```
 並列テスト
 ```
-./vendor/bin/sail test --parallel
+sail test --parallel
 ```
 テストカバレッジ
 ```
-./vendor/bin/sail test --coverage
+sail test --coverage
 ```
 並列テストとテストカバレッジ
 ```
-./vendor/bin/sail test --parallel --coverage
+sail test --parallel --coverage
 ```
 
 ### コードフォーマット
@@ -337,39 +349,39 @@ vendor/bin/pint --test
 ### ファイル作成
 モデル作成
 ```
-./vendor/bin/sail artisan make:model ファイル名
+sail artisan make:model ファイル名
 ```
 マイグレーション作成
 ```
 // テーブルの作成
-./vendor/bin/sail artisan make:migration ファイル名 --create=テーブル名
+sail artisan make:migration ファイル名 --create=テーブル名
 
 // テーブルの編集
-./vendor/bin/sail artisan make:migration ファイル名 --table=テーブル名
+sail artisan make:migration ファイル名 --table=テーブル名
 ```
 ファクトリ作成
 ```
-./vendor/bin/sail artisan make:factory ファイル名
+sail artisan make:factory ファイル名
 ```
 シーダー作成
 ```
-./vendor/bin/sail artisan make:seeder ファイル名
+sail artisan make:seeder ファイル名
 ```
 コントローラ作成
 ```
-./vendor/bin/sail artisan make:controller ファイル名
+sail artisan make:controller ファイル名
 ```
 リソース作成
 ```
-./vendor/bin/sail artisan make:resource ファイル名
+sail artisan make:resource ファイル名
 ```
 フォームリクエスト作成
 ```
-./vendor/bin/sail artisan make:request ファイル名
+sail artisan make:request ファイル名
 ```
 テスト作成
 ```
-./vendor/bin/sail artisan make:test ファイル名
+sail artisan make:test ファイル名
 ```
 
 ## ライセンス
