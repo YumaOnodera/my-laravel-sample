@@ -34,7 +34,7 @@ services:
             - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
             - ./docker/mysql/sql:/docker-entrypoint-initdb.d
     meilisearch:
-        image: getmeili/meilisearch:v1.1
+        image: getmeili/meilisearch:v1.1.1
         ports:
             - '7700:7700'
         volumes:
