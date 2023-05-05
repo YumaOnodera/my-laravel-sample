@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
-use MeiliSearch\Client;
-use MeiliSearch\MeiliSearch;
+use Meilisearch\Client;
+use Meilisearch\Meilisearch;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -68,7 +68,7 @@ class AppServiceProvider extends ServiceProvider
      */
     private function updateFilterableAttributes(): void
     {
-        if (class_exists(MeiliSearch::class)) {
+        if (class_exists(Meilisearch::class)) {
             $client = app(Client::class);
             $config = config('scout.meilisearch.settings');
             collect($config)
