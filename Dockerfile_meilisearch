@@ -1,0 +1,5 @@
+FROM getmeili/meilisearch:v1.1.1
+
+VOLUME meilisearch:/meili_data
+
+EXPOSE 7700

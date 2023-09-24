@@ -1,0 +1,16 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '--build-arg',
+      'PROJECT_ENV=$_PROJECT_ENV',
+      '-t',
+      '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}',
+      '-f',
+      '${_DOCKER_FILE}',
+      '.'
+    ]
+substitutions:
+  _PROJECT_ENV: stg
+images: ['${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}']
