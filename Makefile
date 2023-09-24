@@ -7,17 +7,21 @@ ifdef e
 PROJECT_ENV=${e}
 endif
 
+# GCPプロジェクト作成
 gcloud-create-project: pre
 	gcloud projects create ${APP_NAME}-${PROJECT_ENV} ;
 
+# GCPリポジトリ作成
 gcloud-create-repository: pre
-	gcloud artifacts repositories create cloud-run-source-deploy \
+	gcloud artifacts repositories create ${GCP_REPOSITORY} \
 		--repository-format=docker \
 		--location=${GCP_REGION} ;
 
+# デプロイ準備
 deploy-setup: pre
 	gcloud config set project ${APP_NAME}-${PROJECT_ENV} ;
 
+# APIデプロイ
 deploy-app: pre
 	@make deploy-setup ;\
 	gcloud builds submit --config=cloudbuild.yaml \
@@ -26,6 +30,7 @@ deploy-app: pre
 		--image ${GCP_REGION}-docker.pkg.dev/${APP_NAME}-${PROJECT_ENV}/${GCP_REPOSITORY}/${APP_NAME} \
 		--region ${GCP_REGION} ;
 
+# 検索エンジンデプロイ
 deploy-meilisearch: pre
 	@make deploy-setup ;\
 	gcloud builds submit --config=cloudbuild.yaml \
