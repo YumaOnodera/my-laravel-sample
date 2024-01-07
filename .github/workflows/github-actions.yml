@@ -41,5 +41,9 @@ jobs:
           pwd
           cd ../../../..
           pwd
+          ls
+          cd ..
+          pwd
+          ls
           make deploy-app
           make deploy-meilisearch
