@@ -38,5 +38,5 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |-
-          deploy-app \
-          deploy-meilisearch
+          make deploy-app \
+          make deploy-meilisearch
