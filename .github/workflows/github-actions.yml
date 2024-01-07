@@ -6,7 +6,7 @@ on:
 name: Build and Deploy to Cloud Run
 env:
   SERVICE: larastep
-  REGION: asia-northeast1-a
+  REGION: asia-northeast1
 
 jobs:
   deploy:
@@ -38,9 +38,5 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |-
-          gcloud run deploy ${{ env.SERVICE }} \
-            --project ${{ secrets.PROJECT_ID }} \
-            --region ${{ env.REGION }} \
-            --platform "managed" \
-            --source .
-            --quiet
+          deploy-app \
+          deploy-meilisearch
