@@ -9,7 +9,8 @@ env:
   REGION: asia-northeast1
 
 defaults:
-  shell: zsh {0}
+  run:
+    shell: zsh {0}
 
 jobs:
   deploy:
