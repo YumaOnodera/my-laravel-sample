@@ -39,8 +39,7 @@ jobs:
       - name: Deploy to Cloud Run
         run: |
           ls
-          echo $ZSH_NAME $ZSH_VERSION
+          echo $SHELL
           make echo-shell
           make deploy-app
           make deploy-meilisearch
-        shell: zsh {0}
