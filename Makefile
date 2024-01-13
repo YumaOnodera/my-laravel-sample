@@ -7,9 +7,6 @@ ifdef e
 PROJECT_ENV=${e}
 endif
 
-echo-shell:
-	echo $SHELL ;
-
 # GCPプロジェクト作成
 gcloud-create-project: pre
 	gcloud projects create ${APP_NAME}-${PROJECT_ENV} ;
