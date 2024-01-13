@@ -40,6 +40,7 @@ jobs:
         run: |
           ls
           echo $ZSH_NAME $ZSH_VERSION
+          make echo-shell
           make deploy-app
           make deploy-meilisearch
         shell: zsh {0}
