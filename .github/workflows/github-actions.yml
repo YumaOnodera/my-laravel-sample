@@ -41,5 +41,5 @@ jobs:
           ls
           echo $SHELL
           make echo-shell
-          make deploy-app
-          make deploy-meilisearch
+#          make deploy-app
+#          make deploy-meilisearch

@@ -1,5 +1,4 @@
-include .env
-export
+#include .env
 
 PROJECT_ENV=stg
 
