@@ -9,8 +9,6 @@ env:
   REGION: asia-northeast1
 
 defaults:
-  run: |
-    echo $ZSH_NAME $ZSH_VERSION
   shell: zsh {0}
 
 jobs:
