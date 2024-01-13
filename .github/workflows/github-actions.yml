@@ -8,11 +8,6 @@ env:
   SERVICE: larastep
   REGION: asia-northeast1
 
-defaults:
-  run: |
-    echo $ZSH_NAME $ZSH_VERSION
-  shell: zsh {0}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -44,6 +39,7 @@ jobs:
       - name: Deploy to Cloud Run
         run: |
           ls
-          echo $SHELL
+          echo $ZSH_NAME $ZSH_VERSION
           make deploy-app
           make deploy-meilisearch
+        shell: zsh {0}
