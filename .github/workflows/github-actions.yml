@@ -39,8 +39,14 @@ jobs:
       - name: Authorize Docker push
         run: gcloud auth configure-docker
 
+#      - name: Set up project environment variables
+#        run: |
+#          touch .env
+#            cp .env.testing.example .env.testing
+#            cp docker/.env.example docker/.env
+
       - name: Deploy to Cloud Run
         run: |
-          make deploy-app
-          make deploy-meilisearch
-        shell: zsh {0}
+          zsh ./scripts/set_project.sh
+          zsh ./scripts/deploy_app.sh
+          zsh ./scripts/deploy_meilisearch.sh
