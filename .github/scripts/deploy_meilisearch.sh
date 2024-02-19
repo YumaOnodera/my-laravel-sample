@@ -1,4 +1,4 @@
-source ../.env
+source ../../.env
 
 PROJECT_ENV=stg
 if [ $1 ]; then
