@@ -5,5 +5,7 @@ if [ $1 ]; then
 PROJECT_ENV=$1
 fi
 
+export PROJECT_ID=${APP_NAME}-${PROJECT_ENV}
+
 # プロジェクト設定
-gcloud config set project ${APP_NAME}-${PROJECT_ENV}
+gcloud config set project ${PROJECT_ID}
