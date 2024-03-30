@@ -52,6 +52,7 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
+          echo $GITHUB_WORKSPACE
           zsh ./scripts/00_set_project.sh
           zsh ./scripts/11_deploy_app.sh
           zsh ./scripts/12_deploy_meilisearch.sh
