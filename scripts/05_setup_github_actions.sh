@@ -25,7 +25,12 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
     --member=serviceAccount:${SERVICE_ACCOUNT} \
     --role=projects/${PROJECT_ID}/roles/${PROJECT_REFERENCE_ROLE}
 
-# プロジェクト参照権限をサービスアカウントに付与する
+# gcloud buildsの実行権限をサービスアカウントに付与する
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
     --member=serviceAccount:${SERVICE_ACCOUNT} \
     --role=roles/serviceusage.serviceUsageConsumer
+
+# Cloud Runへのデプロイ権限をサービスアカウントに付与する
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member=serviceAccount:${SERVICE_ACCOUNT} \
+    --role=roles/iam.serviceAccountUser
