@@ -8,7 +8,8 @@ fi
 export PROJECT_ID=${APP_NAME}-${PROJECT_ENV}
 
 gcloud builds submit --config=cloudbuild.yaml \
-    --substitutions=_PROJECT_ENV="${PROJECT_ENV}",_LOCATION="${GCP_REGION}",_REPOSITORY="${GCP_REPOSITORY}",_IMAGE="${APP_NAME}",_DOCKER_FILE=Dockerfile_php
+    --substitutions=_PROJECT_ENV="${PROJECT_ENV}",_LOCATION="${GCP_REGION}",_REPOSITORY="${GCP_REPOSITORY}",_IMAGE="${APP_NAME}",_DOCKER_FILE=Dockerfile_php \
+    --verbosity debug
 gcloud run deploy ${APP_NAME} \
     --image ${GCP_REGION}-docker.pkg.dev/${PROJECT_ID}/${GCP_REPOSITORY}/${APP_NAME} \
     --region ${GCP_REGION} \
